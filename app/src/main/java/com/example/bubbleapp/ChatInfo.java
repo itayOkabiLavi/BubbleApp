@@ -1,3 +1,5 @@
+package com.example.bubbleapp;
+
 import java.util.Date;
 
 public class ChatInfo {

@@ -1,3 +1,5 @@
+package com.example.bubbleapp;
+
 import java.util.List;
 
 interface DataManager {

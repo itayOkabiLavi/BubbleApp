@@ -20,6 +20,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
+            android:id="@+id/main_login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="155dp"
+            android:text="Register" />
+        <Button
             android:id="@+id/register_btn"
             android:layout_width="match_parent"
             android:layout_height="155dp"
