@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
         binding.mainLoginBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(this, Chats.class);
+            Intent intent = new Intent(this, ChatsActivity.class);
             String token = dataManager.login("itay", "itay123");
             intent.putExtra("token", token);
             startActivity(intent);

@@ -14,7 +14,10 @@
         android:theme="@style/Theme.BubbleApp"
         tools:targetApi="31">
         <activity
-            android:name=".Chats"
+            android:name=".chatsactivitypack.ChatDisplayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChatsActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterForm"
