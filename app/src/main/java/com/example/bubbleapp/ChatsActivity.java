@@ -7,7 +7,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.bubbleapp.chatsactivitypack.ChatAdapter;
+import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfoAdapter;
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
 import com.example.bubbleapp.databinding.ActivityChatsBinding;
 
@@ -36,24 +36,34 @@ public class ChatsActivity extends AppCompatActivity {
         } else {
             this.token = "";
         }
-        // set chats list
+        // set chats list - maybe in login
         this.chatPreviewInfoList = dataManager.getContacts(token);
+
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
-        ChatAdapter chatAdapter = new ChatAdapter(chatPreviewInfoList);
-        binding.chatsRv.setAdapter(chatAdapter);
+        ChatPreviewInfoAdapter chatPreviewInfoAdapter = new ChatPreviewInfoAdapter(this);
+        binding.chatsRv.setAdapter(chatPreviewInfoAdapter);
         binding.chatsRv.setLayoutManager(llm);
-        //ChatAdapter chatAdapter = new ChatAdapter(this, this.chatInfoList);
-/*
+    }
 
-        ArrayAdapter<ChatInfo> chatAdapter = new ArrayAdapter(
-                getApplicationContext(),
-                android.R.layout.simple_list_item_1,
-                chatInfoList
-        );
-        listView.setAdapter(chatAdapter);
-*/
+    public ActivityChatsBinding getBinding() {
+        return binding;
+    }
 
+    public DataManager getDataManager() {
+        return dataManager;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public List<ChatPreviewInfo> getChatPreviewInfoList() {
+        return chatPreviewInfoList;
+    }
+
+    public List<String> getChatTitles() {
+        return chatTitles;
     }
 }

@@ -6,13 +6,68 @@
     android:layout_height="match_parent"
     tools:context=".chatsactivitypack.ChatDisplayActivity">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contact_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal"
+            android:background="@color/blue_standard"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/contact_back_btn"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:drawableTop="@drawable/ic_chatdisplay_more"
+                android:padding="10dp"
+                android:textAlignment="center"
+                app:srcCompat="@drawable/ic_chatdisplay_back" />
+
+            <ImageView
+                android:id="@+id/contact_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_weight="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/contact_back_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/contact_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textAlignment="textStart"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/contact_info"
+
+                app:layout_constraintLeft_toRightOf="@id/contact_image"
+                app:layout_constraintTop_toTopOf="@id/contact_info" />
+
+            <Button
+                android:id="@+id/contact_more_btn"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:height="40dp"
+                app:layout_constraintBottom_toBottomOf="@id/contact_info"
+                app:layout_constraintTop_toTopOf="@id/contact_info"
+                app:layout_constraintRight_toRightOf="@id/contact_info"
+                android:drawableTop="@drawable/ic_chatdisplay_more"
+                android:padding="10dp"
+                android:textAlignment="center"
+                app:srcCompat="@drawable/ic_chatdisplay_more" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

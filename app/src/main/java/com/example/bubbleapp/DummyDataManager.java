@@ -4,6 +4,8 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.bubbleapp.chatsactivitypack.ChatContent;
+import com.example.bubbleapp.chatsactivitypack.ChatMessage;
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
 
 import java.time.LocalDateTime;
@@ -50,15 +52,19 @@ public class DummyDataManager implements DataManager {
     }
 
     @Override
+    public ChatContent getContact(String token, String id) {
+        return null;
+    }
+
+    @Override
     public boolean sendMessage(String token, String destination, String textMessage) {
 
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void getMessage() {
-
+    public ChatMessage getMessage() {
+        return new ChatMessage("fromMe", "to", "stuff");
     }
-
-
 }

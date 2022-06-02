@@ -1,5 +1,9 @@
 package com.example.bubbleapp.chatsactivitypack;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -15,6 +19,16 @@ public class ChatPreviewInfo implements Serializable {
         this.contactName = contactName;
         this.lastMessage = lastMessage;
         this.lastMessageDate = lastMessageDate;
+        this.profilePicture = profilePicture;
+        this.server = server;
+        this.id = contactName + "^" + server;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public ChatPreviewInfo(String contactName, String lastMessage, String lastMessageDate, String profilePicture, String server) {
+        this.contactName = contactName;
+        this.lastMessage = lastMessage;
+        this.lastMessageDate = LocalDateTime.parse(lastMessageDate);
         this.profilePicture = profilePicture;
         this.server = server;
         this.id = contactName + "^" + server;
