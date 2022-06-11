@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         binding.registerBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(this, RegisterForm.class);
+            Intent intent = new Intent(this, LoginForm.class);
             startActivity(intent);
         });
         binding.mainLoginBtn.setOnClickListener(view -> {
