@@ -13,6 +13,7 @@ import com.example.bubbleapp.api.ChatsAPI;
 import com.example.bubbleapp.api.WebServiceAPI;
 import com.example.bubbleapp.databinding.ActivityLoginFormBinding;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -40,8 +41,25 @@ public class LoginForm extends AppCompatActivity {
 
         loginBtn.setOnClickListener(view -> {
             JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString());
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, ChatsActivity.class);
+            try {
+                JSONObject user = userInfo.getJSONObject("user");
+                intent.putExtra("token",userInfo.getString("token"));
+                intent.putExtra("id",user.getString("id"));
+                intent.putExtra("name",user.getString("name"));
+                intent.putExtra("server",user.getString("server"));
+                intent.putExtra("last",user.getString("last"));
+                intent.putExtra("lastType",user.getString("lastType"));
+                try {
+                    intent.putExtra("lastDate",user.getJSONObject("lastDate").toString());
+                } catch (Exception ignored) {}
+                intent.putExtra("userMessages",user.getJSONArray("userMessages").toString());
+                intent.putExtra("profileImg",user.getJSONObject("profileImg").toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             startActivity(intent);
         });
     }
+
 }

@@ -33,8 +33,9 @@ public class RegisterForm extends AppCompatActivity {
         password = binding.password;
         validatePassword = binding.validatePassword;
         regBtn.setOnClickListener(view -> {
-            JSONObject token = chatsAPI.register(fullName.getText().toString(), nickName.getText().toString(), password.getText().toString(), validatePassword.getText().toString());
-            Intent intent = new Intent(this, MainActivity.class);
+            JSONObject userInfo = chatsAPI.register(fullName.getText().toString(), nickName.getText().toString(), password.getText().toString(), validatePassword.getText().toString());
+            Intent intent = new Intent(this, ChatsActivity.class);
+            //intent.putExtra("userInfo",userInfo);
             startActivity(intent);
         });
     }
