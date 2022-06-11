@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 
 import com.example.bubbleapp.MyApplication;
 import com.example.bubbleapp.R;
-import com.example.bubbleapp.payloads.Login;
+
+import org.json.JSONObject;
+
 
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,24 +31,59 @@ public class ChatsAPI {
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }
 
-    public void login(String name, String password) {
-        Call<String> call = webServiceAPI.login(/*new Login(name,password)*/new MultipartBody.Builder()
+    public JSONObject login(String name, String password) {
+        final JSONObject[] res = new JSONObject[1];
+        MultipartBody loginBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("name", name)
                 .addFormDataPart("password", password)
-                .build());
-        call.enqueue(new Callback<String>() {
+                .build();
+        Call<ResponseBody> call = webServiceAPI.login(loginBody);
+
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                String body = response.body();
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                try {
+                    res[0] = new JSONObject(response.body().string());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
 
             }
         });
+        return res[0];
+    }
 
+    public JSONObject register(String fullName, String nickName, String password, String validatePassword) {
+        final JSONObject[] res = new JSONObject[1];
+        MultipartBody registerBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("name", fullName)
+                .addFormDataPart("nickName", nickName)
+                .addFormDataPart("password", password)
+                .build();
+        Call<ResponseBody> call = webServiceAPI.register(registerBody);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                try {
+                    res[0] =new JSONObject(response.body().string());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+
+            }
+        });
+        return res[0];
     }
 
 }

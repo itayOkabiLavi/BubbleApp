@@ -13,6 +13,8 @@ import com.example.bubbleapp.api.ChatsAPI;
 import com.example.bubbleapp.api.WebServiceAPI;
 import com.example.bubbleapp.databinding.ActivityLoginFormBinding;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import retrofit2.Call;
@@ -28,24 +30,18 @@ public class LoginForm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int SDK_INT = android.os.Build.VERSION.SDK_INT;
         ChatsAPI chatsAPI = new ChatsAPI();
-        if (SDK_INT > 8) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                    .permitAll().build();
-            StrictMode.setThreadPolicy(policy);
 
-            binding = ActivityLoginFormBinding.inflate(getLayoutInflater());
-            setContentView(binding.getRoot());
-            loginBtn = binding.loginBtn;
-            name = binding.userName;
-            password = binding.password;
-            loginBtn.setOnClickListener(view -> {
-                chatsAPI.login(name.getText().toString(), password.getText().toString());
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            });
-        }
+        binding = ActivityLoginFormBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        loginBtn = binding.loginBtn;
+        name = binding.userName;
+        password = binding.password;
+
+        loginBtn.setOnClickListener(view -> {
+            JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString());
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        });
     }
-
 }
