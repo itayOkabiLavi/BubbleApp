@@ -59,7 +59,7 @@ public class ChatsAPI {
         return res[0];
     }
 
-    public JSONObject register(String fullName, String nickName, String password, String validatePassword) {
+    public JSONObject register(String fullName, String nickName, String password) {
         final JSONObject[] res = new JSONObject[1];
         MultipartBody registerBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -68,29 +68,17 @@ public class ChatsAPI {
                 .addFormDataPart("password", password)
                 .build();
         Call<ResponseBody> call = webServiceAPI.register(registerBody);
-        try {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> result = executorService.submit(() -> {
             Response<ResponseBody> response = call.execute();
-            res[0] = new JSONObject(response.body().string());
+            assert response.body() != null;
+            return response.body().string();
+        });
+        try {
+            res[0] = new JSONObject(result.get());
         } catch (Exception e) {
             e.printStackTrace();
         }
-/*
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                try {
-                    res[0] = new JSONObject(response.body().string());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-
-            }
-        });
-*/
         return res[0];
     }
 

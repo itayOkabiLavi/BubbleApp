@@ -11,6 +11,7 @@ import com.example.bubbleapp.api.ChatsAPI;
 import com.example.bubbleapp.databinding.ActivityLoginFormBinding;
 import com.example.bubbleapp.databinding.ActivityRegisterBinding;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterForm extends AppCompatActivity {
@@ -33,9 +34,25 @@ public class RegisterForm extends AppCompatActivity {
         password = binding.password;
         validatePassword = binding.validatePassword;
         regBtn.setOnClickListener(view -> {
-            JSONObject userInfo = chatsAPI.register(fullName.getText().toString(), nickName.getText().toString(), password.getText().toString(), validatePassword.getText().toString());
+            JSONObject userInfo = chatsAPI.register(fullName.getText().toString(), nickName.getText().toString(), password.getText().toString());
             Intent intent = new Intent(this, ChatsActivity.class);
-            //intent.putExtra("userInfo",userInfo);
+            try {
+                JSONObject user = userInfo.getJSONObject("user");
+                intent.putExtra("token", userInfo.getString("token"));
+                intent.putExtra("id", user.getString("id"));
+                intent.putExtra("name", user.getString("name"));
+                intent.putExtra("server", user.getString("server"));
+                intent.putExtra("last", user.getString("last"));
+                intent.putExtra("lastType", user.getString("lastType"));
+                try {
+                    intent.putExtra("lastDate", user.getJSONObject("lastDate").toString());
+                } catch (Exception ignored) {
+                }
+                intent.putExtra("userMessages", user.getJSONArray("userMessages").toString());
+                intent.putExtra("profileImg", user.getJSONObject("profileImg").toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             startActivity(intent);
         });
     }
