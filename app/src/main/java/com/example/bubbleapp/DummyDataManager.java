@@ -1,20 +1,56 @@
 package com.example.bubbleapp;
 
+import android.app.Activity;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
+import androidx.room.Room;
 
 import com.example.bubbleapp.chatsactivitypack.ChatContent;
 import com.example.bubbleapp.chatsactivitypack.ChatMessage;
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
+import com.example.bubbleapp.database.MyDao;
+import com.example.bubbleapp.database.MyDatabase;
+import com.example.bubbleapp.models.Message;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DummyDataManager implements DataManager {
 
-    public DummyDataManager() { }
+public class DummyDataManager extends Activity implements DataManager {
+    private List<ChatPreviewInfo> dummyChats;
+    private List<ChatMessage> dummyMessages;
+    private MyDatabase myDatabase;
+    private MyDao myDao;
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public DummyDataManager() {
+        myDatabase = Room.databaseBuilder(getApplicationContext(),
+                MyDatabase.class, "myDatabase").build();
+        myDao = myDatabase.MyDao();
+        this.dummyChats = new ArrayList<>();
+        dummyChats.add(
+                new ChatPreviewInfo(
+                        "Itay",
+                        "hey there",
+                        LocalDateTime.now(),
+                        "pic",
+                        "123")
+        );
+        dummyChats.add(
+                new ChatPreviewInfo(
+                        "Nadav",
+                        "hey there!!",
+                        LocalDateTime.now(),
+                        "pic",
+                        "123")
+        );
+        this.dummyMessages = new ArrayList<>();
+        dummyMessages.add(
+                new ChatMessage("ME", "mom", "hi")
+        );
+    }
 
     @Override
     public String login(String name, String password) {
@@ -28,37 +64,21 @@ public class DummyDataManager implements DataManager {
         return token;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public List<ChatPreviewInfo> getContacts(String token) {
-        List<ChatPreviewInfo> list = new ArrayList<>();
-        list.add(
-                new ChatPreviewInfo(
-                        "Itay",
-                        "hey there",
-                        LocalDateTime.now(),
-                        "pic",
-                        "123")
-        );
-        list.add(
-                new ChatPreviewInfo(
-                        "Nadav",
-                        "hey there!!",
-                        LocalDateTime.now(),
-                        "pic",
-                        "123")
-        );
-        return list;
+        return dummyChats;
     }
 
     @Override
     public ChatContent getContact(String token, String id) {
-        return null;
+        return new ChatContent(
+                "itay", "mom", this.dummyMessages
+        );
     }
 
     @Override
-    public boolean sendMessage(String token, String destination, String textMessage) {
-
+    public boolean sendMessage(String token, Message message) {
+        myDao.insertMessage(message);
         return true;
     }
 

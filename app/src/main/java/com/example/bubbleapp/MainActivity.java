@@ -16,8 +16,7 @@ public class MainActivity extends AppCompatActivity {
         dataManager = new DummyDataManager();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
+        
         binding.loginBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, LoginForm.class);
             startActivity(intent);

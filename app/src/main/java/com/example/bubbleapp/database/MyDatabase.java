@@ -11,7 +11,6 @@ import com.example.bubbleapp.models.User;
 @Database(entities = {User.class, Chat.class, Message.class}, version = 1)
 @TypeConverters({FileTypeConvertor.class})
 public abstract class MyDatabase extends RoomDatabase {
-
     public abstract MyDao MyDao();
 }
 

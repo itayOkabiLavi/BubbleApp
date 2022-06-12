@@ -36,7 +36,7 @@ public class ChatsActivity extends AppCompatActivity {
         } else {
             this.token = "";
         }
-        // set chats list - maybe in login
+        // set chats list - may be in login
         this.chatPreviewInfoList = dataManager.getContacts(token);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);

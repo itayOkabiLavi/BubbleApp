@@ -3,19 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/drawable/ic_chatdisplay_more.xml" value="0.1755" />
         <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1575" />
+        <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/activity_chat_display.xml" value="0.2" />
+        <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/activity_chat_item.xml" value="0.152" />
+        <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/activity_chats.xml" value="0.264" />
         <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/activity_main.xml" value="0.31462140992167104" />
         <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/activity_register_form.xml" value="0.264" />
-        <entry key="..\:/Users/yehud/StudioProjects/BubbleApp/app/src/main/res/layout-w1240dp/activity_register.xml" value="0.1" />
-        <entry key="..\:/Users/yehud/StudioProjects/BubbleApp/app/src/main/res/layout/activity_chat_display.xml" value="0.17916666666666667" />
-        <entry key="..\:/Users/yehud/StudioProjects/BubbleApp/app/src/main/res/layout/activity_chats.xml" value="0.17916666666666667" />
-        <entry key="..\:/Users/yehud/StudioProjects/BubbleApp/app/src/main/res/layout/activity_login_form.xml" value="0.264" />
-        <entry key="..\:/Users/yehud/StudioProjects/BubbleApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/yehud/StudioProjects/BubbleApp/app/src/main/res/layout/activity_register.xml" value="0.17192982456140352" />
-        <entry key="..\:/Users/yehud/StudioProjects/BubbleApp/app/src/main/res/layout/activity_register_form.xml" value="0.17300724637681159" />
-        <entry key="..\:/Users/yehud/StudioProjects/BubbleApp/app/src/main/res/layout/chat_list_item.xml" value="0.2" />
-        <entry key="..\:/Users/yehud/StudioProjects/BubbleApp/app/src/main/res/layout/content_register.xml" value="0.13148148148148148" />
-        <entry key="..\:/Users/yehud/StudioProjects/BubbleApp/app/src/main/res/xml/network_security_config.xml" value="0.1" />
+        <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/chat_item.xml" value="0.16145833333333334" />
+        <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/chat_list_item.xml" value="0.253125" />
+        <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/chat_message_item.xml" value="0.253125" />
       </map>
     </option>
   </component>

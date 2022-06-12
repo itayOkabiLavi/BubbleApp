@@ -5,24 +5,32 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.example.bubbleapp.models.Message;
 import com.example.bubbleapp.models.User;
 
 import java.util.List;
 
 @Dao
 public interface MyDao {
-    /*@Query("")
-    List<User> getAll();
-
+    @Query("SELECT * FROM user")
+    List<User> getAllUsers();
+/*
     @Query("")
     List<User> loadAllByIds(int[] userIds);
+*/
+    @Query("SELECT * FROM user WHERE id = :id")
+    User getUserById(String id);
 
-    @Query("")
-    User findByName(String first, String last);
+    @Query("SELECT * FROM user WHERE name = :name")
+    User getUserByName(String name);
 
     @Insert
-    void insertAll(User... users);
+    void insertUsers(User... users);
 
+    @Insert
+    void insertMessage(Message... messages);
     @Delete
-    void delete(User user);*/
+    void deleteUsers(User user);
+
+
 }

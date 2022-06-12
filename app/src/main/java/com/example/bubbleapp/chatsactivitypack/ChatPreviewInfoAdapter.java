@@ -20,24 +20,23 @@ public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfo
     private final List<ChatPreviewInfo> chatPreviewInfoList;
     private final ChatsActivity container;
 
-    class ContactViewHolder extends RecyclerView.ViewHolder {
-        private ChatListItemBinding chatListItemBinding;
-        private ChatsActivity container;
-
-        private Context context;
-        ContactViewHolder(ChatListItemBinding chatListItemBinding,
-                          ChatsActivity chatsActivity) {
-            super(chatListItemBinding.getRoot());
-            this.chatListItemBinding = chatListItemBinding;
-            context = chatListItemBinding.getRoot().getContext();
-            this.container = chatsActivity;
-        }
+        class ContactViewHolder extends RecyclerView.ViewHolder {
+            private ChatListItemBinding chatListItemBinding;
+            private ChatsActivity container;
+            private Context context;
+            ContactViewHolder(ChatListItemBinding chatListItemBinding,
+                              ChatsActivity chatsActivity) {
+                super(chatListItemBinding.getRoot());
+                this.chatListItemBinding = chatListItemBinding;
+                context = chatListItemBinding.getRoot().getContext();
+                this.container = chatsActivity;
+            }
 
             public void setUserData(ChatPreviewInfo userData) {
                 chatListItemBinding.userCard.setOnClickListener(x -> {
                     Intent intent = new Intent(context, ChatDisplayActivity.class);
-
                     intent.putExtra("chatinfo", userData);
+                    intent.putExtra("token", container.getToken());
                     context.startActivity(intent);
                 });
                 chatListItemBinding.userCard.setOnLongClickListener(x -> {
@@ -47,7 +46,7 @@ public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfo
                             .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    chatPreviewInfoList.remove(userData);
+
                                 }
                             })
                             .setNegativeButton("Cancel", null)
