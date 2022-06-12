@@ -43,7 +43,7 @@ public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfo
                 chatListItemBinding.userCard.setOnLongClickListener(x -> {
                     new AlertDialog.Builder(context)
                             .setTitle("Warning")
-                            .setMessage("Delete this message?")
+                            .setMessage("Delete this chat?")
                             .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
