@@ -2,25 +2,18 @@ package com.example.bubbleapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.example.bubbleapp.api.ChatsAPI;
-import com.example.bubbleapp.api.WebServiceAPI;
+import com.example.bubbleapp.database.MyDatabase;
 import com.example.bubbleapp.databinding.ActivityLoginFormBinding;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginForm extends AppCompatActivity {
     private ActivityLoginFormBinding binding;
@@ -55,6 +48,8 @@ public class LoginForm extends AppCompatActivity {
                 } catch (Exception ignored) {}
                 intent.putExtra("userMessages",user.getJSONArray("userMessages").toString());
                 intent.putExtra("profileImg",user.getJSONObject("profileImg").toString());
+                MyDatabase db = Room.databaseBuilder(getApplicationContext(),
+                        MyDatabase.class, "myDatabase").build();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
