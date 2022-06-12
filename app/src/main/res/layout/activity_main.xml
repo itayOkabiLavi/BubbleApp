@@ -25,9 +25,14 @@
             android:layout_height="155dp"
             android:text="Login to chats" />
         <Button
+            android:id="@+id/login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="155dp"
+            android:text="@string/login" />
+        <Button
             android:id="@+id/register_btn"
             android:layout_width="match_parent"
             android:layout_height="155dp"
-            android:text="Register" />
+            android:text="@string/register" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
