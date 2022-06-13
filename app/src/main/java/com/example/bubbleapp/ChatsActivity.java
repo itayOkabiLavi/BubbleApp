@@ -7,8 +7,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfoAdapter;
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
+import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfoAdapter;
 import com.example.bubbleapp.databinding.ActivityChatsBinding;
 
 import java.util.List;
@@ -18,6 +18,7 @@ public class ChatsActivity extends AppCompatActivity {
     private DataManager dataManager;
     private String token;
     public static String myName;
+    public static int nextMessageIndex;
     private List<ChatPreviewInfo> chatPreviewInfoList;
     private List<String> chatTitles;
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -25,6 +26,9 @@ public class ChatsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("ready...");
         super.onCreate(savedInstanceState);
+
+
+
         // set binding
         this.binding = ActivityChatsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -36,6 +40,9 @@ public class ChatsActivity extends AppCompatActivity {
 
         // set dataManager
         this.dataManager = new DummyDataManager(this.getApplicationContext());
+        dataManager.clearCache();
+        nextMessageIndex = 0;
+
         // set chats list - may be in login
         this.chatPreviewInfoList = dataManager.getContacts(token);
 

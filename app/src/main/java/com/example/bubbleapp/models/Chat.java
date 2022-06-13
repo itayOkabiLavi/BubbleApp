@@ -10,14 +10,12 @@ public class Chat {
     @NonNull
     public String id;
     public String participant1, participant2;
-    public int lastMessageId;
 
 
     public Chat(String participant1, String participant2) {
         this.participant1 = participant1;
         this.participant2 = participant2;
         id += participant1 + "&" + participant2 + "&";
-        lastMessageId = 0;
     }
 
     @NonNull
@@ -33,11 +31,6 @@ public class Chat {
         return participant2;
     }
 
-    public int notifyMessageAdded() {
-        int temp = this.lastMessageId;
-        lastMessageId += 1;
-        return temp;
-    }
 
     //TODO: fix
     //public List<Message> messages;

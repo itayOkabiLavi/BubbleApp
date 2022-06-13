@@ -1,6 +1,5 @@
 package com.example.bubbleapp.chatsactivitypack;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -16,7 +15,6 @@ import com.example.bubbleapp.databinding.ActivityChatDisplayBinding;
 import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class ChatDisplayActivity extends AppCompatActivity {
@@ -46,8 +44,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
         // Set buttons behaviour
         ImageButton backBtn = binding.chatBackBtn;
         backBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(this, ChatsActivity.class);
-            startActivity(intent);
+            finish();
         });
 
         ImageButton sendBtn = binding.chatSendBtn;
@@ -55,9 +52,13 @@ public class ChatDisplayActivity extends AppCompatActivity {
         sendBtn.setOnClickListener(view -> {
             dataManager.sendMessage(
                     token,
-                    new Message(LocalDateTime.now().toString(), "me", "mom", chatId, chat.notifyMessageAdded())
+                    binding.chatInputText.getText().toString(),
+                    "mom",
+                    chatId
             );
-
+            messageList.clear();
+            messageList.addAll(dataManager.getAllMessages(chatId));
+            messageAdapter.notifyDataSetChanged();
         });
 
         // set chats list
@@ -70,9 +71,4 @@ public class ChatDisplayActivity extends AppCompatActivity {
         binding.messagesRv.setLayoutManager(llm);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        messageAdapter.notifyDataSetChanged();
-    }
 }

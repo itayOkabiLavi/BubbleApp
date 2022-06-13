@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface DataManager {
 
+    public void clearCache();
+
     public String login(String name, String password);
 
     public String register(String name, String nickname, String password) ;
@@ -23,6 +25,7 @@ public interface DataManager {
     public List<Message> getAllMessages(String chatId);
 
     public boolean sendMessage(String token, Message message);
+    public boolean sendMessage(String token, String content, String to, String chatId);
 
     public Message getMessage(String id);
 }

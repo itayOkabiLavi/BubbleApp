@@ -21,13 +21,15 @@ public class Message {
                    String fromId,
                    String toId,
                    String chatId,
-                   int serialNumberInChat) {
+                   int id) {
         this.content = content;
         this.fromId = fromId;
         this.toId = toId;
         this.chatId = chatId;
-        this.messageId = generateId(fromId, toId, serialNumberInChat);
+        this.messageId = Integer.toString(id);
     }
+
+    public void setMessageId(String id) { this.messageId = id; }
 
     public Message() {
         new Message("Empty",

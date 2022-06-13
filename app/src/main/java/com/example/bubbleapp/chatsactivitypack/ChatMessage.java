@@ -49,6 +49,6 @@ public class ChatMessage implements Serializable {
     }
 
     public Message getMessage() {
-        return new Message(this.text, this.from, this.to, this.chatId, 0);
+        return null;
     }
 }

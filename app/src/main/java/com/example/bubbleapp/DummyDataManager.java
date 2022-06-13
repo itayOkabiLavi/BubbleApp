@@ -48,13 +48,11 @@ public class DummyDataManager extends Activity implements DataManager {
                         "pic",
                         "123")
         );
-        dummyMessages = new ArrayList<>();
-        dummyMessages.add(
-                new Message("hi mom", "ME", "mom", "?", -1)
-        );
-        dummyMessages.add(
-                new Message("hi itay", "ME", "mom", "?", -1)
-        );
+    }
+
+    @Override
+    public void clearCache() {
+        this.myDatabase.clearAllTables();
     }
 
     @Override
@@ -91,7 +89,8 @@ public class DummyDataManager extends Activity implements DataManager {
 
     @Override
     public List<Message> getAllMessages(String chatId) {
-        return this.dummyMessages;
+
+        return myDao.getAllMessages(chatId);
     }
 
     @Override
@@ -101,8 +100,20 @@ public class DummyDataManager extends Activity implements DataManager {
     }
 
     @Override
+    public boolean sendMessage(String token, String content, String to, String chatId) {
+        return sendMessage(token,
+                new Message(content, "ME", to, chatId, this.getMessageId())
+                );
+    }
+
+    @Override
     public Message getMessage(String id) {
         return new Message("content", "from", "to", "no chat", -1);
     }
 
+    public int getMessageId() {
+        int temp = ChatsActivity.nextMessageIndex;
+        ChatsActivity.nextMessageIndex += 1;
+        return temp;
+    }
 }
