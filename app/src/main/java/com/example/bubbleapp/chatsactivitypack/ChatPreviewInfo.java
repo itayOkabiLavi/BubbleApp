@@ -1,14 +1,13 @@
 package com.example.bubbleapp.chatsactivitypack;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
+import com.example.bubbleapp.ChatsActivity;
+import com.example.bubbleapp.models.Chat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class ChatPreviewInfo implements Serializable {
-    private String id;
+    private Chat chat;
     private String server;
     private String contactName;
     private String lastMessage;
@@ -21,17 +20,7 @@ public class ChatPreviewInfo implements Serializable {
         this.lastMessageDate = lastMessageDate;
         this.profilePicture = profilePicture;
         this.server = server;
-        this.id = contactName + "^" + server;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public ChatPreviewInfo(String contactName, String lastMessage, String lastMessageDate, String profilePicture, String server) {
-        this.contactName = contactName;
-        this.lastMessage = lastMessage;
-        this.lastMessageDate = LocalDateTime.parse(lastMessageDate);
-        this.profilePicture = profilePicture;
-        this.server = server;
-        this.id = contactName + "^" + server;
+        this.chat = new Chat(contactName, ChatsActivity.myName);
     }
 
     public String getContactName() {
@@ -50,18 +39,19 @@ public class ChatPreviewInfo implements Serializable {
         return profilePicture;
     }
 
-    public String getId() {
-        return id;
+    public Chat getChat() {
+        return chat;
     }
 
     @Override
     public String toString() {
-        return "ChatInfo = {" +
-                "id='" + id + '\'' +
+        return "ChatPreviewInfo{" +
+                "chat=" + chat +
                 ", server='" + server + '\'' +
                 ", contactName='" + contactName + '\'' +
                 ", lastMessage='" + lastMessage + '\'' +
                 ", lastMessageDate=" + lastMessageDate +
+                ", profilePicture='" + profilePicture + '\'' +
                 '}';
     }
 }

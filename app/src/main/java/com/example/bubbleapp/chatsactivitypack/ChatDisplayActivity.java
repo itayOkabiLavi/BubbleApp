@@ -14,7 +14,6 @@ import com.example.bubbleapp.DataManager;
 import com.example.bubbleapp.DummyDataManager;
 import com.example.bubbleapp.databinding.ActivityChatDisplayBinding;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChatDisplayActivity extends AppCompatActivity {
@@ -22,6 +21,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
     private String token;
     private DataManager dataManager;
     private ChatContent chatContent;
+    private String chatId;
     private List<ChatMessage> messageList;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -36,14 +36,8 @@ public class ChatDisplayActivity extends AppCompatActivity {
         // Extract data received
         Bundle extras = getIntent().getExtras();
         this.token = extras.getString("token");
-        if (extras == null) {
-            chatContent = (ChatContent) extras.getSerializable("chaContent");
-        } else {
-            List<ChatMessage> messageList = new ArrayList<>();
-            messageList.add(new ChatMessage(ChatMessage.ME, "Empty", "empty message from me"));
-            messageList.add(new ChatMessage("Empty", ChatMessage.ME, "empty message to me"));
-            chatContent = new ChatContent("ME", "Empty", messageList);
-        }
+        this.chatId = extras.getString("chatId");
+
         // Set buttons behaviour
         ImageButton backBtn = binding.chatBackBtn;
         backBtn.setOnClickListener(view -> {
@@ -57,7 +51,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
         });
 
         // set chats list
-        this.messageList = chatContent.getMessageList();
+        this.messageList = dataManager.getAllMessages(chatId);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         ChatMessageAdapter chatMessageAdapter = new ChatMessageAdapter(this.messageList);

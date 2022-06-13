@@ -35,7 +35,7 @@ public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfo
             public void setUserData(ChatPreviewInfo userData) {
                 chatListItemBinding.userCard.setOnClickListener(x -> {
                     Intent intent = new Intent(context, ChatDisplayActivity.class);
-                    intent.putExtra("chatinfo", userData);
+                    intent.putExtra("chatId", userData.getChat().getId());
                     intent.putExtra("token", container.getToken());
                     context.startActivity(intent);
                 });

@@ -1,8 +1,8 @@
 package com.example.bubbleapp;
 
-import com.example.bubbleapp.chatsactivitypack.ChatContent;
 import com.example.bubbleapp.chatsactivitypack.ChatMessage;
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
+import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
 
 import java.util.List;
@@ -15,7 +15,10 @@ public interface DataManager {
 
     public List<ChatPreviewInfo> getContacts(String token);
 
-    public ChatContent getContact(String token, String id);
+    public Chat getContact(String token, String id);
+
+    // Messages
+    public List<ChatMessage> getAllMessages(String chatId);
 
     public boolean sendMessage(String token, Message message);
 

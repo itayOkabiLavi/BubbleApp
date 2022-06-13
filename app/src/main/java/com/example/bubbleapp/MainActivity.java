@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ChatsActivity.class);
             String token = dataManager.login("itay", "itay123");
             intent.putExtra("token", token);
+            intent.putExtra("myId", "itay");
             startActivity(intent);
         });
     }

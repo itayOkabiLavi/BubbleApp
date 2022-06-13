@@ -17,6 +17,7 @@ public class ChatsActivity extends AppCompatActivity {
     private ActivityChatsBinding binding;
     private DataManager dataManager;
     private String token;
+    public static String myName;
     private List<ChatPreviewInfo> chatPreviewInfoList;
     private List<String> chatTitles;
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -33,6 +34,7 @@ public class ChatsActivity extends AppCompatActivity {
         // set token
         if (extras != null) {
             this.token = extras.getString("token");
+            this.myName = extras.getString("userName");
         } else {
             this.token = "";
         }

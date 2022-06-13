@@ -4,11 +4,13 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.bubbleapp.models.Message;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class ChatMessage implements Serializable {
-    private String from, to, text;
+    private String from, to, text, chatId;
     private LocalDateTime time;
     static final String ME = "ME";
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -44,5 +46,9 @@ public class ChatMessage implements Serializable {
 
     public LocalDateTime getTime() {
         return time;
+    }
+
+    public Message getMessage() {
+        return new Message(this.text, this.from, this.to, this.chatId, 0);
     }
 }

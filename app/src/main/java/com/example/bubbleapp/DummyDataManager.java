@@ -7,11 +7,11 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.room.Room;
 
-import com.example.bubbleapp.chatsactivitypack.ChatContent;
 import com.example.bubbleapp.chatsactivitypack.ChatMessage;
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
 import com.example.bubbleapp.database.MyDao;
 import com.example.bubbleapp.database.MyDatabase;
+import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
 
 import java.time.LocalDateTime;
@@ -49,9 +49,9 @@ public class DummyDataManager extends Activity implements DataManager {
                         "pic",
                         "123")
         );
-        this.dummyMessages = new ArrayList<>();
+        dummyMessages = new ArrayList<>();
         dummyMessages.add(
-                new ChatMessage("ME", "mom", "hi")
+                new ChatMessage("ME", "mom", "hi1")
         );
         dummyMessages.add(
                 new ChatMessage("ME", "mom", "bi")
@@ -76,10 +76,13 @@ public class DummyDataManager extends Activity implements DataManager {
     }
 
     @Override
-    public ChatContent getContact(String token, String id) {
-        return new ChatContent(
-                "itay", "mom", this.dummyMessages
-        );
+    public Chat getContact(String token, String id) {
+        return new Chat("itay", "mom");
+    }
+
+    @Override
+    public List<ChatMessage> getAllMessages(String chatId) {
+        return this.dummyMessages;
     }
 
     @Override
