@@ -28,7 +28,7 @@ public class ChatsActivity extends AppCompatActivity {
         this.binding = ActivityChatsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         // set dataManager
-        this.dataManager = new DummyDataManager();
+        this.dataManager = new DummyDataManager(this.getApplicationContext());
         Bundle extras = getIntent().getExtras();
         // set token
         if (extras != null) {

@@ -32,7 +32,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
         this.binding = ActivityChatDisplayBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         // Data manager
-        this.dataManager = new DummyDataManager();
+        this.dataManager = new DummyDataManager(this.getApplicationContext());
         // Extract data received
         Bundle extras = getIntent().getExtras();
         this.token = extras.getString("token");

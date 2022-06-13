@@ -1,6 +1,7 @@
 package com.example.bubbleapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -25,9 +26,11 @@ public class DummyDataManager extends Activity implements DataManager {
     private MyDao myDao;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public DummyDataManager() {
-        myDatabase = Room.databaseBuilder(getApplicationContext(),
-                MyDatabase.class, "myDatabase").build();
+    public DummyDataManager(Context applicationContext) {
+        myDatabase = Room.databaseBuilder(
+                applicationContext,
+                MyDatabase.class,
+                "myDatabase").build();
         myDao = myDatabase.MyDao();
         this.dummyChats = new ArrayList<>();
         dummyChats.add(
@@ -49,6 +52,9 @@ public class DummyDataManager extends Activity implements DataManager {
         this.dummyMessages = new ArrayList<>();
         dummyMessages.add(
                 new ChatMessage("ME", "mom", "hi")
+        );
+        dummyMessages.add(
+                new ChatMessage("ME", "mom", "bi")
         );
     }
 

@@ -4,14 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.time.LocalDateTime;
-
 @Entity
 public class Message {
     @PrimaryKey
     @NonNull
     public String MessageId;
-    public LocalDateTime created;
+    public String created;
     public String content;
     //public File formFile;
     public boolean sent;
@@ -19,16 +17,24 @@ public class Message {
     public String toId;
     public String chatId;
 
-    public Message(String content, String fromId, String toId, int serialNumberInChat) {
+    public Message(String content,
+                   String fromId,
+                   String toId,
+                   String chatId,
+                   int serialNumberInChat) {
         this.content = content;
         this.fromId = fromId;
         this.toId = toId;
-        this.chatId = "Null for now";
+        this.chatId = chatId;
         this.MessageId = generateId(fromId, toId, serialNumberInChat);
     }
 
     public Message() {
-        new Message("Empty", "from no one", "to nobody", -1);
+        new Message("Empty",
+                "from no one",
+                "to nobody",
+                "a>b",
+                -1);
     }
 
     public boolean isSent() {
@@ -57,5 +63,18 @@ public class Message {
 
     public String generateId(String from, String to, int serialNumber) {
         return from + ">" + to + "#" + serialNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "MessageId='" + MessageId + '\'' +
+                ", created='" + created + '\'' +
+                ", content='" + content + '\'' +
+                ", sent=" + sent +
+                ", fromId='" + fromId + '\'' +
+                ", toId='" + toId + '\'' +
+                ", chatId='" + chatId + '\'' +
+                '}';
     }
 }
