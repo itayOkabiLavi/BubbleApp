@@ -8,7 +8,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.bubbleapp.ChatsActivity;
 import com.example.bubbleapp.DataManager;
 import com.example.bubbleapp.DummyDataManager;
 import com.example.bubbleapp.databinding.ActivityChatDisplayBinding;
@@ -21,7 +20,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
     private ActivityChatDisplayBinding binding;
     private String token;
     private DataManager dataManager;
-    private ChatContent chatContent;
+    private String chatAddressee;
     private String chatId;
     private List<Message> messageList;
     private MessageAdapter messageAdapter;
@@ -40,7 +39,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         this.token = extras.getString("token");
         this.chatId = extras.getString("chatId");
-        this.chat = dataManager.getContact(token, ChatsActivity.myName);
+        this.chatAddressee = extras.getString("chatAddressee");
         // Set buttons behaviour
         ImageButton backBtn = binding.chatBackBtn;
         backBtn.setOnClickListener(view -> {
@@ -50,10 +49,11 @@ public class ChatDisplayActivity extends AppCompatActivity {
         ImageButton sendBtn = binding.chatSendBtn;
 
         sendBtn.setOnClickListener(view -> {
+            if (binding.chatInputText.getText().toString().equals("")) return;
             dataManager.sendMessage(
                     token,
                     binding.chatInputText.getText().toString(),
-                    "mom",
+                    chatAddressee,
                     chatId
             );
             messageList.clear();

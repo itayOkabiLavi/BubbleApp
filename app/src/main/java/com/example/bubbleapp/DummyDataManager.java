@@ -102,7 +102,7 @@ public class DummyDataManager extends Activity implements DataManager {
     @Override
     public boolean sendMessage(String token, String content, String to, String chatId) {
         return sendMessage(token,
-                new Message(content, "ME", to, chatId, this.getMessageId())
+                new Message(content, ChatsActivity.myName, to, chatId, this.getMessageId())
                 );
     }
 

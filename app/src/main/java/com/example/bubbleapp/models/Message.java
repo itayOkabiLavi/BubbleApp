@@ -1,15 +1,22 @@
 package com.example.bubbleapp.models;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 public class Message {
     @PrimaryKey
     @NonNull
     public String messageId;
-    public String createdAt;
+    public long creationTime;
     public String content;
     //public File formFile;
     public boolean sent;
@@ -17,6 +24,7 @@ public class Message {
     public String toId;
     public String chatId;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Message(String content,
                    String fromId,
                    String toId,
@@ -27,10 +35,12 @@ public class Message {
         this.toId = toId;
         this.chatId = chatId;
         this.messageId = Integer.toString(id);
+        this.creationTime = System.currentTimeMillis();
     }
 
     public void setMessageId(String id) { this.messageId = id; }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Message() {
         new Message("Empty",
                 "from no one",
@@ -76,8 +86,11 @@ public class Message {
         return chatId;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public LocalDateTime getCreationTime() {
+        return Instant.ofEpochMilli(creationTime)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
     }
 
     public String generateId(String from, String to, int serialNumber) {
@@ -88,7 +101,7 @@ public class Message {
     public String toString() {
         return "Message{" +
                 "MessageId='" + messageId + '\'' +
-                ", created='" + createdAt + '\'' +
+                ", created='" + creationTime + '\'' +
                 ", content='" + content + '\'' +
                 ", sent=" + sent +
                 ", fromId='" + fromId + '\'' +

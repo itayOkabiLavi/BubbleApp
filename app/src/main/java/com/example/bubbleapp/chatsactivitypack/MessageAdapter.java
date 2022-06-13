@@ -1,19 +1,24 @@
 package com.example.bubbleapp.chatsactivitypack;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bubbleapp.databinding.MessageItemBinding;
 import com.example.bubbleapp.models.Message;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
     //private DateTimeFormatter dateTimeFormat;
     private final List<Message> MessageList;
+    private DateTimeFormatter messageTimeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     class MessageViewHolder extends RecyclerView.ViewHolder {
         private MessageItemBinding MessageBinding;
@@ -22,36 +27,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             this.MessageBinding = chatListItemBinding;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         public void setMessageData(Message messageData) {
             MessageBinding.msgText.setText(messageData.getContent());
-            MessageBinding.msgTime.setText(messageData.getCreatedAt());
-            /*
-            MessageBinding.userCard.setOnClickListener(x -> {
-                Intent intent = new Intent(context, ChatDisplayActivity.class);
-                intent.putExtra("chatinfo", userData);
-                intent.putExtra("token", container.getToken());
-                context.startActivity(intent);
-            });
-            chatListItemBinding.userCard.setOnLongClickListener(x -> {
-                new AlertDialog.Builder(context)
-                        .setTitle("Warning")
-                        .setMessage("Delete this chat?")
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        })
-                        .setNegativeButton("Cancel", null)
-                        .show();
-                return false;
-            });
-            chatListItemBinding.userName.setText(userData.getContactName());
-            chatListItemBinding.lastmessageText.setText(userData.getLastMessage());
-            chatListItemBinding.lastmessageTime.setText(userData.getLastMessageDate().toString());
-            //IMAGE
-
-             */
+            MessageBinding.msgTime.setText(messageData.getCreationTime().format(messageTimeFormat));
+            MessageBinding.msgFrom.setText(messageData.fromId);
+            MessageBinding.msgTo.setText(messageData.toId);
         }
     }
 
