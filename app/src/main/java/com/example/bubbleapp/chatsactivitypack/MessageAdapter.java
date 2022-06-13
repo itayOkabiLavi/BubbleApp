@@ -6,26 +6,27 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bubbleapp.databinding.ChatMessageItemBinding;
+import com.example.bubbleapp.databinding.MessageItemBinding;
+import com.example.bubbleapp.models.Message;
 
 import java.util.List;
 
-public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.MessageViewHolder> {
+public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
     //private DateTimeFormatter dateTimeFormat;
-    private final List<ChatMessage> chatMessageList;
+    private final List<Message> MessageList;
 
     class MessageViewHolder extends RecyclerView.ViewHolder {
-        private ChatMessageItemBinding chatMessageBinding;
-        MessageViewHolder(ChatMessageItemBinding chatListItemBinding) {
+        private MessageItemBinding MessageBinding;
+        MessageViewHolder(MessageItemBinding chatListItemBinding) {
             super(chatListItemBinding.getRoot());
-            this.chatMessageBinding = chatListItemBinding;
+            this.MessageBinding = chatListItemBinding;
         }
 
-        public void setMessageData(ChatMessage messageData) {
-            chatMessageBinding.msgText.setText(messageData.getText());
-            chatMessageBinding.msgTime.setText(messageData.getTime().toString());
+        public void setMessageData(Message messageData) {
+            MessageBinding.msgText.setText(messageData.getContent());
+            MessageBinding.msgTime.setText(messageData.getCreatedAt());
             /*
-            chatMessageBinding.userCard.setOnClickListener(x -> {
+            MessageBinding.userCard.setOnClickListener(x -> {
                 Intent intent = new Intent(context, ChatDisplayActivity.class);
                 intent.putExtra("chatinfo", userData);
                 intent.putExtra("token", container.getToken());
@@ -54,29 +55,30 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
         }
     }
 
-    public ChatMessageAdapter(List<ChatMessage> messageList) {
-        this.chatMessageList = messageList;
+    public MessageAdapter(List<Message> messageList) {
+        this.MessageList = messageList;
     }
 
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ChatMessageItemBinding chatMessageItemBinding = ChatMessageItemBinding.inflate(
-                LayoutInflater.from(parent.getContext()),
-                parent,
-                false
-        );
-        return new MessageViewHolder(chatMessageItemBinding);
+        MessageItemBinding MessageItemBinding =
+                com.example.bubbleapp.databinding.MessageItemBinding.inflate(
+                    LayoutInflater.from(parent.getContext()),
+                    parent,
+                    false
+                );
+        return new MessageViewHolder(MessageItemBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
-        holder.setMessageData(chatMessageList.get(position));
+        holder.setMessageData(MessageList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return chatMessageList.size();
+        return MessageList.size();
     }
 
 }

@@ -1,6 +1,5 @@
 package com.example.bubbleapp;
 
-import com.example.bubbleapp.chatsactivitypack.ChatMessage;
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
 import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
@@ -18,9 +17,12 @@ public interface DataManager {
     public Chat getContact(String token, String id);
 
     // Messages
-    public List<ChatMessage> getAllMessages(String chatId);
+    public void setMessagesList(List<Message> messageList);
+    public void setMessagesList(String chatId);
+
+    public List<Message> getAllMessages(String chatId);
 
     public boolean sendMessage(String token, Message message);
 
-    public ChatMessage getMessage();
+    public Message getMessage(String id);
 }

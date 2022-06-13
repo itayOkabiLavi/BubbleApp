@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey;
 public class Message {
     @PrimaryKey
     @NonNull
-    public String MessageId;
-    public String created;
+    public String messageId;
+    public String createdAt;
     public String content;
     //public File formFile;
     public boolean sent;
@@ -26,7 +26,7 @@ public class Message {
         this.fromId = fromId;
         this.toId = toId;
         this.chatId = chatId;
-        this.MessageId = generateId(fromId, toId, serialNumberInChat);
+        this.messageId = generateId(fromId, toId, serialNumberInChat);
     }
 
     public Message() {
@@ -61,6 +61,23 @@ public class Message {
         this.toId = toId;
     }
 
+    @NonNull
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getChatId() {
+        return chatId;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
     public String generateId(String from, String to, int serialNumber) {
         return from + ">" + to + "#" + serialNumber;
     }
@@ -68,8 +85,8 @@ public class Message {
     @Override
     public String toString() {
         return "Message{" +
-                "MessageId='" + MessageId + '\'' +
-                ", created='" + created + '\'' +
+                "MessageId='" + messageId + '\'' +
+                ", created='" + createdAt + '\'' +
                 ", content='" + content + '\'' +
                 ", sent=" + sent +
                 ", fromId='" + fromId + '\'' +

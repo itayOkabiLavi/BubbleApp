@@ -7,7 +7,6 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.room.Room;
 
-import com.example.bubbleapp.chatsactivitypack.ChatMessage;
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
 import com.example.bubbleapp.database.MyDao;
 import com.example.bubbleapp.database.MyDatabase;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class DummyDataManager extends Activity implements DataManager {
     private List<ChatPreviewInfo> dummyChats;
-    private List<ChatMessage> dummyMessages;
+    private List<Message> dummyMessages;
     private MyDatabase myDatabase;
     private MyDao myDao;
 
@@ -30,7 +29,7 @@ public class DummyDataManager extends Activity implements DataManager {
         myDatabase = Room.databaseBuilder(
                 applicationContext,
                 MyDatabase.class,
-                "myDatabase").build();
+                "myDatabase").allowMainThreadQueries().build();
         myDao = myDatabase.MyDao();
         this.dummyChats = new ArrayList<>();
         dummyChats.add(
@@ -51,10 +50,10 @@ public class DummyDataManager extends Activity implements DataManager {
         );
         dummyMessages = new ArrayList<>();
         dummyMessages.add(
-                new ChatMessage("ME", "mom", "hi1")
+                new Message("hi mom", "ME", "mom", "?", -1)
         );
         dummyMessages.add(
-                new ChatMessage("ME", "mom", "bi")
+                new Message("hi itay", "ME", "mom", "?", -1)
         );
     }
 
@@ -81,19 +80,29 @@ public class DummyDataManager extends Activity implements DataManager {
     }
 
     @Override
-    public List<ChatMessage> getAllMessages(String chatId) {
+    public void setMessagesList(List<Message> messageList) {
+        this.dummyMessages = messageList;
+    }
+
+    @Override
+    public void setMessagesList(String chatId) {
+        this.dummyMessages = myDao.getAllMessages(chatId);
+    }
+
+    @Override
+    public List<Message> getAllMessages(String chatId) {
         return this.dummyMessages;
     }
 
     @Override
     public boolean sendMessage(String token, Message message) {
-        myDao.insertMessage(message);
+        myDao.insertMessages(message);
         return true;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public ChatMessage getMessage() {
-        return new ChatMessage("fromMe", "to", "stuff");
+    public Message getMessage(String id) {
+        return new Message("content", "from", "to", "no chat", -1);
     }
+
 }

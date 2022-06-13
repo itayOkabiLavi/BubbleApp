@@ -27,10 +27,19 @@ public interface MyDao {
     @Insert
     void insertUsers(User... users);
 
-    @Insert
-    void insertMessage(Message... messages);
     @Delete
     void deleteUsers(User user);
 
+    // MESSAGES
+    @Query("SELECT * FROM message ")
+    List<Message> getAllMessages();
 
+    @Query("SELECT * FROM message WHERE chatId = :chatId")
+    List<Message> getAllMessages(String chatId);
+
+    @Query("SELECT * FROM message WHERE messageId = :id")
+    Message getMessage(String id);
+
+    @Insert
+    void insertMessages(Message... messages);
 }
