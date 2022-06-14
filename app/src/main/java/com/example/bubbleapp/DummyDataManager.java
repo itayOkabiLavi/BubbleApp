@@ -7,11 +7,15 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.room.Room;
 
+import com.example.bubbleapp.api.ChatsAPI;
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
 import com.example.bubbleapp.database.MyDao;
 import com.example.bubbleapp.database.MyDatabase;
 import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,12 +26,14 @@ public class DummyDataManager extends Activity implements DataManager {
     private List<ChatPreviewInfo> dummyChats;
     private MyDatabase myDatabase;
     private MyDao myDao;
+    private ChatsAPI chatsAPI;
     // TODO: add firebase
     // TODO: add relevant methods for firebase
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public DummyDataManager(Context applicationContext) {
+        chatsAPI = new ChatsAPI();
         myDatabase = Room.databaseBuilder(
                 applicationContext,
                 MyDatabase.class,
@@ -75,12 +81,15 @@ public class DummyDataManager extends Activity implements DataManager {
     }
 
     private void setRelevantCache() {
+         updateChats(MyApplication.token);
         // clear cache
         // update chats
         // update messages
     }
 
     private void updateChats(String token) {
+        JSONArray jo =chatsAPI.getContacts(token);
+        //myDao.insertUsers();
         // TODO: get contacts of current user from server
     }
 
@@ -115,7 +124,7 @@ public class DummyDataManager extends Activity implements DataManager {
     public boolean sendMessage(String token, String content, String to, String chatId) {
         return sendMessage(token,
                 new Message(content, ChatsActivity.myName, to, chatId)
-                );
+        );
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

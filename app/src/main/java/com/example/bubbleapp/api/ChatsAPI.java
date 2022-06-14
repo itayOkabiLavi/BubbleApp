@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.example.bubbleapp.MyApplication;
 import com.example.bubbleapp.R;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 
@@ -36,7 +37,22 @@ public class ChatsAPI {
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }
-
+    public JSONArray getContacts(String token){
+        final JSONArray[] res = new JSONArray[1];
+        Call<ResponseBody> call = webServiceAPI.getContacts("Bearer "+token);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> result = executorService.submit(() -> {
+            Response<ResponseBody> response = call.execute();
+            assert response.body() != null;
+            return response.body().string();
+        });
+        try {
+            res[0] = new JSONArray(result.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res[0];
+    }
     public JSONObject login(String name, String password) {
         final JSONObject[] res = new JSONObject[1];
         MultipartBody loginBody = new MultipartBody.Builder()

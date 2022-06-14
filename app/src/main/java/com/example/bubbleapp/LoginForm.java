@@ -1,10 +1,12 @@
 package com.example.bubbleapp;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
@@ -17,15 +19,17 @@ import org.json.JSONObject;
 
 public class LoginForm extends AppCompatActivity {
     private ActivityLoginFormBinding binding;
+    private DataManager dataManager;
     Button loginBtn;
     EditText name;
     EditText password;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ChatsAPI chatsAPI = new ChatsAPI();
-
+        dataManager=new DummyDataManager(this);
         binding = ActivityLoginFormBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         loginBtn = binding.loginBtn;
@@ -34,6 +38,12 @@ public class LoginForm extends AppCompatActivity {
 
         loginBtn.setOnClickListener(view -> {
             JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString());
+            try {
+                MyApplication.setToken(userInfo.getString("token"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            dataManager.login(name.getText().toString(), password.getText().toString());
             Intent intent = new Intent(this, ChatsActivity.class);
             try {
                 JSONObject user = userInfo.getJSONObject("user");
