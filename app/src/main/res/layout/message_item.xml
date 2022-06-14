@@ -10,7 +10,8 @@
         android:id="@+id/msg_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxWidth="200dp"
+        android:layout_alignParentRight="false"
+        android:maxWidth="240dp"
         android:padding="10dp"
         app:cardBackgroundColor="#4CAF50">
 
@@ -33,17 +34,6 @@
                 android:layout_height="wrap_content"
                 android:text="TextView" />
 
-            <TextView
-                android:id="@+id/msg_from"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/msg_to"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

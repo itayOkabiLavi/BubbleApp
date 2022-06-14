@@ -13,9 +13,9 @@ import java.time.ZoneId;
 
 @Entity
 public class Message {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
-    public String messageId;
+    public int messageId;
     public long creationTime;
     public String content;
     //public File formFile;
@@ -28,25 +28,22 @@ public class Message {
     public Message(String content,
                    String fromId,
                    String toId,
-                   String chatId,
-                   int id) {
+                   String chatId) {
         this.content = content;
         this.fromId = fromId;
         this.toId = toId;
         this.chatId = chatId;
-        this.messageId = Integer.toString(id);
         this.creationTime = System.currentTimeMillis();
     }
 
-    public void setMessageId(String id) { this.messageId = id; }
+    public void changeMessageId(int id) { this.messageId = id; }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Message() {
         new Message("Empty",
                 "from no one",
                 "to nobody",
-                "a>b",
-                -1);
+                "a>b");
     }
 
     public boolean isSent() {
@@ -74,7 +71,7 @@ public class Message {
     }
 
     @NonNull
-    public String getMessageId() {
+    public int getMessageId() {
         return messageId;
     }
 
@@ -91,10 +88,6 @@ public class Message {
         return Instant.ofEpochMilli(creationTime)
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
-    }
-
-    public String generateId(String from, String to, int serialNumber) {
-        return from + ">" + to + "#" + serialNumber;
     }
 
     @Override

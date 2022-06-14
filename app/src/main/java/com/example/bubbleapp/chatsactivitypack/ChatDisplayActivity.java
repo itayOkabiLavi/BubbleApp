@@ -59,10 +59,10 @@ public class ChatDisplayActivity extends AppCompatActivity {
             messageList.clear();
             messageList.addAll(dataManager.getAllMessages(chatId));
             messageAdapter.notifyDataSetChanged();
+            binding.chatInputText.setText("");
         });
 
         // set chats list
-        dataManager.setMessagesList(chatId);
         this.messageList = dataManager.getAllMessages(chatId);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);

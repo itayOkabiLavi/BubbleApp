@@ -19,9 +19,6 @@ public interface DataManager {
     public Chat getContact(String token, String id);
 
     // Messages
-    public void setMessagesList(List<Message> messageList);
-    public void setMessagesList(String chatId);
-
     public List<Message> getAllMessages(String chatId);
 
     public boolean sendMessage(String token, Message message);
