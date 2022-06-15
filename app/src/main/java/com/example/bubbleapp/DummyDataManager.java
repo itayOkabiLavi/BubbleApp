@@ -13,8 +13,11 @@ import com.example.bubbleapp.database.MyDao;
 import com.example.bubbleapp.database.MyDatabase;
 import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
+import com.example.bubbleapp.models.User;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
@@ -81,15 +84,21 @@ public class DummyDataManager extends Activity implements DataManager {
     }
 
     private void setRelevantCache() {
-         updateChats(MyApplication.token);
+        updateChats(MyApplication.token);
         // clear cache
         // update chats
         // update messages
     }
 
     private void updateChats(String token) {
-        JSONArray jo =chatsAPI.getContacts(token);
-        //myDao.insertUsers();
+        JSONArray jsonArray = chatsAPI.getContacts(token);
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                myDao.insertUsers(new Gson().fromJson(jsonArray.getString(i), User.class));
+            } catch (JSONException e) {
+                break;
+            }
+        }
         // TODO: get contacts of current user from server
     }
 
