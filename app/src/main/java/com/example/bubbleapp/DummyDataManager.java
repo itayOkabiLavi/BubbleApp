@@ -99,10 +99,23 @@ public class DummyDataManager extends Activity implements DataManager {
                 break;
             }
         }
+        List<User> users = myDao.getAllUsers();
+        for (int i = 0; i < users.size(); i++) {
+            jsonArray = chatsAPI.getMessages(token, users.get(i).id);
+            for (int j = 0; j < jsonArray.length(); j++) {
+                try {
+                    myDao.insertMessages(new Gson().fromJson(jsonArray.getString(j), Message.class));
+                } catch (JSONException e) {
+                    break;
+                }
+            }
+        }
         // TODO: get contacts of current user from server
     }
 
-    private void updateMessage(String token, String chatId) {
+    private void updateMessage(String token, String contactId) {
+        JSONArray jsonArray = chatsAPI.getMessages(token, contactId);
+
         // TODO: get messages of chat from server
     }
 

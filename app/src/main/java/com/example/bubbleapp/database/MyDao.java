@@ -3,6 +3,7 @@ package com.example.bubbleapp.database;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.bubbleapp.models.Message;
@@ -25,7 +26,7 @@ public interface MyDao {
     @Query("SELECT * FROM user WHERE name = :name")
     User getUserByName(String name);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUsers(User... users);
 
     @Delete
@@ -41,6 +42,6 @@ public interface MyDao {
     @Query("SELECT * FROM message WHERE messageId = :id")
     Message getMessage(String id);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMessages(Message... messages);
 }

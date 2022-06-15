@@ -37,9 +37,10 @@ public class ChatsAPI {
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }
-    public JSONArray getContacts(String token){
+
+    public JSONArray getContacts(String token) {
         final JSONArray[] res = new JSONArray[1];
-        Call<ResponseBody> call = webServiceAPI.getContacts("Bearer "+token);
+        Call<ResponseBody> call = webServiceAPI.getContacts("Bearer " + token);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<String> result = executorService.submit(() -> {
             Response<ResponseBody> response = call.execute();
@@ -53,6 +54,24 @@ public class ChatsAPI {
         }
         return res[0];
     }
+
+    public JSONArray getMessages(String token, String contactId) {
+        final JSONArray[] res = new JSONArray[1];
+        Call<ResponseBody> call = webServiceAPI.getMessages("Bearer " + token, contactId);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> result = executorService.submit(() -> {
+            Response<ResponseBody> response = call.execute();
+            assert response.body() != null;
+            return response.body().string();
+        });
+        try {
+            res[0] = new JSONArray(result.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res[0];
+    }
+
     public JSONObject login(String name, String password) {
         final JSONObject[] res = new JSONObject[1];
         MultipartBody loginBody = new MultipartBody.Builder()
