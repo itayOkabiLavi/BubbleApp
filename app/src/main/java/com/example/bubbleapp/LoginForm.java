@@ -13,6 +13,7 @@ import androidx.room.Room;
 import com.example.bubbleapp.api.ChatsAPI;
 import com.example.bubbleapp.database.MyDatabase;
 import com.example.bubbleapp.databinding.ActivityLoginFormBinding;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +29,10 @@ public class LoginForm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(LoginForm.this, instanceIdResult -> {
+            String fbToken = instanceIdResult.getToken();
+            MyApplication.setBfToken(fbToken);
+        });
         ChatsAPI chatsAPI = new ChatsAPI();
         dataManager=new DummyDataManager(this);
         binding = ActivityLoginFormBinding.inflate(getLayoutInflater());
@@ -37,7 +42,7 @@ public class LoginForm extends AppCompatActivity {
         password = binding.password;
 
         loginBtn.setOnClickListener(view -> {
-            JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString());
+            JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString(),MyApplication.bfToken);
             try {
                 MyApplication.setToken(userInfo.getString("token"));
             } catch (JSONException e) {

@@ -72,12 +72,13 @@ public class ChatsAPI {
         return res[0];
     }
 
-    public JSONObject login(String name, String password) {
+    public JSONObject login(String name, String password,String androidToken) {
         final JSONObject[] res = new JSONObject[1];
         MultipartBody loginBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("name", name)
                 .addFormDataPart("password", password)
+                .addFormDataPart("androidToken", androidToken)
                 .build();
         Call<ResponseBody> call = webServiceAPI.login(loginBody);
         ExecutorService executorService = Executors.newSingleThreadExecutor();

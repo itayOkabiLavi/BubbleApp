@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfoAdapter;
 import com.example.bubbleapp.databinding.ActivityChatsBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.List;
 
@@ -26,7 +29,10 @@ public class ChatsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("ready...");
         super.onCreate(savedInstanceState);
-
+        /*FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ChatsActivity.this, instanceIdResult -> {
+            String fbToken = instanceIdResult.getToken();
+            MyApplication.setBfToken(fbToken);
+        });*/
 
 
         // set binding

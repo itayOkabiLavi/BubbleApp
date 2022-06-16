@@ -6,6 +6,12 @@ import android.content.Context;
 public class MyApplication extends Application {
     public static Context context;
     public static String token;
+    public static String bfToken;
+
+    public static void setBfToken(String bfToken) {
+        MyApplication.bfToken = bfToken;
+    }
+
 
     public static void setToken(String token) {
         MyApplication.token = token;
