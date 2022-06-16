@@ -41,7 +41,7 @@ public class ChatsActivity extends AppCompatActivity {
 
         // set dataManager
         this.dataManager = new DummyDataManager(this.getApplicationContext());
-        dataManager.clearCache();
+        //dataManager.clearCache();
 
         // set chats list - may be in login
         this.chatPreviewInfoList = dataManager.getContacts(token);

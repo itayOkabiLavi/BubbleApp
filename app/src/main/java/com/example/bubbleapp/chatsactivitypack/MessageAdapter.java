@@ -31,7 +31,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public void setMessageData(Message messageData) {
             MessageBinding.msgText.setText(messageData.getContent());
             MessageBinding.msgTime.setText(messageData.getCreationTime().format(messageTimeFormat));
-
+            MessageBinding.msgChatID.setText(Integer.toString(messageData.getChatId()));
         }
     }
 

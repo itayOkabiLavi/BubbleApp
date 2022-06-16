@@ -83,9 +83,16 @@ public class DummyDataManager extends Activity implements DataManager {
         this.myDao.insertChats(chat);
     }
 
+
+
     @Override
-    public List<Message> getAllMessages(String chatId) {
+    public List<Message> getAllMessages(int chatId) {
         return myDao.getAllMessages(chatId);
+    }
+
+
+    public List<Message> getAllMessages() {
+        return myDao.getAllMessages();
     }
 
     @Override
@@ -97,7 +104,7 @@ public class DummyDataManager extends Activity implements DataManager {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public boolean sendMessage(String token, String content, String to, String chatId) {
+    public boolean sendMessage(String token, String content, String to, int chatId) {
         return sendMessage(token,
                 new Message(content, ChatsActivity.myName, to, chatId)
                 );
@@ -106,6 +113,6 @@ public class DummyDataManager extends Activity implements DataManager {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public Message getMessage(String id) {
-        return new Message("content", "from", "to", "no chat");
+        return null;
     }
 }

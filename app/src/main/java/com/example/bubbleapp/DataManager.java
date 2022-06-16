@@ -19,10 +19,11 @@ public interface DataManager {
     public void addContact(Chat chat);
 
     // Messages
-    public List<Message> getAllMessages(String chatId);
+    public List<Message> getAllMessages();
+    public List<Message> getAllMessages(int chatId);
 
     public boolean sendMessage(String token, Message message);
-    public boolean sendMessage(String token, String content, String to, String chatId);
+    public boolean sendMessage(String token, String content, String to, int chatId);
 
     public Message getMessage(String id);
 }

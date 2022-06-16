@@ -23,7 +23,7 @@ public interface MyDao {
     List<Message> getAllMessages();
 
     @Query("SELECT * FROM message WHERE chatId = :chatId")
-    List<Message> getAllMessages(String chatId);
+    List<Message> getAllMessages(int chatId);
 
     @Query("SELECT * FROM message WHERE messageId = :id")
     Message getMessage(String id);
