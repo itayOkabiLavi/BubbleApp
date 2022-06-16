@@ -13,10 +13,10 @@ public interface DataManager {
     public String login(String name, String password);
 
     public String register(String name, String nickname, String password) ;
-
+    // Contacts
     public List<ChatPreviewInfo> getContacts(String token);
 
-    public Chat getContact(String token, String id);
+    public void addContact(Chat chat);
 
     // Messages
     public List<Message> getAllMessages(String chatId);

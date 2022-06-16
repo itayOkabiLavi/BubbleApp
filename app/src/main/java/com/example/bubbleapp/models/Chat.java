@@ -6,32 +6,32 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Chat {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
-    public String id;
-    public String participant1, participant2;
+    public int id;
+    public String contactName;
+    public String server;
+    public String image;
 
-
-    public Chat(String participant1, String participant2) {
-        this.participant1 = participant1;
-        this.participant2 = participant2;
-        id += participant1 + "&" + participant2 + "&";
+    public Chat(String contactName, String server, String image) {
+        this.contactName = contactName;
+        this.server = server;
+        this.image = image;
     }
 
-    @NonNull
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public String getParticipant1() {
-        return participant1;
+    public String getContactName() {
+        return contactName;
     }
 
-    public String getParticipant2() {
-        return participant2;
+    public String getServer() {
+        return server;
     }
 
-
-    //TODO: fix
-    //public List<Message> messages;
+    public String getImage() {
+        return image;
+    }
 }

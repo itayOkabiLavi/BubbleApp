@@ -13,7 +13,6 @@ import com.example.bubbleapp.database.MyDatabase;
 import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,23 +32,6 @@ public class DummyDataManager extends Activity implements DataManager {
                 MyDatabase.class,
                 "myDatabase").allowMainThreadQueries().build();
         myDao = myDatabase.MyDao();
-        this.dummyChats = new ArrayList<>();
-        dummyChats.add(
-                new ChatPreviewInfo(
-                        "Itay",
-                        "hey there",
-                        LocalDateTime.now(),
-                        "pic",
-                        "123")
-        );
-        dummyChats.add(
-                new ChatPreviewInfo(
-                        "Nadav",
-                        "hey there!!",
-                        LocalDateTime.now(),
-                        "pic",
-                        "123")
-        );
     }
 
     @Override
@@ -90,12 +72,15 @@ public class DummyDataManager extends Activity implements DataManager {
 
     @Override
     public List<ChatPreviewInfo> getContacts(String token) {
-        return dummyChats;
+        List<Chat> chats = myDao.getAllContacts();
+        List<ChatPreviewInfo> chatPreviewInfoList = new ArrayList<>();
+        for (Chat c : chats) chatPreviewInfoList.add(new ChatPreviewInfo(c));
+        return chatPreviewInfoList;
     }
 
     @Override
-    public Chat getContact(String token, String id) {
-        return new Chat("itay", "mom");
+    public void addContact(Chat chat) {
+        this.myDao.insertChats(chat);
     }
 
     @Override
@@ -122,11 +107,5 @@ public class DummyDataManager extends Activity implements DataManager {
     @Override
     public Message getMessage(String id) {
         return new Message("content", "from", "to", "no chat");
-    }
-
-    public int getMessageId() {
-        int temp = ChatsActivity.nextMessageIndex;
-        ChatsActivity.nextMessageIndex += 1;
-        return temp;
     }
 }
