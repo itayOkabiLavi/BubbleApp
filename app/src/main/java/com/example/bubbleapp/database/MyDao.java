@@ -1,47 +1,33 @@
 package com.example.bubbleapp.database;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
-import com.example.bubbleapp.models.User;
 
 import java.util.List;
 
 @Dao
 public interface MyDao {
+    // CHATS
+    @Query("SELECT * FROM chat")
+    List<Chat> getAllContacts();
 
-    @Query("SELECT * FROM user")
-    List<User> getAllUsers();
-/*
-    @Query("")
-    List<User> loadAllByIds(int[] userIds);
-*/
-    @Query("SELECT * FROM user WHERE id = :id")
-    User getUserById(String id);
-
-    @Query("SELECT * FROM user WHERE name = :name")
-    User getUserByName(String name);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertUsers(User... users);
-
-    @Delete
-    void deleteUsers(User user);
+    @Insert
+    void insertChats(Chat... chats);
 
     // MESSAGES
     @Query("SELECT * FROM message ")
     List<Message> getAllMessages();
 
     @Query("SELECT * FROM message WHERE chatId = :chatId")
-    List<Message> getAllMessages(String chatId);
+    List<Message> getAllMessages(int chatId);
 
     @Query("SELECT * FROM message WHERE messageId = :id")
     Message getMessage(String id);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     void insertMessages(Message... messages);
 }

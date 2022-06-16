@@ -22,13 +22,13 @@ public class Message {
     public boolean sent;
     public String fromId;
     public String toId;
-    public String chatId;
+    public int chatId;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Message(String content,
                    String fromId,
                    String toId,
-                   String chatId) {
+                   int chatId) {
         this.content = content;
         this.fromId = fromId;
         this.toId = toId;
@@ -43,7 +43,7 @@ public class Message {
         new Message("Empty",
                 "from no one",
                 "to nobody",
-                "a>b");
+                -1);
     }
 
     public boolean isSent() {
@@ -79,7 +79,7 @@ public class Message {
         return content;
     }
 
-    public String getChatId() {
+    public int getChatId() {
         return chatId;
     }
 
