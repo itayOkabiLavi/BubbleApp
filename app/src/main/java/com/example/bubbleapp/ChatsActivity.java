@@ -65,7 +65,7 @@ public class ChatsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String name = input.getText().toString();
-                    dataManager.addContact(new Chat(name, "dummy", "dummyImg"));
+                    dataManager.addContact(new Chat(name, "localhost:7135", "dummyImg"));
                     chatPreviewInfoList.clear();
                     chatPreviewInfoList.addAll(dataManager.getContacts(token));
                     chatPreviewInfoAdapter.notifyDataSetChanged();

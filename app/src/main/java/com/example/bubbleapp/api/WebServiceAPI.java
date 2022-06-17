@@ -27,5 +27,8 @@ public interface WebServiceAPI {
     Call<ResponseBody> getUser(@Header("Authorization") String token);
 
     @POST("Contacts/{id}/messages")
-    Call<ResponseBody> sendMessage(@Header("Authorization") String token,@Path("id") String id,@Body MultipartBody multipartBody);
+    Call<ResponseBody> sendMessage(@Header("Authorization") String token, @Path("id") String id, @Body MultipartBody multipartBody);
+
+    @POST("Contacts")
+    Call<ResponseBody> addContact(@Header("Authorization") String token, @Body MultipartBody multipartBody);
 }

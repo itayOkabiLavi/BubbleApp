@@ -118,6 +118,7 @@ public class DummyDataManager extends Activity implements DataManager {
 
     @Override
     public void addContact(Chat chat) {
+        chatsAPI.addContact(chat);
         this.myDao.insertChats(chat);
     }
 

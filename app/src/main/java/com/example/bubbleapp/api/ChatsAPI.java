@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.example.bubbleapp.MyApplication;
 import com.example.bubbleapp.R;
+import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
 
 import org.json.JSONArray;
@@ -119,8 +120,7 @@ public class ChatsAPI {
         return res[0];
     }
 
-    public JSONObject sendMessage(Message message) {
-        final JSONObject[] res = new JSONObject[1];
+    public void sendMessage(Message message) {
         MultipartBody sendMessageBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("id", message.toId)
@@ -129,17 +129,11 @@ public class ChatsAPI {
                 .build();
         Call<ResponseBody> call = webServiceAPI.sendMessage("Bearer " + MyApplication.token, message.toId, sendMessageBody);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-        Future<String> result = executorService.submit(() -> {
+        executorService.submit(() -> {
             Response<ResponseBody> response = call.execute();
             assert response.body() != null;
             return response.body().string();
         });
-        try {
-            res[0] = new JSONObject(result.get());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return res[0];
     }
 
     public JSONArray getUser(String token) {
@@ -160,6 +154,21 @@ public class ChatsAPI {
     }
 
 
+    public void addContact(Chat chat) {
+        MultipartBody addContactBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("id", chat.contactName)
+                .addFormDataPart("name", chat.contactName)
+                .addFormDataPart("server", chat.server)
+                .build();
+        Call<ResponseBody> call = webServiceAPI.addContact("Bearer " + MyApplication.token, addContactBody);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(() -> {
+            Response<ResponseBody> response = call.execute();
+            assert response.body() != null;
+            return response.body().string();
+        });
+    }
 }
 
 
