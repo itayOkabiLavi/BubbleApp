@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.bubbleapp.DataManager;
 import com.example.bubbleapp.DummyDataManager;
+import com.example.bubbleapp.MyApplication;
 import com.example.bubbleapp.databinding.ActivityChatDisplayBinding;
 import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class ChatDisplayActivity extends AppCompatActivity {
     private ActivityChatDisplayBinding binding;
-    private String token;
+    //private String token;
     private String server;
     private DataManager dataManager;
     private String chatAddressee;
@@ -38,7 +39,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
         this.dataManager = new DummyDataManager(this.getApplicationContext());
         // Extract data received
         Bundle extras = getIntent().getExtras();
-        this.token = extras.getString("token");
+        //this.token = extras.getString("token");
         this.server = extras.getString("server");
         this.chatId = extras.getString("chatId");
         this.chatAddressee = extras.getString("chatAddressee");
@@ -52,7 +53,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
         binding.chatSendBtn.setOnClickListener(view -> {
             if (binding.chatInputText.getText().toString().equals("")) return;
             dataManager.sendMessage(
-                    token,
+                    MyApplication.token,
                     binding.chatInputText.getText().toString(),
                     chatAddressee,
                     server,

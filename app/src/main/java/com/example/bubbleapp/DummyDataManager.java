@@ -53,17 +53,17 @@ public class DummyDataManager extends Activity implements DataManager {
     @Override
     public String login(String name, String password) {
         // TODO: send login to server
-        String token = "dummytoken";
+        //String token = "dummytoken";
         setRelevantCache();
-        return token;
+        return "";
     }
 
     @Override
     public String register(String name, String nickname, String password) {
         // TODO: send register to server
-        String token = "dummytoken";
+        //String token = "dummytoken";
         setRelevantCache();
-        return token;
+        return "";
     }
 
     private void setRelevantCache() {
@@ -147,7 +147,7 @@ public class DummyDataManager extends Activity implements DataManager {
         String time = LocalDateTime.now().toString();
         String msgId = MyApplication.user.id + "," + to + "," + server + "," + time + "," + content;
         return sendMessage(token,
-                new Message(msgId, content, ChatsActivity.myName, to, chatId, time)
+                new Message(msgId, content, MyApplication.user.name, to, chatId, time)
         );
     }
 

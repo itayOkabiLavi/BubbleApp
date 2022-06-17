@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bubbleapp.ChatsActivity;
+import com.example.bubbleapp.MyApplication;
 import com.example.bubbleapp.databinding.ChatListItemBinding;
 
 import java.util.List;
@@ -39,7 +40,6 @@ public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfo
                 intent.putExtra("server", userData.getChat().getServer());
                 intent.putExtra("chatId", userData.getChat().getContactName());
                 intent.putExtra("chatAddressee", userData.getChat().getContactName());
-                intent.putExtra("token", container.getToken());
                 context.startActivity(intent);
             });
             chatListItemBinding.userCard.setOnLongClickListener(x -> {

@@ -53,27 +53,8 @@ public class LoginForm extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            dataManager.login(name.getText().toString(), password.getText().toString());
+            dataManager.login("", "");
             Intent intent = new Intent(this, ChatsActivity.class);
-            try {
-                JSONObject user = userInfo.getJSONObject("user");
-                intent.putExtra("token", userInfo.getString("token"));
-                intent.putExtra("id", user.getString("id"));
-                intent.putExtra("name", user.getString("name"));
-                intent.putExtra("server", user.getString("server"));
-                intent.putExtra("last", user.getString("last"));
-                intent.putExtra("lastType", user.getString("lastType"));
-                try {
-                    intent.putExtra("lastDate", user.getJSONObject("lastDate").toString());
-                } catch (Exception ignored) {
-                }
-                intent.putExtra("userMessages", user.getJSONArray("userMessages").toString());
-                intent.putExtra("profileImg", user.getJSONObject("profileImg").toString());
-                MyDatabase db = Room.databaseBuilder(getApplicationContext(),
-                        MyDatabase.class, "myDatabase").build();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
             startActivity(intent);
         });
     }
