@@ -22,4 +22,10 @@ public interface WebServiceAPI {
 
     @GET("Contacts/{id}/messages")
     Call<ResponseBody> getMessages(@Header("Authorization") String token, @Path("id") String contactId);
+
+    @GET("Users/getUser")
+    Call<ResponseBody> getUser(@Header("Authorization") String token);
+
+    @POST("Contacts/{id}/messages")
+    Call<ResponseBody> sendMessage(@Header("Authorization") String token,@Path("id") String id,@Body MultipartBody multipartBody);
 }

@@ -13,7 +13,10 @@ import androidx.room.Room;
 import com.example.bubbleapp.api.ChatsAPI;
 import com.example.bubbleapp.database.MyDatabase;
 import com.example.bubbleapp.databinding.ActivityLoginFormBinding;
+import com.example.bubbleapp.models.Message;
+import com.example.bubbleapp.models.User;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +37,7 @@ public class LoginForm extends AppCompatActivity {
             MyApplication.setBfToken(fbToken);
         });
         ChatsAPI chatsAPI = new ChatsAPI();
-        dataManager=new DummyDataManager(this);
+        dataManager = new DummyDataManager(this);
         binding = ActivityLoginFormBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         loginBtn = binding.loginBtn;
@@ -42,9 +45,11 @@ public class LoginForm extends AppCompatActivity {
         password = binding.password;
 
         loginBtn.setOnClickListener(view -> {
-            JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString(),MyApplication.bfToken);
+            JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString(), MyApplication.bfToken);
             try {
                 MyApplication.setToken(userInfo.getString("token"));
+                User user = new Gson().fromJson(String.valueOf(userInfo.getJSONObject("user")), User.class);
+                MyApplication.setUser(user);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -52,17 +57,18 @@ public class LoginForm extends AppCompatActivity {
             Intent intent = new Intent(this, ChatsActivity.class);
             try {
                 JSONObject user = userInfo.getJSONObject("user");
-                intent.putExtra("token",userInfo.getString("token"));
-                intent.putExtra("id",user.getString("id"));
-                intent.putExtra("name",user.getString("name"));
-                intent.putExtra("server",user.getString("server"));
-                intent.putExtra("last",user.getString("last"));
-                intent.putExtra("lastType",user.getString("lastType"));
+                intent.putExtra("token", userInfo.getString("token"));
+                intent.putExtra("id", user.getString("id"));
+                intent.putExtra("name", user.getString("name"));
+                intent.putExtra("server", user.getString("server"));
+                intent.putExtra("last", user.getString("last"));
+                intent.putExtra("lastType", user.getString("lastType"));
                 try {
-                    intent.putExtra("lastDate",user.getJSONObject("lastDate").toString());
-                } catch (Exception ignored) {}
-                intent.putExtra("userMessages",user.getJSONArray("userMessages").toString());
-                intent.putExtra("profileImg",user.getJSONObject("profileImg").toString());
+                    intent.putExtra("lastDate", user.getJSONObject("lastDate").toString());
+                } catch (Exception ignored) {
+                }
+                intent.putExtra("userMessages", user.getJSONArray("userMessages").toString());
+                intent.putExtra("profileImg", user.getJSONObject("profileImg").toString());
                 MyDatabase db = Room.databaseBuilder(getApplicationContext(),
                         MyDatabase.class, "myDatabase").build();
             } catch (JSONException e) {

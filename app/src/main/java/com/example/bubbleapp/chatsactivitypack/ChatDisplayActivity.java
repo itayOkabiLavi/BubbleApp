@@ -19,6 +19,7 @@ import java.util.List;
 public class ChatDisplayActivity extends AppCompatActivity {
     private ActivityChatDisplayBinding binding;
     private String token;
+    private String server;
     private DataManager dataManager;
     private String chatAddressee;
     private String chatId;
@@ -38,6 +39,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
         // Extract data received
         Bundle extras = getIntent().getExtras();
         this.token = extras.getString("token");
+        this.server = extras.getString("server");
         this.chatId = extras.getString("chatId");
         this.chatAddressee = extras.getString("chatAddressee");
         // Set buttons behaviour
@@ -53,6 +55,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
                     token,
                     binding.chatInputText.getText().toString(),
                     chatAddressee,
+                    server,
                     chatId
             );
             messageList.clear();

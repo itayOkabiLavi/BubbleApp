@@ -78,7 +78,7 @@ public class DummyDataManager extends Activity implements DataManager {
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 User user = new Gson().fromJson(jsonArray.getString(i), User.class);
-                Chat chat = new Chat(user.name,user.server,"");
+                Chat chat = new Chat(user.name, user.server, "");
                 myDao.insertChats(chat);
                 myDao.insertUsers(user);
             } catch (JSONException e) {
@@ -91,7 +91,7 @@ public class DummyDataManager extends Activity implements DataManager {
             for (int j = 0; j < jsonArray.length(); j++) {
                 try {
                     Message message = new Gson().fromJson(jsonArray.getString(j), Message.class);
-                    message.chatId=users.get(i).id;
+                    message.chatId = users.get(i).id;
                     myDao.insertMessages(message);
                 } catch (JSONException e) {
                     break;
@@ -122,7 +122,6 @@ public class DummyDataManager extends Activity implements DataManager {
     }
 
 
-
     @Override
     public List<Message> getAllMessages(String chatId) {
         return myDao.getAllMessages(chatId);
@@ -136,15 +135,18 @@ public class DummyDataManager extends Activity implements DataManager {
     @Override
     public boolean sendMessage(String token, Message message) {
         // TODO: send message to server
+        chatsAPI.sendMessage(message);
         myDao.insertMessages(message);
         return true;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public boolean sendMessage(String token, String content, String to, String chatId) {
+    public boolean sendMessage(String token, String content, String to, String server, String chatId) {
+        String time = LocalDateTime.now().toString();
+        String msgId = MyApplication.user.id + "," + to + "," + server + "," + time + "," + content;
         return sendMessage(token,
-                new Message("",content, ChatsActivity.myName, to, chatId,LocalDateTime.now().toString())
+                new Message(msgId, content, ChatsActivity.myName, to, chatId, time)
         );
     }
 

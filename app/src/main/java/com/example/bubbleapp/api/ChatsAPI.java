@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.example.bubbleapp.MyApplication;
 import com.example.bubbleapp.R;
+import com.example.bubbleapp.models.Message;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -72,7 +73,7 @@ public class ChatsAPI {
         return res[0];
     }
 
-    public JSONObject login(String name, String password,String androidToken) {
+    public JSONObject login(String name, String password, String androidToken) {
         final JSONObject[] res = new JSONObject[1];
         MultipartBody loginBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -117,6 +118,47 @@ public class ChatsAPI {
         }
         return res[0];
     }
+
+    public JSONObject sendMessage(Message message) {
+        final JSONObject[] res = new JSONObject[1];
+        MultipartBody sendMessageBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("id", message.toId)
+                .addFormDataPart("content", message.content)
+                //.addFormDataPart("formFile", "null")
+                .build();
+        Call<ResponseBody> call = webServiceAPI.sendMessage("Bearer " + MyApplication.token, message.toId, sendMessageBody);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> result = executorService.submit(() -> {
+            Response<ResponseBody> response = call.execute();
+            assert response.body() != null;
+            return response.body().string();
+        });
+        try {
+            res[0] = new JSONObject(result.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res[0];
+    }
+
+    public JSONArray getUser(String token) {
+        final JSONArray[] res = new JSONArray[1];
+        Call<ResponseBody> call = webServiceAPI.getUser("Bearer " + token);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> result = executorService.submit(() -> {
+            Response<ResponseBody> response = call.execute();
+            assert response.body() != null;
+            return response.body().string();
+        });
+        try {
+            res[0] = new JSONArray(result.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res[0];
+    }
+
 
 }
 

@@ -20,46 +20,48 @@ public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfo
     private final List<ChatPreviewInfo> chatPreviewInfoList;
     private final ChatsActivity container;
 
-        class ContactViewHolder extends RecyclerView.ViewHolder {
-            private ChatListItemBinding chatListItemBinding;
-            private ChatsActivity container;
-            private Context context;
-            ContactViewHolder(ChatListItemBinding chatListItemBinding,
-                              ChatsActivity chatsActivity) {
-                super(chatListItemBinding.getRoot());
-                this.chatListItemBinding = chatListItemBinding;
-                context = chatListItemBinding.getRoot().getContext();
-                this.container = chatsActivity;
-            }
+    class ContactViewHolder extends RecyclerView.ViewHolder {
+        private ChatListItemBinding chatListItemBinding;
+        private ChatsActivity container;
+        private Context context;
 
-            public void setUserData(ChatPreviewInfo userData) {
-                chatListItemBinding.userCard.setOnClickListener(x -> {
-                    Intent intent = new Intent(context, ChatDisplayActivity.class);
-                    intent.putExtra("chatId", userData.getChat().getContactName());
-                    intent.putExtra("chatAddressee", userData.getChat().getContactName());
-                    intent.putExtra("token", container.getToken());
-                    context.startActivity(intent);
-                });
-                chatListItemBinding.userCard.setOnLongClickListener(x -> {
-                    new AlertDialog.Builder(context)
-                            .setTitle("Warning")
-                            .setMessage("Delete this chat?")
-                            .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .setNegativeButton("Cancel", null)
-                            .show();
-                    return false;
-                });
-                chatListItemBinding.userName.setText(userData.getContactName());
-                chatListItemBinding.lastmessageText.setText(userData.getLastMessage());
-                chatListItemBinding.lastmessageTime.setText(userData.getLastMessageDate().toString());
-                //IMAGE
-            }
+        ContactViewHolder(ChatListItemBinding chatListItemBinding,
+                          ChatsActivity chatsActivity) {
+            super(chatListItemBinding.getRoot());
+            this.chatListItemBinding = chatListItemBinding;
+            context = chatListItemBinding.getRoot().getContext();
+            this.container = chatsActivity;
         }
+
+        public void setUserData(ChatPreviewInfo userData) {
+            chatListItemBinding.userCard.setOnClickListener(x -> {
+                Intent intent = new Intent(context, ChatDisplayActivity.class);
+                intent.putExtra("server", userData.getChat().getServer());
+                intent.putExtra("chatId", userData.getChat().getContactName());
+                intent.putExtra("chatAddressee", userData.getChat().getContactName());
+                intent.putExtra("token", container.getToken());
+                context.startActivity(intent);
+            });
+            chatListItemBinding.userCard.setOnLongClickListener(x -> {
+                new AlertDialog.Builder(context)
+                        .setTitle("Warning")
+                        .setMessage("Delete this chat?")
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+                return false;
+            });
+            chatListItemBinding.userName.setText(userData.getContactName());
+            chatListItemBinding.lastmessageText.setText(userData.getLastMessage());
+            chatListItemBinding.lastmessageTime.setText(userData.getLastMessageDate().toString());
+            //IMAGE
+        }
+    }
 
     public ChatPreviewInfoAdapter(ChatsActivity chatsActivity) {
         this.container = chatsActivity;
