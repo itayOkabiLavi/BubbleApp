@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +77,10 @@ public class DummyDataManager extends Activity implements DataManager {
         JSONArray jsonArray = chatsAPI.getContacts(token);
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
-                myDao.insertUsers(new Gson().fromJson(jsonArray.getString(i), User.class));
+                User user = new Gson().fromJson(jsonArray.getString(i), User.class);
+                Chat chat = new Chat(user.name,user.server,"");
+                myDao.insertChats(chat);
+                myDao.insertUsers(user);
             } catch (JSONException e) {
                 break;
             }
@@ -86,7 +90,9 @@ public class DummyDataManager extends Activity implements DataManager {
             jsonArray = chatsAPI.getMessages(token, users.get(i).id);
             for (int j = 0; j < jsonArray.length(); j++) {
                 try {
-                    myDao.insertMessages(new Gson().fromJson(jsonArray.getString(j), Message.class));
+                    Message message = new Gson().fromJson(jsonArray.getString(j), Message.class);
+                    message.chatId=users.get(i).id;
+                    myDao.insertMessages(message);
                 } catch (JSONException e) {
                     break;
                 }
@@ -101,6 +107,7 @@ public class DummyDataManager extends Activity implements DataManager {
         // TODO: get messages of chat from server
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public List<ChatPreviewInfo> getContacts(String token) {
         List<Chat> chats = myDao.getAllContacts();
@@ -117,7 +124,7 @@ public class DummyDataManager extends Activity implements DataManager {
 
 
     @Override
-    public List<Message> getAllMessages(int chatId) {
+    public List<Message> getAllMessages(String chatId) {
         return myDao.getAllMessages(chatId);
     }
 
@@ -135,9 +142,9 @@ public class DummyDataManager extends Activity implements DataManager {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public boolean sendMessage(String token, String content, String to, int chatId) {
+    public boolean sendMessage(String token, String content, String to, String chatId) {
         return sendMessage(token,
-                new Message(content, ChatsActivity.myName, to, chatId)
+                new Message("",content, ChatsActivity.myName, to, chatId,LocalDateTime.now().toString())
         );
     }
 

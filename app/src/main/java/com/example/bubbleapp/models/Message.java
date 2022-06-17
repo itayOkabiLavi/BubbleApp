@@ -13,22 +13,25 @@ import java.time.ZoneId;
 
 @Entity
 public class Message {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @NonNull
-    public int messageId;
+    public String id;
+    public String created;
     public long creationTime;
     public String content;
     //public File formFile;
     public boolean sent;
     public String fromId;
     public String toId;
-    public int chatId;
+    public String chatId;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Message(String content,
+    public Message(@NonNull String id, String content,
                    String fromId,
                    String toId,
-                   int chatId) {
+                   String chatId, String created) {
+        this.id=id;
+        this.created=created;
         this.content = content;
         this.fromId = fromId;
         this.toId = toId;
@@ -36,14 +39,14 @@ public class Message {
         this.creationTime = System.currentTimeMillis();
     }
 
-    public void changeMessageId(int id) { this.messageId = id; }
+    public void changeMessageId(String id) { this.id = id; }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Message() {
-        new Message("Empty",
+        new Message("","Empty",
                 "from no one",
                 "to nobody",
-                -1);
+                "-1","");
     }
 
     public boolean isSent() {
@@ -71,15 +74,15 @@ public class Message {
     }
 
     @NonNull
-    public int getMessageId() {
-        return messageId;
+    public String getMessageId() {
+        return id;
     }
 
     public String getContent() {
         return content;
     }
 
-    public int getChatId() {
+    public String getChatId() {
         return chatId;
     }
 
@@ -90,10 +93,11 @@ public class Message {
                 .toLocalDateTime();
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Message{" +
-                "MessageId='" + messageId + '\'' +
+                "MessageId='" + id + '\'' +
                 ", created='" + creationTime + '\'' +
                 ", content='" + content + '\'' +
                 ", sent=" + sent +

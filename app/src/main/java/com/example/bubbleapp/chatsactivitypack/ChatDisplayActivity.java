@@ -21,7 +21,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
     private String token;
     private DataManager dataManager;
     private String chatAddressee;
-    private int chatId;
+    private String chatId;
     private List<Message> messageList;
     private MessageAdapter messageAdapter;
     private Chat chat;
@@ -38,7 +38,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
         // Extract data received
         Bundle extras = getIntent().getExtras();
         this.token = extras.getString("token");
-        this.chatId = extras.getInt("chatId");
+        this.chatId = extras.getString("chatId");
         this.chatAddressee = extras.getString("chatAddressee");
         // Set buttons behaviour
         ImageButton backBtn = binding.chatBackBtn;
