@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "654013028840",
+    "project_id": "bubbleapp-c2826",
+    "storage_bucket": "bubbleapp-c2826.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654013028840:android:ca32d4acf1090c58f2ac5d",
+        "android_client_info": {
+          "package_name": "com.example.bubbleapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "654013028840-qilftfu105s798de8drgq6tl2biksbe0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlJjAn5rVPZDJWtQvgjQQljLXk6ufPEC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "654013028840-qilftfu105s798de8drgq6tl2biksbe0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
