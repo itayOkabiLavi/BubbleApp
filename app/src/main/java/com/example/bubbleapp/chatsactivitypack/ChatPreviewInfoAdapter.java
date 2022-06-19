@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bubbleapp.ChatsActivity;
-import com.example.bubbleapp.MyApplication;
 import com.example.bubbleapp.databinding.ChatListItemBinding;
 
 import java.util.List;
@@ -35,14 +34,14 @@ public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfo
         }
 
         public void setUserData(ChatPreviewInfo userData) {
-            chatListItemBinding.userCard.setOnClickListener(x -> {
+            chatListItemBinding.chatsCard.setOnClickListener(x -> {
                 Intent intent = new Intent(context, ChatDisplayActivity.class);
                 intent.putExtra("server", userData.getChat().getServer());
                 intent.putExtra("chatId", userData.getChat().getContactName());
                 intent.putExtra("chatAddressee", userData.getChat().getContactName());
                 context.startActivity(intent);
             });
-            chatListItemBinding.userCard.setOnLongClickListener(x -> {
+            chatListItemBinding.chatsCard.setOnLongClickListener(x -> {
                 new AlertDialog.Builder(context)
                         .setTitle("Warning")
                         .setMessage("Delete this chat?")
@@ -58,7 +57,10 @@ public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfo
             });
             chatListItemBinding.userName.setText(userData.getContactName());
             chatListItemBinding.lastmessageText.setText(userData.getLastMessage());
-            chatListItemBinding.lastmessageTime.setText(userData.getLastMessageDate().toString());
+            if (userData.getLastMessageDate() == null)
+                chatListItemBinding.lastmessageTime.setText("");
+            else
+                chatListItemBinding.lastmessageTime.setText(userData.getLastMessageDate().toString());
             //IMAGE
         }
     }

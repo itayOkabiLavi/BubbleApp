@@ -15,13 +15,29 @@ public class MyApplication extends Application {
         MyApplication.user = user;
     }
 
+    public static void setUser() {
+        MyApplication.user = new User("userID",
+                "userName",
+                "userServer",
+                "userLastMessage",
+                "userLastType",
+                "userLastDate");
+    }
+
     public static void setBfToken(String bfToken) {
         MyApplication.bfToken = bfToken;
     }
 
+    public static void setBfToken() {
+        MyApplication.bfToken = "dummyBfToken";
+    }
 
     public static void setToken(String token) {
         MyApplication.token = token;
+    }
+
+    public static void setToken() {
+        MyApplication.token = "dummyToken";
     }
 
     @Override

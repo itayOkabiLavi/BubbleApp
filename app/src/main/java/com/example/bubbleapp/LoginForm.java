@@ -49,6 +49,7 @@ public class LoginForm extends AppCompatActivity {
             try {
                 MyApplication.setToken(userInfo.getString("token"));
                 User user = new Gson().fromJson(String.valueOf(userInfo.getJSONObject("user")), User.class);
+                if (user == null) MyApplication.setUser();
                 MyApplication.setUser(user);
             } catch (JSONException e) {
                 e.printStackTrace();

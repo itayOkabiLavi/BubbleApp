@@ -18,7 +18,6 @@ import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -75,6 +74,10 @@ public class DummyDataManager extends Activity implements DataManager {
 
     private void updateChats(String token) {
         JSONArray jsonArray = chatsAPI.getContacts(token);
+        if (jsonArray == null) {
+            myDatabase.clearAllTables();
+            return;
+        }
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 User user = new Gson().fromJson(jsonArray.getString(i), User.class);

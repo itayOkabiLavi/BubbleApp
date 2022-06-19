@@ -36,13 +36,14 @@ public class ChatsActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         // set token and user-name
-        //this.token = extras.getString("token");
-        //this.myName = extras.getString("myName");
-
+        MyApplication.setUser();
+        MyApplication.setToken();
         // set dataManager
         this.dataManager = new DummyDataManager(this.getApplicationContext());
         //dataManager.clearCache();
 
+        // set title
+        binding.chatsUsername.setText("Hello " + MyApplication.user.name);
         // set chats list - may be in login
         this.chatPreviewInfoList = dataManager.getContacts(MyApplication.token);
 
