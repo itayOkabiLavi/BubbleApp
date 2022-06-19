@@ -83,6 +83,15 @@ public class DummyDataManager extends Activity implements DataManager {
         this.myDao.insertChats(chat);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public ChatPreviewInfo lastMessageUpdate(int chatId, Message message) {
+        Chat chat = myDao.getChat(chatId);
+        ChatPreviewInfo chatPreviewInfo = new ChatPreviewInfo(chat);
+        chatPreviewInfo.setLastMessage(message.getContent());
+        chatPreviewInfo.setLastMessageDate(message.getCreationTime());
+        return chatPreviewInfo;
+    }
 
 
     @Override

@@ -11,9 +11,7 @@ public class ChatPreviewInfo implements Serializable {
     private LocalDateTime lastMessageDate;
     // ALL THE VIEW PARTS ARE DONE IN "CHAT ADAPTER"
     public ChatPreviewInfo(Chat chat) {
-        this.lastMessage = lastMessage;
-        this.lastMessageDate = lastMessageDate;
-        lastMessageDate = LocalDateTime.now();
+        lastMessageDate = null;
         this.chat = chat;
     }
 
@@ -27,6 +25,14 @@ public class ChatPreviewInfo implements Serializable {
 
     public LocalDateTime getLastMessageDate() {
         return lastMessageDate;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
+    public void setLastMessageDate(LocalDateTime lastMessageDate) {
+        this.lastMessageDate = lastMessageDate;
     }
 
     public String getProfilePicture() {

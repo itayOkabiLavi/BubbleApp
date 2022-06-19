@@ -38,6 +38,7 @@ public class ChatsActivity extends AppCompatActivity {
         // set token and user-name
         this.token = extras.getString("token");
         this.myName = extras.getString("myName");
+        binding.chatsUsername.setText(myName);
 
         // set dataManager
         this.dataManager = new DummyDataManager(this.getApplicationContext());

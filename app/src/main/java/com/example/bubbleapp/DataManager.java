@@ -18,6 +18,8 @@ public interface DataManager {
 
     public void addContact(Chat chat);
 
+    public ChatPreviewInfo lastMessageUpdate(int chatId, Message message);
+
     // Messages
     public List<Message> getAllMessages();
     public List<Message> getAllMessages(int chatId);

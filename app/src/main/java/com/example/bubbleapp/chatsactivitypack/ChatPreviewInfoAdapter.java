@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bubbleapp.ChatsActivity;
 import com.example.bubbleapp.databinding.ChatListItemBinding;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfoAdapter.ContactViewHolder> {
@@ -33,14 +34,14 @@ public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfo
             }
 
             public void setUserData(ChatPreviewInfo userData) {
-                chatListItemBinding.userCard.setOnClickListener(x -> {
+                chatListItemBinding.chatsCard.setOnClickListener(x -> {
                     Intent intent = new Intent(context, ChatDisplayActivity.class);
                     intent.putExtra("chatId", userData.getChat().getId());
                     intent.putExtra("chatAddressee", userData.getChat().getContactName());
                     intent.putExtra("token", container.getToken());
                     context.startActivity(intent);
                 });
-                chatListItemBinding.userCard.setOnLongClickListener(x -> {
+                chatListItemBinding.chatsCard.setOnLongClickListener(x -> {
                     new AlertDialog.Builder(context)
                             .setTitle("Warning")
                             .setMessage("Delete this chat?")
@@ -56,7 +57,11 @@ public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfo
                 });
                 chatListItemBinding.userName.setText(userData.getContactName());
                 chatListItemBinding.lastmessageText.setText(userData.getLastMessage());
-                chatListItemBinding.lastmessageTime.setText(userData.getLastMessageDate().toString());
+                LocalDateTime lastMessageDate = userData.getLastMessageDate();
+                if (lastMessageDate == null)
+                    chatListItemBinding.lastmessageTime.setText("");
+                else
+                    chatListItemBinding.lastmessageTime.setText(lastMessageDate.toString());
                 //IMAGE
             }
         }

@@ -1,6 +1,7 @@
 package com.example.bubbleapp.database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -14,6 +15,12 @@ public interface MyDao {
     // CHATS
     @Query("SELECT * FROM chat")
     List<Chat> getAllContacts();
+
+    @Query("SELECT * FROM chat WHERE id = :id")
+    Chat getChat(int id);
+
+    @Delete
+    void deleteChat(Chat... chats);
 
     @Insert
     void insertChats(Chat... chats);

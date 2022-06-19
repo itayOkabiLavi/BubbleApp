@@ -2,12 +2,7 @@ package com.example.bubbleapp.models;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
-import java.io.File;
-import java.util.List;
 @Entity
 //@TypeConverters({FileTypeConvertor.class})
 public class User {
