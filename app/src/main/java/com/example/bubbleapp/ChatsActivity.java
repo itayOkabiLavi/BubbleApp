@@ -20,7 +20,7 @@ import java.util.List;
 public class ChatsActivity extends AppCompatActivity {
     private ActivityChatsBinding binding;
     private DataManager dataManager;
-    private String token;
+    //private String token;
     public static String myName;
     private List<ChatPreviewInfo> chatPreviewInfoList;
     private ChatPreviewInfoAdapter chatPreviewInfoAdapter;
@@ -36,16 +36,15 @@ public class ChatsActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         // set token and user-name
-        this.token = extras.getString("token");
-        this.myName = extras.getString("myName");
-        binding.chatsUsername.setText(myName);
+        //this.token = extras.getString("token");
+        //this.myName = extras.getString("myName");
 
         // set dataManager
         this.dataManager = new DummyDataManager(this.getApplicationContext());
         //dataManager.clearCache();
 
         // set chats list - may be in login
-        this.chatPreviewInfoList = dataManager.getContacts(token);
+        this.chatPreviewInfoList = dataManager.getContacts(MyApplication.token);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -66,9 +65,9 @@ public class ChatsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String name = input.getText().toString();
-                    dataManager.addContact(new Chat(name, "dummy", "dummyImg"));
+                    dataManager.addContact(new Chat(name, "localhost:7135", "dummyImg"));
                     chatPreviewInfoList.clear();
-                    chatPreviewInfoList.addAll(dataManager.getContacts(token));
+                    chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token));
                     chatPreviewInfoAdapter.notifyDataSetChanged();
                 }
             });
@@ -89,10 +88,6 @@ public class ChatsActivity extends AppCompatActivity {
 
     public DataManager getDataManager() {
         return dataManager;
-    }
-
-    public String getToken() {
-        return token;
     }
 
     public List<ChatPreviewInfo> getChatPreviewInfoList() {

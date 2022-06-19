@@ -1,5 +1,9 @@
 package com.example.bubbleapp.chatsactivitypack;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.example.bubbleapp.models.Chat;
 
 import java.io.Serializable;
@@ -10,6 +14,7 @@ public class ChatPreviewInfo implements Serializable {
     private String lastMessage;
     private LocalDateTime lastMessageDate;
     // ALL THE VIEW PARTS ARE DONE IN "CHAT ADAPTER"
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public ChatPreviewInfo(Chat chat) {
         lastMessageDate = null;
         this.chat = chat;

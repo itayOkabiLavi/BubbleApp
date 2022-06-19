@@ -22,6 +22,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     class MessageViewHolder extends RecyclerView.ViewHolder {
         private MessageItemBinding MessageBinding;
+
         MessageViewHolder(MessageItemBinding chatListItemBinding) {
             super(chatListItemBinding.getRoot());
             this.MessageBinding = chatListItemBinding;
@@ -30,8 +31,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         @RequiresApi(api = Build.VERSION_CODES.O)
         public void setMessageData(Message messageData) {
             MessageBinding.msgText.setText(messageData.getContent());
-            MessageBinding.msgTime.setText(messageData.getCreationTime().format(messageTimeFormat));
-            MessageBinding.msgChatID.setText(Integer.toString(messageData.getChatId()));
+            String[] date = messageData.created.split("T");
+            String time = date[1].split("\\.")[0].substring(0, 5);
+            String dateTime = date[0] +"\n"+ time;
+            MessageBinding.msgTime.setText(dateTime);
+            //MessageBinding.msgChatID.setText(messageData.getChatId());
         }
     }
 
@@ -44,9 +48,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         MessageItemBinding MessageItemBinding =
                 com.example.bubbleapp.databinding.MessageItemBinding.inflate(
-                    LayoutInflater.from(parent.getContext()),
-                    parent,
-                    false
+                        LayoutInflater.from(parent.getContext()),
+                        parent,
+                        false
                 );
         return new MessageViewHolder(MessageItemBinding);
     }
