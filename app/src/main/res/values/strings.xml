@@ -25,4 +25,11 @@
     <string name="fullName">fullName</string>
     <string name="register">register</string>
     <string name="nickname">nickName</string>
+    <string name="login_register_text">Register</string>
+    <string name="settings_design_label">Graphics</string>
+    <string name="settings_network_label">Network</string>
+    <string name="settings_switch_label">Dark mode</string>
+    <string name="settings_server_label">server</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_appy_btn">Apply</string>
 </resources>

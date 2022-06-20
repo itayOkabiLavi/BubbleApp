@@ -35,5 +35,8 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("myName", "myName");
             startActivity(intent);
         });
+
+        Intent intent = new Intent(this, LoginForm.class);
+        startActivity(intent);
     }
 }

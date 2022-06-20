@@ -6,11 +6,13 @@ import android.widget.ImageButton;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.bubbleapp.DataManager;
 import com.example.bubbleapp.DummyDataManager;
 import com.example.bubbleapp.MyApplication;
+import com.example.bubbleapp.R;
 import com.example.bubbleapp.databinding.ActivityChatDisplayBinding;
 import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
@@ -31,6 +33,10 @@ public class ChatDisplayActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            setTheme(R.style.DarkTheme);
+        else
+            setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         // View
         this.binding = ActivityChatDisplayBinding.inflate(getLayoutInflater());

@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatsActivity">
+    tools:context=".ChatsActivity"
+    >
 
     <LinearLayout
         android:id="@+id/chats_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue_standard"
+        android:background="?attr/backgroundTitle"
         android:orientation="horizontal"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +24,7 @@
             android:layout_height="match_parent"
             android:layout_marginRight="15dp"
             android:layout_weight="0"
-            android:background="@color/blue_standard"
+            android:background="?attr/backgroundTitle"
             android:padding="10dp"
             app:srcCompat="@drawable/ic_chatdisplay_back" />
 
@@ -44,8 +45,7 @@
             android:padding="5dp"
             android:text="TextView"
             android:textAlignment="textStart"
-            android:textColor="@color/white"
-
+            android:textColor="?attr/txtTitle1"
             android:textSize="20dp" />
 
         <ImageButton
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:background="@color/blue_standard"
+            android:background="?attr/backgroundTitle"
             android:padding="10dp"
             app:srcCompat="@drawable/ic_baseline_person_add_24" />
     </LinearLayout>
@@ -65,7 +65,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chats_bar">
+        app:layout_constraintTop_toBottomOf="@+id/chats_bar"
+        android:background="?attr/backgroundBody">
 
     </androidx.recyclerview.widget.RecyclerView>
 

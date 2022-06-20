@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
@@ -28,6 +29,11 @@ public class ChatsActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            setTheme(R.style.DarkTheme);
+        else
+            setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
 
         // set binding

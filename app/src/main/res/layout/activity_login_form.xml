@@ -4,39 +4,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wallpaper2"
     tools:context=".LoginForm">
 
-    <EditText
-        android:id="@+id/userName"
-        android:layout_width="fill_parent"
+    <ImageButton
+        android:id="@+id/login_settings_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_settings_30" />
+
+    <ImageView
+        android:id="@+id/login_logo"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:srcCompat="@drawable/logo"
+        tools:layout_editor_absoluteX="-4dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
-        android:autofillHints="User Name"
-        android:hint="@string/user_name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/password"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingTop="20dp"
+        android:paddingRight="50dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="fill_parent"
+        <EditText
+            android:id="@+id/userName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:autofillHints="User Name"
+            android:hint="@string/user_name"
+            android:inputType="textPersonName"
+            android:padding="8dp"
+            android:textColor="?attr/txtSubtitle1"
+            android:textColorHint="?attr/txtSubtitle2"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:autofillHints="User password"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            android:textColor="?attr/txtSubtitle1"
+            android:textColorHint="?attr/txtSubtitle2"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/loginBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="?attr/backgroundButton"
+            android:backgroundTint="?attr/backgroundButton"
+            android:text="@string/login"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/login_register_btn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="356dp"
-        android:autofillHints="User password"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        android:layout_margin="5dp"
+        android:backgroundTint="@android:color/transparent"
+        android:text="@string/login_register_text"
+        android:textColor="?attr/txtSubtitle1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/loginBtn"
+        android:id="@+id/login_dummychats"
         android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:text="@string/login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:backgroundTint="@android:color/transparent"
+        android:text="dummy chats"
+        android:textColor="?attr/txtSubtitle1"
+        app:layout_constraintBottom_toTopOf="@+id/login_register_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="dt">
+        <attr name="txtTitle1" format="color"/>
+        <attr name="txtSubtitle1" format="color"/>
+        <attr name="txtTitle2" format="color"/>
+        <attr name="txtSubtitle2" format="color"/>
+        <attr name="mainText" format="color"/>
+
+        <attr name="backgroundBody" format="color"/>
+        <attr name="backgroundSubBody" format="color"/>
+        <attr name="backgroundTitle" format="color"/>
+        <attr name="backgroundButton" format="color"/>
+
+        <attr name="messageFromMe" format="color"/>
+        <attr name="messageToMe" format="color"/>
+    </declare-styleable>
+</resources>

@@ -8,13 +8,14 @@
         <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/activity_chat_display.xml" value="0.2" />
         <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/activity_chat_item.xml" value="0.152" />
         <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/activity_chats.xml" value="0.264" />
+        <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/activity_login_form.xml" value="0.175" />
         <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/activity_main.xml" value="0.31462140992167104" />
         <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/activity_register_form.xml" value="0.264" />
         <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/chat_item.xml" value="0.16145833333333334" />
         <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/chat_list_item.xml" value="0.253125" />
         <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/chat_message_item.xml" value="0.253125" />
         <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/message_item.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/yehud/StudioProjects/BubbleApp/app/src/main/res/layout/message_item.xml" value="0.11944444444444445" />
+        <entry key="..\:/Users/hagsh/AndroidStudioProjects/BubbleApp/app/src/main/res/layout/settings_layout.xml" value="0.264" />
       </map>
     </option>
   </component>

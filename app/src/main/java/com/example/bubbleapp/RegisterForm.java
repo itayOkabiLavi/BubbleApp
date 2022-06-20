@@ -1,14 +1,14 @@
 package com.example.bubbleapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.example.bubbleapp.api.ChatsAPI;
-import com.example.bubbleapp.databinding.ActivityLoginFormBinding;
 import com.example.bubbleapp.databinding.ActivityRegisterBinding;
 
 import org.json.JSONException;
@@ -24,6 +24,10 @@ public class RegisterForm extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            setTheme(R.style.DarkTheme);
+        else
+            setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         ChatsAPI chatsAPI = new ChatsAPI();
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());

@@ -7,22 +7,23 @@
     tools:context=".chatsactivitypack.ChatDisplayActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/chat_title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue_standard"
+        android:background="?attr/backgroundTitle"
         android:orientation="horizontal"
         android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <ImageButton
             android:id="@+id/chat_back_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="15dp"
-            android:background="@color/blue_standard"
+            android:background="?attr/backgroundTitle"
             android:padding="10dp"
             app:srcCompat="@drawable/ic_chatdisplay_back" />
 
@@ -42,7 +43,7 @@
             android:padding="5dp"
             android:text="TextView"
             android:textAlignment="textStart"
-            android:textColor="@color/white"
+            android:textColor="?attr/txtTitle1"
 
             android:textSize="20dp" />
 
@@ -56,7 +57,8 @@
         app:layout_constraintBottom_toTopOf="@+id/chat_inputbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" >
+        app:layout_constraintTop_toBottomOf="@+id/chat_title_bar"
+        android:background="?attr/backgroundBody">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -64,12 +66,13 @@
         android:id="@+id/chat_inputbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue_standard"
+        android:background="?attr/backgroundTitle"
         android:orientation="horizontal"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/chat_input_text"
@@ -93,7 +96,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="0"
-            android:background="@color/blue_standard"
+            android:background="?attr/backgroundTitle"
             app:srcCompat="@drawable/ic_baseline_send_24" />
 
     </LinearLayout>
