@@ -12,12 +12,7 @@
           "package_name": "com.example.bubbleapp"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "654013028840-qilftfu105s798de8drgq6tl2biksbe0.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyBlJjAn5rVPZDJWtQvgjQQljLXk6ufPEC0"
@@ -25,12 +20,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "654013028840-qilftfu105s798de8drgq6tl2biksbe0.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

@@ -97,13 +97,14 @@ public class ChatsAPI {
         return res[0];
     }
 
-    public JSONObject register(String fullName, String nickName, String password) {
+    public JSONObject register(String fullName, String nickName, String password,String androidToken) {
         final JSONObject[] res = new JSONObject[1];
         MultipartBody registerBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("name", fullName)
                 .addFormDataPart("nickName", nickName)
                 .addFormDataPart("password", password)
+                .addFormDataPart("androidToken", androidToken)
                 .build();
         Call<ResponseBody> call = webServiceAPI.register(registerBody);
         ExecutorService executorService = Executors.newSingleThreadExecutor();

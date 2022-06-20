@@ -21,8 +21,6 @@ import java.util.List;
 public class ChatsActivity extends AppCompatActivity {
     private ActivityChatsBinding binding;
     private DataManager dataManager;
-    //private String token;
-    public static String myName;
     private List<ChatPreviewInfo> chatPreviewInfoList;
     private ChatPreviewInfoAdapter chatPreviewInfoAdapter;
     private List<String> chatTitles;
@@ -42,8 +40,8 @@ public class ChatsActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         // set token and user-name
-        MyApplication.setUser();
-        MyApplication.setToken();
+        //MyApplication.setUser();
+        //MyApplication.setToken();
         // set dataManager
         this.dataManager = new DummyDataManager(this.getApplicationContext());
         //dataManager.clearCache();

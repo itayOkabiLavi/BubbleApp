@@ -8,7 +8,7 @@ import com.example.bubbleapp.models.User;
 public class MyApplication extends Application {
     public static Context context;
     public static String token;
-    public static String bfToken;
+    public static String fbToken;
     public static User user;
 
     public static void setUser(User user) {
@@ -24,12 +24,12 @@ public class MyApplication extends Application {
                 "userLastDate");
     }
 
-    public static void setBfToken(String bfToken) {
-        MyApplication.bfToken = bfToken;
+    public static void setFbToken(String fbToken) {
+        MyApplication.fbToken = fbToken;
     }
 
     public static void setBfToken() {
-        MyApplication.bfToken = "dummyBfToken";
+        MyApplication.fbToken = "dummyBfToken";
     }
 
     public static void setToken(String token) {

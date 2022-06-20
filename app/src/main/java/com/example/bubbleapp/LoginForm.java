@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Switch;
 
 import androidx.annotation.RequiresApi;
@@ -32,6 +31,7 @@ public class LoginForm extends AppCompatActivity {
     Button loginBtn;
     EditText name;
     EditText password;
+    Button registerButton;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -45,7 +45,7 @@ public class LoginForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(LoginForm.this, instanceIdResult -> {
             String fbToken = instanceIdResult.getToken();
-            MyApplication.setBfToken(fbToken);
+            MyApplication.setFbToken(fbToken);
         });
         ChatsAPI chatsAPI = new ChatsAPI();
         dataManager = new DummyDataManager(this);
@@ -55,10 +55,11 @@ public class LoginForm extends AppCompatActivity {
         name = binding.userName;
         password = binding.password;
         binding.loginLogo.setColorFilter(Color.WHITE);
+        registerButton=binding.loginRegisterBtn;
 
 
         loginBtn.setOnClickListener(view -> {
-            JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString(), MyApplication.bfToken);
+            JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString(), MyApplication.fbToken);
             try {
                 MyApplication.setToken(userInfo.getString("token"));
                 User user = new Gson().fromJson(String.valueOf(userInfo.getJSONObject("user")), User.class);
@@ -79,7 +80,10 @@ public class LoginForm extends AppCompatActivity {
             intent.putExtra("myName", "myName");
             startActivity(intent);
         });
-
+        registerButton.setOnClickListener(view->{
+            Intent intent = new Intent(this,RegisterForm.class);
+            startActivity(intent);
+        });
         binding.loginSettingsBtn.setOnClickListener(view -> {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 
