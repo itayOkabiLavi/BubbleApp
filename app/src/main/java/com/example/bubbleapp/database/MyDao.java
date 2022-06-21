@@ -17,6 +17,9 @@ public interface MyDao {
     @Query("SELECT * FROM chat WHERE id = :chatId")
     Chat getChat(int chatId);
 
+    @Query("SELECT * FROM chat WHERE contactName = :name")
+    Chat getChat(String name);
+
     @Query("SELECT * FROM chat")
     List<Chat> getAllContacts();
 
@@ -36,10 +39,10 @@ public interface MyDao {
     @Query("SELECT * FROM message ")
     List<Message> getAllMessages();
 
-    @Query("SELECT * FROM message WHERE chatId = :chatId")
+    @Query("SELECT * FROM message WHERE contactName = :chatId")
     List<Message> getAllMessages(int chatId);
 
-    @Query("SELECT * FROM message WHERE chatId = :contactName")
+    @Query("SELECT * FROM message WHERE contactName = :contactName")
     List<Message> getAllMessages(String contactName);
 
     @Query("SELECT * FROM message WHERE id = :id")

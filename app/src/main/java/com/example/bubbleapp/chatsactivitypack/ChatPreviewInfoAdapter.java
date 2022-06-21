@@ -58,6 +58,7 @@ public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfo
             });
             chatListItemBinding.userName.setText(userData.getContactName());
             chatListItemBinding.lastmessageText.setText(userData.getLastMessage());
+
             if (userData.getLastMessageDate() == null)
                 chatListItemBinding.lastmessageTime.setText("");
             else

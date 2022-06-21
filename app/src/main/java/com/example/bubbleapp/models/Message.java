@@ -13,9 +13,10 @@ import java.time.ZoneId;
 
 @Entity
 public class Message {
-    @PrimaryKey
+    @PrimaryKey (autoGenerate = true)
     @NonNull
-    public String id;
+    public int id;
+    // TODO: delete created
     public String created;
     public long creationTime;
     public String content;
@@ -23,27 +24,26 @@ public class Message {
     public boolean sent;
     public String fromId;
     public String toId;
-    public String chatId;
+    public String contactName;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Message(@NonNull String id, String content,
+    public Message(String content,
                    String fromId,
                    String toId,
-                   String chatId, String created) {
-        this.id=id;
+                   String contactName, String created) {
         this.created=created;
         this.content = content;
         this.fromId = fromId;
         this.toId = toId;
-        this.chatId = chatId;
+        this.contactName = contactName;
         this.creationTime = System.currentTimeMillis();
     }
 
-    public void changeMessageId(String id) { this.id = id; }
+    public void changeMessageId(int id) { this.id = id; }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Message() {
-        new Message("","Empty",
+        new Message("Empty",
                 "from no one",
                 "to nobody",
                 "-1","");
@@ -73,17 +73,14 @@ public class Message {
         this.toId = toId;
     }
 
-    @NonNull
-    public String getMessageId() {
-        return id;
-    }
+    public int getMessageId() { return id; }
 
     public String getContent() {
         return content;
     }
 
-    public String getChatId() {
-        return chatId;
+    public String getContactName() {
+        return contactName;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -91,19 +88,5 @@ public class Message {
         return Instant.ofEpochMilli(creationTime)
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "Message{" +
-                "MessageId='" + id + '\'' +
-                ", created='" + creationTime + '\'' +
-                ", content='" + content + '\'' +
-                ", sent=" + sent +
-                ", fromId='" + fromId + '\'' +
-                ", toId='" + toId + '\'' +
-                ", chatId='" + chatId + '\'' +
-                '}';
     }
 }

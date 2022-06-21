@@ -56,17 +56,25 @@
             android:background="?attr/backgroundTitle"
             android:padding="10dp"
             app:srcCompat="@drawable/ic_baseline_person_add_24" />
+
+        <ImageButton
+            android:id="@+id/chats_refresh_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:background="?attr/backgroundTitle"
+            android:padding="10dp"
+            app:srcCompat="@drawable/ic_baseline_refresh_24" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatsRv"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="629dp"
+        android:background="?attr/backgroundBody"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chats_bar"
-        android:background="?attr/backgroundBody">
+        app:layout_constraintTop_toBottomOf="@+id/chats_bar">
 
     </androidx.recyclerview.widget.RecyclerView>
 

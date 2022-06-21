@@ -76,6 +76,8 @@ public class LoginForm extends AppCompatActivity {
         binding.loginDummychats.setOnClickListener(view -> {
             Intent intent = new Intent(this, ChatsActivity.class);
             String token = dataManager.login("itay", "itay123");
+            MyApplication.setUser();
+            MyApplication.setToken();
             intent.putExtra("token", token);
             intent.putExtra("myName", "myName");
             startActivity(intent);
@@ -93,15 +95,21 @@ public class LoginForm extends AppCompatActivity {
             dialogBuilder.setView(dialogView);
             Button apply = (Button) dialogView.findViewById(R.id.settings_apply_btn);
             Switch darkModeSwitch = (Switch) dialogView.findViewById(R.id.settings_darkmode_switch);
+            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+                darkModeSwitch.setChecked(true);
+            else
+                darkModeSwitch.setChecked(false);
             EditText serverInput = (EditText) dialogView.findViewById(R.id.settings_server_input);
             serverInput.setText(MyApplication.user.server);
+            EditText fbtInput = (EditText) dialogView.findViewById(R.id.settings_fbtoken_input);
+            fbtInput.setText(MyApplication.fbToken);
             apply.setOnClickListener(view1 -> {
                 if (darkModeSwitch.isChecked()) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 MyApplication.user.server = serverInput.getText().toString();
+                MyApplication.fbToken = fbtInput.getText().toString();
                 alertDialog.dismiss();
                 reset();
-
             });
 
             alertDialog = dialogBuilder.create();

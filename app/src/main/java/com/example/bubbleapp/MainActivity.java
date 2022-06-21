@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.bubbleapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,7 +37,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        MyApplication.setUser();
         Intent intent = new Intent(this, LoginForm.class);
         startActivity(intent);
     }
+
+
 }

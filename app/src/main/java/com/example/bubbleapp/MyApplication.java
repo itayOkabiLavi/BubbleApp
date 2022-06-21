@@ -2,6 +2,9 @@ package com.example.bubbleapp;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.bubbleapp.models.User;
 
@@ -10,13 +13,14 @@ public class MyApplication extends Application {
     public static String token;
     public static String fbToken;
     public static User user;
+    public static DataManager dataManager;
 
     public static void setUser(User user) {
         MyApplication.user = user;
     }
 
     public static void setUser() {
-        MyApplication.user = new User("userID",
+        MyApplication.user = new User(
                 "userName",
                 "userServer",
                 "userLastMessage",
@@ -40,10 +44,11 @@ public class MyApplication extends Application {
         MyApplication.token = "dummyToken";
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onCreate() {
-
         super.onCreate();
         context = getApplicationContext();
+        MyApplication.dataManager = new DummyDataManager(context);
     }
 }

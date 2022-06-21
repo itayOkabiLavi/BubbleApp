@@ -5,6 +5,7 @@
         <item name="txtSubtitle1">@color/white </item>
         <item name="txtTitle2">@color/dark_blue </item>
         <item name="txtSubtitle2">@color/gray </item>
+        <item name="txtInput">@color/black </item>
         <item name="mainText">@color/black </item>
 
         <item name="backgroundBody">@color/white </item>
@@ -21,6 +22,7 @@
         <item name="txtSubtitle1">@color/white </item>
         <item name="txtTitle2">@color/white </item>
         <item name="txtSubtitle2">@color/blue </item>
+        <item name="txtInput">@color/light_blue </item>
         <item name="mainText">@color/white </item>
 
         <item name="backgroundBody">@color/dark_purple </item>

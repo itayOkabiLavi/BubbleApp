@@ -85,6 +85,21 @@ public class ChatsActivity extends AppCompatActivity {
 
             builder.show();
         });
+        binding.chatsRefreshBtn.setOnClickListener(view -> {
+            refresh();
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refresh();
+    }
+
+    public void refresh() {
+        chatPreviewInfoList.clear();
+        chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token));
+        chatPreviewInfoAdapter.notifyDataSetChanged();
     }
 
     public ActivityChatsBinding getBinding() {

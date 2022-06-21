@@ -90,11 +90,11 @@ public class DummyDataManager extends Activity implements DataManager {
         }
         List<User> users = myDao.getAllUsers();
         for (int i = 0; i < users.size(); i++) {
-            jsonArray = chatsAPI.getMessages(token, users.get(i).id);
+            jsonArray = chatsAPI.getMessages(token, users.get(i).name);
             for (int j = 0; j < jsonArray.length(); j++) {
                 try {
                     Message message = new Gson().fromJson(jsonArray.getString(j), Message.class);
-                    message.chatId = users.get(i).id;
+                    message.contactName = users.get(i).name;
                     myDao.insertMessages(message);
                 } catch (JSONException e) {
                     break;
@@ -120,9 +120,19 @@ public class DummyDataManager extends Activity implements DataManager {
     }
 
     @Override
+    public Chat getContactByName(String name) {
+        return myDao.getChat(name);
+    }
+
+    @Override
     public void addContact(Chat chat) {
         chatsAPI.addContact(chat);
         this.myDao.insertChats(chat);
+    }
+
+    @Override
+    public void FBPushNewChat(Chat... chats) {
+        this.myDao.insertChats(chats);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -159,8 +169,13 @@ public class DummyDataManager extends Activity implements DataManager {
         String time = LocalDateTime.now().toString();
         String msgId = MyApplication.user.id + "," + to + "," + server + "," + time + "," + content;
         return sendMessage(token,
-                new Message(msgId, content, MyApplication.user.name, to, chatId, time)
+                new Message(content, MyApplication.user.name, to, chatId, time)
         );
+    }
+
+    @Override
+    public void FBPushNewMessage(Message... messages) {
+        this.myDao.insertMessages(messages);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

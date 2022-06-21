@@ -54,8 +54,9 @@ public class ChatDisplayActivity extends AppCompatActivity {
         backBtn.setOnClickListener(view -> {
             finish();
         });
-
+        System.out.println("57");
         binding.chatContactNickname.setText(chatAddressee);
+        System.out.println("59");
         binding.chatSendBtn.setOnClickListener(view -> {
             if (binding.chatInputText.getText().toString().equals("")) return;
             dataManager.sendMessage(
@@ -70,7 +71,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
             messageAdapter.notifyDataSetChanged();
             binding.chatInputText.setText("");
         });
-
+        System.out.println("74");
         // set chats list
         this.messageList = dataManager.getAllMessages(chatId);
         LinearLayoutManager llm = new LinearLayoutManager(this);

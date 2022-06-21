@@ -6,6 +6,7 @@
         <attr name="txtTitle2" format="color"/>
         <attr name="txtSubtitle2" format="color"/>
         <attr name="mainText" format="color"/>
+        <attr name="txtInput" format="color"/>
 
         <attr name="backgroundBody" format="color"/>
         <attr name="backgroundSubBody" format="color"/>
@@ -14,5 +15,6 @@
 
         <attr name="messageFromMe" format="color"/>
         <attr name="messageToMe" format="color"/>
+
     </declare-styleable>
 </resources>
