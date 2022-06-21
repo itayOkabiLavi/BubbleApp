@@ -1,12 +1,15 @@
 package com.example.bubbleapp;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +27,7 @@ public class ChatsActivity extends AppCompatActivity {
     private List<ChatPreviewInfo> chatPreviewInfoList;
     private ChatPreviewInfoAdapter chatPreviewInfoAdapter;
     private List<String> chatTitles;
+    private AlertDialog alertDialog;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,43 @@ public class ChatsActivity extends AppCompatActivity {
 
         // set behaviour
         binding.chatsAddContact.setOnClickListener(view -> {
+            androidx.appcompat.app.AlertDialog.Builder dialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+
+            LayoutInflater inflater = this.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.alert_layout, null);
+
+            dialogBuilder.setView(dialogView);
+            Button ok = (Button) dialogView.findViewById(R.id.alert_okay_btn);
+            Button cancel = (Button) dialogView.findViewById(R.id.alert_cancel_btn);
+
+            EditText input = (EditText) dialogView.findViewById(R.id.alert_input);
+            TextView inputLabel = (TextView) dialogView.findViewById(R.id.alert_input_label);
+            inputLabel.setText("Enter contact name");
+
+            EditText input2 = (EditText) dialogView.findViewById(R.id.alert_input2);
+            TextView inputLabel2 = (TextView) dialogView.findViewById(R.id.alert_input_label2);
+            inputLabel2.setText("Enter contact server");
+
+            TextView title = (TextView) dialogView.findViewById(R.id.alert_title);
+            title.setText("Add contact");
+
+            ok.setOnClickListener(view1 -> {
+                String name = input.getText().toString(), server = input2.getText().toString();
+                dataManager.addContact(new Chat(name, server, "dummyImg"));
+                chatPreviewInfoList.clear();
+                chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token));
+                chatPreviewInfoAdapter.notifyDataSetChanged();
+                alertDialog.dismiss();
+            });
+            cancel.setOnClickListener(view1 -> {
+
+                alertDialog.dismiss();
+            });
+
+            alertDialog = dialogBuilder.create();
+
+            alertDialog.show();
+            /*
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Title");
 
@@ -69,11 +110,7 @@ public class ChatsActivity extends AppCompatActivity {
             builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    String name = input.getText().toString();
-                    dataManager.addContact(new Chat(name, "localhost:7135", "dummyImg"));
-                    chatPreviewInfoList.clear();
-                    chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token));
-                    chatPreviewInfoAdapter.notifyDataSetChanged();
+
                 }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -84,9 +121,14 @@ public class ChatsActivity extends AppCompatActivity {
             });
 
             builder.show();
+
+             */
         });
         binding.chatsRefreshBtn.setOnClickListener(view -> {
             refresh();
+        });
+        binding.chatsLogoutBtn.setOnClickListener(view -> {
+            finish();
         });
     }
 

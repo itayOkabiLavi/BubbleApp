@@ -33,4 +33,6 @@
     <string name="settings_app_bf_token_label">FireBase token</string>
     <string name="settings_title">Settings</string>
     <string name="settings_appy_btn">Apply</string>
+    <string name="alert_okay_btn">Apply</string>
+    <string name="alert_cancel_btn">Cancel</string>
 </resources>

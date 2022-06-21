@@ -1,5 +1,6 @@
 package com.example.bubbleapp.chatsactivitypack;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bubbleapp.MyApplication;
+import com.example.bubbleapp.R;
 import com.example.bubbleapp.databinding.MessageItemBinding;
 import com.example.bubbleapp.models.Message;
 
@@ -48,15 +50,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
             setMessageDesign(MessageBinding, messageData);
         }
+        @SuppressLint("ResourceAsColor")
         private void setMessageDesign(MessageItemBinding messageItemBinding, Message message) {
             int bg, txt;
             boolean darkMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
             if (message.fromId.equals(MyApplication.user.name)) {
                 if (darkMode) {
-                    bg = Color.GREEN;
+                    bg = 0x004E4E;
                     txt = Color.WHITE;
                 } else {
-                    bg = Color.GREEN;
+                    bg = 0x70DADA;
                     txt = Color.BLACK;
                 }
                 // TODO: align to left
@@ -64,10 +67,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
             else {
                 if (darkMode) {
-                    bg = Color.DKGRAY;
+                    bg = R.color.dark_msg2;
                     txt = Color.WHITE;
                 } else {
-                    bg = Color.LTGRAY;
+                    bg = R.color.light_msg2;
                     txt = Color.BLACK;
                 }
             }
