@@ -1,6 +1,11 @@
 package com.example.bubbleapp.api;
 
 
+import com.example.bubbleapp.models.Message;
+import com.example.bubbleapp.models.User;
+
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -18,10 +23,10 @@ public interface WebServiceAPI {
     Call<ResponseBody> register(@Body MultipartBody register);
 
     @GET("Contacts")
-    Call<ResponseBody> getContacts(@Header("Authorization") String token);
+    Call<List<User>> getContacts(@Header("Authorization") String token);
 
     @GET("Contacts/{id}/messages")
-    Call<ResponseBody> getMessages(@Header("Authorization") String token, @Path("id") String contactId);
+    Call<List<Message>> getMessages(@Header("Authorization") String token, @Path("id") String contactId);
 
     @GET("Users/getUser")
     Call<ResponseBody> getUser(@Header("Authorization") String token);

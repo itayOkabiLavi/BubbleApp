@@ -57,7 +57,7 @@ public class DummyDataManager extends Activity implements DataManager {
     }
 
     private void updateChats(String token) {
-        JSONArray jsonArray = chatsAPI.getContacts(token);
+        /*JSONArray jsonArray = chatsAPI.getContacts(token);
         if (jsonArray == null) {
             //myDatabase.clearAllTables();
             return;
@@ -80,12 +80,12 @@ public class DummyDataManager extends Activity implements DataManager {
                     myDao.insertMessages(message);
                 } catch (JSONException ignored) {}
             }
-        }
+        }*/
         // TODO: get contacts of current user from server
     }
 
     private void updateMessage(String token, String contactId) {
-        JSONArray jsonArray = chatsAPI.getMessages(token, contactId);
+        //JSONArray jsonArray = chatsAPI.getMessages(token, contactId);
 
         // TODO: get messages of chat from server
     }

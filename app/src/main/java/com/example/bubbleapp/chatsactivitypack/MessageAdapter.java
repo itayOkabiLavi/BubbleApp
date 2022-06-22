@@ -23,7 +23,7 @@ import java.util.List;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
     //private DateTimeFormatter dateTimeFormat;
-    private final List<Message> MessageList;
+    private List<Message> MessageList;
     private DateTimeFormatter messageTimeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     class MessageViewHolder extends RecyclerView.ViewHolder {
@@ -77,6 +77,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     public MessageAdapter(List<Message> messageList) {
         this.MessageList = messageList;
+    }
+
+    public void setMessageList(List<Message> messageList) {
+        MessageList = messageList;
     }
 
     @NonNull

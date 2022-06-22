@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.bubbleapp.ChatsViewModel;
 import com.example.bubbleapp.MyApplication;
 import com.example.bubbleapp.R;
 import com.example.bubbleapp.DataManager;
@@ -20,6 +21,7 @@ import com.example.bubbleapp.databinding.ActivityChatDisplayBinding;
 import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ChatDisplayActivity extends NotifiableActivity {
@@ -33,6 +35,8 @@ public class ChatDisplayActivity extends NotifiableActivity {
     private MessageAdapter messageAdapter;
     private Chat chat;
     private LiveMessages liveMessages;
+    private MessagesViewModel viewModel;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +45,25 @@ public class ChatDisplayActivity extends NotifiableActivity {
         else
             setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        liveMessages=new ViewModelProvider((this)).get(LiveMessages.class);
+        Bundle extras = getIntent().getExtras();
+        //this.token = extras.getString("token");
+        this.server = extras.getString("server");
+        this.chatId = extras.getString("chatId");
+        this.chatAddressee = extras.getString("chatAddressee");
+        liveMessages = new ViewModelProvider((this)).get(LiveMessages.class);
+        viewModel = new ViewModelProvider(this).get(MessagesViewModel.class);
+        viewModel.setContactId(chatAddressee);
         final Observer<String> messageObserver = newName -> {
             // Update the UI, in this case, a TextView.
-            messageList.clear();
+            /*messageList.clear();
             messageList.addAll(dataManager.getAllMessages(chatId));
             messageAdapter.notifyDataSetChanged();
-            binding.chatInputText.setText("");
+            binding.chatInputText.setText("");*/
         };
+        viewModel.getMessages().observe(this, messages -> {
+            messageAdapter.setMessageList(messages);
+            messageAdapter.notifyDataSetChanged();
+        });
         liveMessages.getCurrentMessages().observe(this, messageObserver);
 
         // View
@@ -57,11 +72,17 @@ public class ChatDisplayActivity extends NotifiableActivity {
         // Data manager
         this.dataManager = new DummyDataManager(this.getApplicationContext());
         // Extract data received
-        Bundle extras = getIntent().getExtras();
-        //this.token = extras.getString("token");
-        this.server = extras.getString("server");
-        this.chatId = extras.getString("chatId");
-        this.chatAddressee = extras.getString("chatAddressee");
+        this.messageList = dataManager.getAllMessages(chatId);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        //messageAdapter = new MessageAdapter(this.messageList);
+        messageAdapter = new MessageAdapter(this.viewModel.getMessages().getValue());
+
+        binding.messagesRv.setAdapter(messageAdapter);
+        binding.messagesRv.setLayoutManager(llm);
+
+        MyApplication.messagesDisplay = this;
+        MyApplication.context = this;
         // Set buttons behaviour
         ImageButton backBtn = binding.chatBackBtn;
         backBtn.setOnClickListener(view -> {
@@ -70,7 +91,13 @@ public class ChatDisplayActivity extends NotifiableActivity {
         binding.chatContactNickname.setText(chatAddressee);
         binding.chatSendBtn.setOnClickListener(view -> {
             if (binding.chatInputText.getText().toString().equals("")) return;
-            dataManager.sendMessage(
+            String id = MyApplication.user.id+","+chatAddressee+","+ LocalDateTime.now().toString()+","+binding.chatInputText.getText().toString();
+            viewModel.add(new Message(id,binding.chatInputText.getText().toString(),
+                    MyApplication.user.id,
+                    chatAddressee,
+                    chatId,
+                    LocalDateTime.now().toString()));
+            /*dataManager.sendMessage(
                     MyApplication.token,
                     binding.chatInputText.getText().toString(),
                     chatAddressee,
@@ -78,7 +105,8 @@ public class ChatDisplayActivity extends NotifiableActivity {
                     chatId
             );
             messageList.clear();
-            messageList.addAll(dataManager.getAllMessages(chatId));
+            messageList.addAll(dataManager.getAllMessages(chatId));*/
+            //messageAdapter.setMessageList(messageList);
             messageAdapter.notifyDataSetChanged();
             binding.chatInputText.setText("");
         });
@@ -86,15 +114,7 @@ public class ChatDisplayActivity extends NotifiableActivity {
             refresh();
         });
         // set chats list
-        this.messageList = dataManager.getAllMessages(chatId);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        messageAdapter = new MessageAdapter(this.messageList);
-        binding.messagesRv.setAdapter(messageAdapter);
-        binding.messagesRv.setLayoutManager(llm);
 
-        MyApplication.messagesDisplay = this;
-        MyApplication.context = this;
     }
 
     private void refresh() {
@@ -102,6 +122,7 @@ public class ChatDisplayActivity extends NotifiableActivity {
         messageList.addAll(dataManager.getAllMessages(chatId));
         messageAdapter.notifyDataSetChanged();
     }
+
     @Override
     public void public_notify() {
         super.public_notify();

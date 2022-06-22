@@ -1,6 +1,7 @@
 package com.example.bubbleapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -63,16 +64,18 @@ public class LoginForm extends AppCompatActivity {
                 dummyChats();
                 return;
             }
-            JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString(), MyApplication.fbToken);
-            try {
-                MyApplication.setToken(userInfo.getString("token"));
-                User user = new Gson().fromJson(String.valueOf(userInfo.getJSONObject("user")), User.class);
-                if (user == null) MyApplication.setUser();
-                MyApplication.setUser(user);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            dataManager.setRelevantCache();
+            //JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString(), MyApplication.fbToken);
+            chatsAPI.login(name.getText().toString(), password.getText().toString(), MyApplication.fbToken);
+
+            SharedPreferences userDetails = MyApplication.context.getSharedPreferences("userdata", 0);
+            while (userDetails.getString("user","")=="" || userDetails.getString("token","")=="");
+
+            MyApplication.setToken(userDetails.getString("token",""));
+            User user = new Gson().fromJson(String.valueOf(userDetails.getString("user","")), User.class);
+            MyApplication.setUser(user);
+
+            /*if (user == null) MyApplication.setUser();
+            dataManager.setRelevantCache();*/
             Intent intent = new Intent(this, ChatsActivity.class);
             startActivity(intent);
         });

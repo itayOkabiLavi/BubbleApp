@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfoAdapter.ContactViewHolder> {
     //private DateTimeFormatter dateTimeFormat;
-    private final List<ChatPreviewInfo> chatPreviewInfoList;
+    private List<ChatPreviewInfo> chatPreviewInfoList;
     private final ChatsActivity container;
 
     class ContactViewHolder extends RecyclerView.ViewHolder {
@@ -70,6 +70,10 @@ public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfo
     public ChatPreviewInfoAdapter(ChatsActivity chatsActivity) {
         this.container = chatsActivity;
         this.chatPreviewInfoList = chatsActivity.getChatPreviewInfoList();
+    }
+
+    public void setChatPreviewInfoList(List<ChatPreviewInfo> chatPreviewInfoList) {
+        this.chatPreviewInfoList = chatPreviewInfoList;
     }
 
     @NonNull

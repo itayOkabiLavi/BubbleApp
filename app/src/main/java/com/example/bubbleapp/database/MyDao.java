@@ -48,4 +48,5 @@ public interface MyDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMessages(Message... messages);
+
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
@@ -18,6 +19,7 @@ import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfoAdapter;
 import com.example.bubbleapp.databinding.ActivityChatsBinding;
 import com.example.bubbleapp.models.Chat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatsActivity extends NotifiableActivity {
@@ -27,6 +29,8 @@ public class ChatsActivity extends NotifiableActivity {
     private ChatPreviewInfoAdapter chatPreviewInfoAdapter;
     private List<String> chatTitles;
     private AlertDialog alertDialog;
+    private ChatsViewModel viewModel;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,17 @@ public class ChatsActivity extends NotifiableActivity {
         // set binding
         this.binding = ActivityChatsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        viewModel = new ViewModelProvider(this).get(ChatsViewModel.class);
+        viewModel.reload();
+        viewModel.getChats().observe(this, chats -> {
+            List<ChatPreviewInfo> chatPreviewInfoList = new ArrayList<>();
+            for (Chat chat : chats) {
+                chatPreviewInfoList.add(new ChatPreviewInfo(chat));
+            }
+            chatPreviewInfoAdapter.setChatPreviewInfoList(chatPreviewInfoList);
+            chatPreviewInfoAdapter.notifyDataSetChanged();
 
+        });
         Bundle extras = getIntent().getExtras();
         // set token and user-name
         //MyApplication.setUser();
