@@ -4,8 +4,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.bubbleapp.MyApplication;
@@ -29,7 +32,7 @@ public class ChatDisplayActivity extends NotifiableActivity {
     private List<Message> messageList;
     private MessageAdapter messageAdapter;
     private Chat chat;
-
+    private LiveMessages liveMessages;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,15 @@ public class ChatDisplayActivity extends NotifiableActivity {
         else
             setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+        liveMessages=new ViewModelProvider((this)).get(LiveMessages.class);
+        final Observer<String> messageObserver = newName -> {
+            // Update the UI, in this case, a TextView.
+            messageList.clear();
+            messageList.addAll(dataManager.getAllMessages(chatId));
+            messageAdapter.notifyDataSetChanged();
+            binding.chatInputText.setText("");
+        };
+        liveMessages.getCurrentMessages().observe(this, messageObserver);
 
         // View
         this.binding = ActivityChatDisplayBinding.inflate(getLayoutInflater());
