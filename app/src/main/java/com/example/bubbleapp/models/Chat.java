@@ -6,9 +6,8 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Chat {
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
-    public int id;
+
+    @PrimaryKey
     @NonNull
     public String contactName;
     public String server;
@@ -18,10 +17,6 @@ public class Chat {
         this.contactName = contactName;
         this.server = server;
         this.image = image;
-    }
-
-    public int getId() {
-        return id;
     }
 
     @NonNull

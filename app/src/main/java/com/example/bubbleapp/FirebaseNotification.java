@@ -30,28 +30,34 @@ public class FirebaseNotification extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+
         Type mapType = new TypeToken<Map<String, String>>(){}.getType();
         String payload = remoteMessage.getNotification().getBody();
+        System.out.println("got notification:\n" + payload);
         Map<String, String> r = new Gson().fromJson(payload, mapType);
         // TODO: new message vs new chat
-        if (r.get("action") == null || r.get("id") == null)
+        if (r.get("action") == null || r.get("id") == null) {
             System.out.println("no action / id");
-        else {
-            String type = r.get("action"), sender = r.get("id");
-            if (r.get("action").equals("newMessage")) {
-
-                dataManager.FBPushNewMessage(new Message(
-                        r.get("content"),
-                        sender,
-                        MyApplication.user.name,
-                        sender,
-                        "yes"));
-            } else {
-                if (dataManager.getContactByName(sender) == null)
-                    dataManager.FBPushNewChat(new Chat(sender, r.get("server"), ""));
-            }
-            //notification(getApplicationContext(), sender, content, type);
+            return;
         }
+        String type = r.get("action"), sender = r.get("id");
+        if (r.get("action").equals("newMessage")) {
+
+            dataManager.FBPushNewMessage(new Message("",
+                    r.get("content"),
+                    sender,
+                    MyApplication.user.name,
+                    sender,
+                    "yes"));
+            MyApplication.notifyMessagesDisplay();
+        } else {
+            if (dataManager.getContactByName(sender) == null) {
+                dataManager.FBPushNewChat(new Chat(sender, r.get("server"), ""));
+                MyApplication.notifyChatDisplay();
+            }
+        }
+        //notification(getApplicationContext(), sender, content, type);
+
 
     }
 
@@ -63,10 +69,7 @@ public class FirebaseNotification extends FirebaseMessagingService {
                 .setContentText(content)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);
-
-
         NotificationManagerCompat notificationCompat = NotificationManagerCompat.from(context);
-
         notificationCompat.notify(1, builder.build());
     }
 

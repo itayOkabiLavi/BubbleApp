@@ -14,6 +14,8 @@ public class MyApplication extends Application {
     public static String fbToken;
     public static User user;
     public static DataManager dataManager;
+    public static NotifiableActivity chatsDisplay = null;
+    public static NotifiableActivity messagesDisplay = null;
 
     public static void setUser(User user) {
         MyApplication.user = user;
@@ -21,6 +23,7 @@ public class MyApplication extends Application {
 
     public static void setUser() {
         MyApplication.user = new User(
+                "userId",
                 "userName",
                 "userServer",
                 "userLastMessage",
@@ -50,5 +53,15 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         MyApplication.dataManager = new DummyDataManager(context);
+    }
+
+    public static void notifyChatDisplay() {
+        if (chatsDisplay != null) chatsDisplay.public_notify();
+        else System.out.println("chatsDisplay is null");
+    }
+
+    public static void notifyMessagesDisplay() {
+        if (messagesDisplay != null) messagesDisplay.public_notify();
+        else System.out.println("messagesDisplay is null");
     }
 }

@@ -6,17 +6,17 @@ import androidx.room.PrimaryKey;
 @Entity
 //@TypeConverters({FileTypeConvertor.class})
 public class User {
-    @PrimaryKey (autoGenerate = true)
+    @PrimaryKey
     @NonNull
-    public int id;
+    public String id;
     public String name;
     public String server;
     public String last;
     public String lastType;
     public String lastDate;
 
-    public User(String name, String server, String last, String lastType, String lastDate) {
-        //this.id = id;
+    public User(@NonNull String id, String name, String server, String last, String lastType, String lastDate) {
+        this.id = id;
         this.name = name;
         this.server = server;
         this.last = last;

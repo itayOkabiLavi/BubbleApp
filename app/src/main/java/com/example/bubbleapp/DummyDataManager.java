@@ -137,7 +137,7 @@ public class DummyDataManager extends Activity implements DataManager {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public ChatPreviewInfo lastMessageUpdate(int chatId, Message message) {
+    public ChatPreviewInfo lastMessageUpdate(String chatId, Message message) {
         Chat chat = myDao.getChat(chatId);
         ChatPreviewInfo chatPreviewInfo = new ChatPreviewInfo(chat);
         chatPreviewInfo.setLastMessage(message.getContent());
@@ -169,7 +169,7 @@ public class DummyDataManager extends Activity implements DataManager {
         String time = LocalDateTime.now().toString();
         String msgId = MyApplication.user.id + "," + to + "," + server + "," + time + "," + content;
         return sendMessage(token,
-                new Message(content, MyApplication.user.name, to, chatId, time)
+                new Message("", content, MyApplication.user.name, to, chatId, time)
         );
     }
 

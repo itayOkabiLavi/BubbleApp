@@ -18,7 +18,7 @@ public interface DataManager {
     public Chat getContactByName(String name);
     public void addContact(Chat chat);
     public void FBPushNewChat(Chat... chats);
-    public ChatPreviewInfo lastMessageUpdate(int chatId, Message message);
+    public ChatPreviewInfo lastMessageUpdate(String chatId, Message message);
 
     // Messages
     public List<Message> getAllMessages();

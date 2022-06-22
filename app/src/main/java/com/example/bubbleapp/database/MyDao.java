@@ -14,8 +14,6 @@ import java.util.List;
 @Dao
 public interface MyDao {
     // CHATS
-    @Query("SELECT * FROM chat WHERE id = :chatId")
-    Chat getChat(int chatId);
 
     @Query("SELECT * FROM chat WHERE contactName = :name")
     Chat getChat(String name);

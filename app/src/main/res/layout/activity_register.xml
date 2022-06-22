@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wallpaper3"
     tools:context=".RegisterForm">
 
     <EditText
@@ -13,12 +14,14 @@
         android:layout_marginTop="62dp"
         android:layout_marginBottom="21dp"
         android:ems="10"
+        android:hint="@string/fullName"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:shadowColor="#F10505"
         app:layout_constraintBottom_toTopOf="@+id/nickName"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="23dp"
-        android:hint="@string/fullName" />
+        android:textColor="?attr/txtInput"/>
 
     <EditText
         android:id="@+id/nickName"
@@ -27,34 +30,40 @@
         android:layout_marginTop="21dp"
         android:layout_marginBottom="13dp"
         android:ems="10"
+        android:hint="@string/nickname"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:shadowColor="#F10505"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintTop_toBottomOf="@+id/fullName"
         tools:layout_editor_absoluteX="0dp"
-        android:hint="@string/nickname" />
+        android:textColor="?attr/txtInput"/>
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
+        android:autofillHints="password"
         android:ems="10"
         android:inputType="textPassword"
+        android:shadowColor="#F10505"
         app:layout_constraintTop_toBottomOf="@+id/nickName"
         tools:layout_editor_absoluteX="25dp"
-        android:autofillHints="password" />
+        android:textColor="?attr/txtInput"/>
 
     <EditText
         android:id="@+id/validatePassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
+        android:autofillHints="validatePassword"
         android:ems="10"
         android:inputType="textPassword"
+        android:shadowColor="#F10505"
         app:layout_constraintTop_toBottomOf="@+id/password"
         tools:layout_editor_absoluteX="0dp"
-        android:autofillHints="validatePassword" />
+        android:textColor="?attr/txtInput"/>
 
     <Button
         android:id="@+id/register_btn"
@@ -63,5 +72,6 @@
         android:layout_marginTop="41dp"
         android:text="@string/register"
         app:layout_constraintTop_toBottomOf="@+id/validatePassword"
-        tools:layout_editor_absoluteX="152dp" />
+        tools:layout_editor_absoluteX="152dp"
+        android:textColor="?attr/txtTitle1"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

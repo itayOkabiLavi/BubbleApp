@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -21,7 +20,7 @@ import com.example.bubbleapp.models.Chat;
 
 import java.util.List;
 
-public class ChatsActivity extends AppCompatActivity {
+public class ChatsActivity extends NotifiableActivity {
     private ActivityChatsBinding binding;
     private DataManager dataManager;
     private List<ChatPreviewInfo> chatPreviewInfoList;
@@ -35,7 +34,6 @@ public class ChatsActivity extends AppCompatActivity {
             setTheme(R.style.DarkTheme);
         else
             setTheme(R.style.AppTheme);
-
         super.onCreate(savedInstanceState);
 
         // set binding
@@ -100,29 +98,6 @@ public class ChatsActivity extends AppCompatActivity {
             alertDialog = dialogBuilder.create();
 
             alertDialog.show();
-            /*
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Title");
-
-            final EditText input = new EditText(this);
-            builder.setView(input);
-
-            builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-
-            builder.show();
-
-             */
         });
         binding.chatsRefreshBtn.setOnClickListener(view -> {
             refresh();
@@ -130,6 +105,7 @@ public class ChatsActivity extends AppCompatActivity {
         binding.chatsLogoutBtn.setOnClickListener(view -> {
             finish();
         });
+        MyApplication.chatsDisplay = this;
     }
 
     @Override
@@ -142,6 +118,12 @@ public class ChatsActivity extends AppCompatActivity {
         chatPreviewInfoList.clear();
         chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token));
         chatPreviewInfoAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void public_notify() {
+        super.public_notify();
+        System.out.println("Chats notified");
     }
 
     public ActivityChatsBinding getBinding() {
@@ -159,4 +141,5 @@ public class ChatsActivity extends AppCompatActivity {
     public List<String> getChatTitles() {
         return chatTitles;
     }
+
 }

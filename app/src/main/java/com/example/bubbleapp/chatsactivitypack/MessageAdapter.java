@@ -16,9 +16,7 @@ import com.example.bubbleapp.R;
 import com.example.bubbleapp.databinding.MessageItemBinding;
 import com.example.bubbleapp.models.Message;
 
-import java.text.DateFormat;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -38,15 +36,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         @RequiresApi(api = Build.VERSION_CODES.O)
         public void setMessageData(Message messageData) {
             MessageBinding.msgText.setText(messageData.getContent());
-            /*
-            String[] date = messageData.created.split("T");
-            String time = date[1].split("\\.")[0].substring(0, 5);
 
-             */
-            String dateTime = DateFormat.getDateTimeInstance().format(
-                    new Date(messageData.creationTime)
-            );
-            MessageBinding.msgTime.setText(dateTime);
+            String[] dateTime = messageData.parseCreationTime();
+            MessageBinding.msgTime.setText(dateTime[0] + " " + dateTime[1]);
 
             setMessageDesign(MessageBinding, messageData);
         }

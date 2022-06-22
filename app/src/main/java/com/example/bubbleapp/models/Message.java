@@ -10,12 +10,15 @@ import androidx.room.PrimaryKey;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Date;
 
 @Entity
 public class Message {
-    @PrimaryKey (autoGenerate = true)
+    @PrimaryKey
     @NonNull
-    public int id;
+    public String id;
     // TODO: delete created
     public String created;
     public long creationTime;
@@ -27,27 +30,23 @@ public class Message {
     public String contactName;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Message(String content,
+    public Message(String id,
+                   String content,
                    String fromId,
                    String toId,
                    String contactName, String created) {
-        this.created=created;
+
+        this.created = generateCreationTime(created);
         this.content = content;
         this.fromId = fromId;
         this.toId = toId;
         this.contactName = contactName;
-        this.creationTime = System.currentTimeMillis();
+
+        this.id = generateNowId(id);
+        //this.creationTime = System.currentTimeMillis();
     }
 
-    public void changeMessageId(int id) { this.id = id; }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public Message() {
-        new Message("Empty",
-                "from no one",
-                "to nobody",
-                "-1","");
-    }
+    public void changeMessageId(String id) { this.id = id; }
 
     public boolean isSent() {
         return sent;
@@ -73,7 +72,7 @@ public class Message {
         this.toId = toId;
     }
 
-    public int getMessageId() { return id; }
+    public String getMessageId() { return id; }
 
     public String getContent() {
         return content;
@@ -81,6 +80,29 @@ public class Message {
 
     public String getContactName() {
         return contactName;
+    }
+
+    public String generateNowId(String id) {
+        if (id.length() < 1)
+            return fromId + "," + toId + "," + created + "," + content;
+        return id;
+    }
+
+    public String generateCreationTime(String createdTime) {
+        if (!createdTime.equals("NOW")) return createdTime;
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss.S");
+        return LocalDateTime.now().format(dateFormat)
+                + "T"
+                + LocalDateTime.now().format(timeFormat);
+    }
+
+    public String[] parseCreationTime() {
+        String[] date = this.created.split("T");
+        String time = date[1].split("\\.")[0].substring(0, 5);
+        String dateTime = date[0] +"\n"+ time;
+        String[] result = {time, dateTime};
+        return result;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

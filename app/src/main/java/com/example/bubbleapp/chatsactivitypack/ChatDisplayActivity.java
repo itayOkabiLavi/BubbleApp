@@ -5,21 +5,21 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.bubbleapp.DataManager;
-import com.example.bubbleapp.DummyDataManager;
 import com.example.bubbleapp.MyApplication;
 import com.example.bubbleapp.R;
+import com.example.bubbleapp.DataManager;
+import com.example.bubbleapp.DummyDataManager;
+import com.example.bubbleapp.NotifiableActivity;
 import com.example.bubbleapp.databinding.ActivityChatDisplayBinding;
 import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
 
 import java.util.List;
 
-public class ChatDisplayActivity extends AppCompatActivity {
+public class ChatDisplayActivity extends NotifiableActivity {
     private ActivityChatDisplayBinding binding;
     //private String token;
     private String server;
@@ -38,6 +38,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
         else
             setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+
         // View
         this.binding = ActivityChatDisplayBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -54,9 +55,7 @@ public class ChatDisplayActivity extends AppCompatActivity {
         backBtn.setOnClickListener(view -> {
             finish();
         });
-        System.out.println("57");
         binding.chatContactNickname.setText(chatAddressee);
-        System.out.println("59");
         binding.chatSendBtn.setOnClickListener(view -> {
             if (binding.chatInputText.getText().toString().equals("")) return;
             dataManager.sendMessage(
@@ -71,7 +70,6 @@ public class ChatDisplayActivity extends AppCompatActivity {
             messageAdapter.notifyDataSetChanged();
             binding.chatInputText.setText("");
         });
-        System.out.println("74");
         // set chats list
         this.messageList = dataManager.getAllMessages(chatId);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -79,6 +77,13 @@ public class ChatDisplayActivity extends AppCompatActivity {
         messageAdapter = new MessageAdapter(this.messageList);
         binding.messagesRv.setAdapter(messageAdapter);
         binding.messagesRv.setLayoutManager(llm);
+
+        MyApplication.messagesDisplay = this;
     }
 
+    @Override
+    public void public_notify() {
+        super.public_notify();
+        System.out.println("Messages notified");
+    }
 }
