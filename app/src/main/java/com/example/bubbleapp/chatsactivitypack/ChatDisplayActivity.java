@@ -70,6 +70,9 @@ public class ChatDisplayActivity extends NotifiableActivity {
             messageAdapter.notifyDataSetChanged();
             binding.chatInputText.setText("");
         });
+        binding.chatRefreshBtn.setOnClickListener(view -> {
+            refresh();
+        });
         // set chats list
         this.messageList = dataManager.getAllMessages(chatId);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -79,8 +82,14 @@ public class ChatDisplayActivity extends NotifiableActivity {
         binding.messagesRv.setLayoutManager(llm);
 
         MyApplication.messagesDisplay = this;
+        MyApplication.context = this;
     }
 
+    private void refresh() {
+        messageList.clear();
+        messageList.addAll(dataManager.getAllMessages(chatId));
+        messageAdapter.notifyDataSetChanged();
+    }
     @Override
     public void public_notify() {
         super.public_notify();

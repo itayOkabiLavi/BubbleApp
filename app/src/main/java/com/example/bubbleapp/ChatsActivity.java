@@ -111,6 +111,7 @@ public class ChatsActivity extends NotifiableActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        MyApplication.context = this;
         refresh();
     }
 
@@ -123,6 +124,7 @@ public class ChatsActivity extends NotifiableActivity {
     @Override
     public void public_notify() {
         super.public_notify();
+        //refresh();
         System.out.println("Chats notified");
     }
 

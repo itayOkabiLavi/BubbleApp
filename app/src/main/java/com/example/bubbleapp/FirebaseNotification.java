@@ -1,5 +1,7 @@
 package com.example.bubbleapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 
@@ -40,37 +42,56 @@ public class FirebaseNotification extends FirebaseMessagingService {
             System.out.println("no action / id");
             return;
         }
-        String type = r.get("action"), sender = r.get("id");
+        String type = r.get("action"), sender = r.get("id"), content;
         if (r.get("action").equals("newMessage")) {
-
+            content = r.get("content");
             dataManager.FBPushNewMessage(new Message("",
-                    r.get("content"),
+                    content,
                     sender,
                     MyApplication.user.name,
                     sender,
-                    "yes"));
+                    "NOW"));
             MyApplication.notifyMessagesDisplay();
         } else {
+            System.out.println("chat exists? : " + dataManager.getContactByName(sender));
             if (dataManager.getContactByName(sender) == null) {
-                dataManager.FBPushNewChat(new Chat(sender, r.get("server"), ""));
+                content = r.get("server");
+                dataManager.FBPushNewChat(new Chat(sender, content, ""));
                 MyApplication.notifyChatDisplay();
             }
+            content = "Already-exists-contact tries to reconnect: " + sender;
         }
-        //notification(getApplicationContext(), sender, content, type);
-
-
+        createNotificationChannel();
+        throwNotification(getApplicationContext(), sender, content, type);
     }
 
 
-    private void notification(Context context, String sender, String content, String type) {
+    private void createNotificationChannel() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    "channelID", "channelName", NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("channleDescription");
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+    }
+
+    private void throwNotification(Context context, String sender, String content, String type) {
+        String title;
+        if (type.equals("newChat"))
+            title = sender + " wants to chat with you!";
+        else
+            title = sender + " sent you a message.";
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "channelID")
-                .setContentTitle("notification from: " + sender)
+                .setContentTitle(title)
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                 .setContentText(content)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(true);
-        NotificationManagerCompat notificationCompat = NotificationManagerCompat.from(context);
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        NotificationManagerCompat notificationCompat = NotificationManagerCompat.from(MyApplication.context);
         notificationCompat.notify(1, builder.build());
     }
+
 
 }
