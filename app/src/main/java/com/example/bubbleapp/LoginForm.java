@@ -59,6 +59,10 @@ public class LoginForm extends AppCompatActivity {
 
 
         loginBtn.setOnClickListener(view -> {
+            if (name.getText().toString().equals("tester")) {
+                dummyChats();
+                return;
+            }
             JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString(), MyApplication.fbToken);
             try {
                 MyApplication.setToken(userInfo.getString("token"));
@@ -73,15 +77,7 @@ public class LoginForm extends AppCompatActivity {
             startActivity(intent);
         });
 
-        binding.loginDummychats.setOnClickListener(view -> {
-            Intent intent = new Intent(this, ChatsActivity.class);
-            String token = dataManager.login("itay", "itay123");
-            MyApplication.setUser();
-            MyApplication.setToken();
-            intent.putExtra("token", token);
-            intent.putExtra("myName", "myName");
-            startActivity(intent);
-        });
+
         registerButton.setOnClickListener(view->{
             Intent intent = new Intent(this,RegisterForm.class);
             startActivity(intent);
@@ -122,5 +118,17 @@ public class LoginForm extends AppCompatActivity {
 
         startActivity(intent);
         finish();
+    }
+
+    private void dummyChats() {
+
+        Intent intent = new Intent(this, ChatsActivity.class);
+        String token = dataManager.login("itay", "itay123");
+        MyApplication.setUser();
+        MyApplication.setToken();
+        intent.putExtra("token", token);
+        intent.putExtra("myName", "myName");
+        startActivity(intent);
+
     }
 }
