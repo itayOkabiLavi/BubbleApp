@@ -49,33 +49,17 @@ public class DummyDataManager extends Activity implements DataManager {
         this.myDatabase.clearAllTables();
     }
 
-    @Override
-    public String login(String name, String password) {
-        // TODO: send login to server
-        //String token = "dummytoken";
-        setRelevantCache();
-        return "";
-    }
 
-    @Override
-    public String register(String name, String nickname, String password) {
-        // TODO: send register to server
-        //String token = "dummytoken";
-        setRelevantCache();
-        return "";
-    }
-
-    private void setRelevantCache() {
+    public void setRelevantCache() {
+        clearCache();
         updateChats(MyApplication.token);
-        // clear cache
-        // update chats
-        // update messages
+
     }
 
     private void updateChats(String token) {
         JSONArray jsonArray = chatsAPI.getContacts(token);
         if (jsonArray == null) {
-            myDatabase.clearAllTables();
+            //myDatabase.clearAllTables();
             return;
         }
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -84,9 +68,7 @@ public class DummyDataManager extends Activity implements DataManager {
                 Chat chat = new Chat(user.name, user.server, "");
                 myDao.insertChats(chat);
                 myDao.insertUsers(user);
-            } catch (JSONException e) {
-                break;
-            }
+            } catch (JSONException ignored) {}
         }
         List<User> users = myDao.getAllUsers();
         for (int i = 0; i < users.size(); i++) {
@@ -96,9 +78,7 @@ public class DummyDataManager extends Activity implements DataManager {
                     Message message = new Gson().fromJson(jsonArray.getString(j), Message.class);
                     message.contactName = users.get(i).name;
                     myDao.insertMessages(message);
-                } catch (JSONException e) {
-                    break;
-                }
+                } catch (JSONException ignored) {}
             }
         }
         // TODO: get contacts of current user from server
@@ -169,7 +149,7 @@ public class DummyDataManager extends Activity implements DataManager {
         String time = LocalDateTime.now().toString();
         String msgId = MyApplication.user.id + "," + to + "," + server + "," + time + "," + content;
         return sendMessage(token,
-                new Message("", content, MyApplication.user.name, to, chatId, time)
+                new Message(msgId, content, MyApplication.user.name, to, chatId, time)
         );
     }
 

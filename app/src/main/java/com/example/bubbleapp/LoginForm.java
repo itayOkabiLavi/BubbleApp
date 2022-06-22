@@ -72,7 +72,7 @@ public class LoginForm extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            dataManager.login("", "");
+            dataManager.setRelevantCache();
             Intent intent = new Intent(this, ChatsActivity.class);
             startActivity(intent);
         });
@@ -123,7 +123,7 @@ public class LoginForm extends AppCompatActivity {
     private void dummyChats() {
 
         Intent intent = new Intent(this, ChatsActivity.class);
-        String token = dataManager.login("itay", "itay123");
+        String token = "token";
         MyApplication.setUser();
         MyApplication.setToken();
         intent.putExtra("token", token);

@@ -30,19 +30,19 @@ public class Message {
     public String contactName;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Message(String id,
+    public Message(@NonNull String id,
                    String content,
                    String fromId,
                    String toId,
                    String contactName, String created) {
 
-        this.created = generateCreationTime(created);
+        this.created = created;//generateCreationTime(created);
         this.content = content;
         this.fromId = fromId;
         this.toId = toId;
         this.contactName = contactName;
 
-        this.id = generateNowId(id);
+        this.id = id;//generateNowId(id);
         //this.creationTime = System.currentTimeMillis();
     }
 
@@ -88,6 +88,7 @@ public class Message {
         return id;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public String generateCreationTime(String createdTime) {
         if (!createdTime.equals("NOW")) return createdTime;
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -97,12 +98,13 @@ public class Message {
                 + LocalDateTime.now().format(timeFormat);
     }
 
-    public String[] parseCreationTime() {
+    public String parseCreationTime() {
         String[] date = this.created.split("T");
         String time = date[1].split("\\.")[0].substring(0, 5);
         String dateTime = date[0] +"\n"+ time;
-        String[] result = {time, dateTime};
-        return result;
+        return dateTime;
+        //String[] result = {time, dateTime};
+        //return result;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

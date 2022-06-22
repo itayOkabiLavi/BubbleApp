@@ -53,7 +53,7 @@ public class FirebaseNotification extends FirebaseMessagingService {
                     sender,
                     MyApplication.user.id,
                     sender,
-                    "NOW"));
+                    LocalDateTime.now().toString()));
             MyApplication.notifyMessagesDisplay();
         } else {
             System.out.println("chat exists? : " + dataManager.getContactByName(sender));
