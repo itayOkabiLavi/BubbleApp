@@ -62,7 +62,7 @@ public class RegisterForm extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            dataManager.register("", "", "");
+            dataManager.setRelevantCache();
             Intent intent = new Intent(this, ChatsActivity.class);
             startActivity(intent);
         });

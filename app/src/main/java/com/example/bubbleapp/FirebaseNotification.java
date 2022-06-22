@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.bubbleapp.chatsactivitypack.LiveMessages;
 import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -52,7 +53,7 @@ public class FirebaseNotification extends FirebaseMessagingService {
                     sender,
                     MyApplication.user.id,
                     sender,
-                    "NOW"));
+                    LocalDateTime.now().toString()));
             MyApplication.notifyMessagesDisplay();
         } else {
             System.out.println("chat exists? : " + dataManager.getContactByName(sender));
@@ -63,6 +64,8 @@ public class FirebaseNotification extends FirebaseMessagingService {
             }
             content = "Already-exists-contact tries to reconnect: " + sender;
         }
+        LiveMessages liveMessages = new LiveMessages();
+        liveMessages.setMessages(r.get("content"));
         createNotificationChannel();
         throwNotification(getApplicationContext(), sender, content, type);
     }

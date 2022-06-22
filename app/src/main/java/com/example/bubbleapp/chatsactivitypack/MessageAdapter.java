@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -37,16 +38,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public void setMessageData(Message messageData) {
             MessageBinding.msgText.setText(messageData.getContent());
 
-            String[] dateTime = messageData.parseCreationTime();
-            MessageBinding.msgTime.setText(dateTime[0] + " " + dateTime[1]);
+            //String[] dateTime = messageData.parseCreationTime();
+            MessageBinding.msgTime.setText(messageData.parseCreationTime());
 
             setMessageDesign(MessageBinding, messageData);
         }
+
         @SuppressLint("ResourceAsColor")
         private void setMessageDesign(MessageItemBinding messageItemBinding, Message message) {
-            int bg, txt;
+            int bg, txt, side;
             boolean darkMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
-            if (message.fromId.equals(MyApplication.user.name)) {
+            if (message.fromId.equals(MyApplication.user.name) || message.fromId.equals(MyApplication.user.name + "*" + MyApplication.user.server)) {
                 if (darkMode) {
                     bg = 0x004E4E;
                     txt = Color.WHITE;
@@ -54,10 +56,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                     bg = 0x70DADA;
                     txt = Color.BLACK;
                 }
-                // TODO: align to left
-            }
-
-            else {
+                side = View.LAYOUT_DIRECTION_LTR;
+            } else {
                 if (darkMode) {
                     bg = R.color.dark_msg2;
                     txt = Color.WHITE;
@@ -65,7 +65,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                     bg = R.color.light_msg2;
                     txt = Color.BLACK;
                 }
+                side = View.LAYOUT_DIRECTION_RTL;
             }
+            MessageBinding.msgContainer.setLayoutDirection(side);
             MessageBinding.msgCard.setCardBackgroundColor(bg);
             MessageBinding.msgText.setTextColor(txt);
 
