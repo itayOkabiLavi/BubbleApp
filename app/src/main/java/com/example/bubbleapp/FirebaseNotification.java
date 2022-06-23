@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.bubbleapp.chatsactivitypack.LiveMessages;
 import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class FirebaseNotification extends FirebaseMessagingService {
@@ -34,9 +36,9 @@ public class FirebaseNotification extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
 
         Type mapType = new TypeToken<Map<String, String>>(){}.getType();
-        String payload = remoteMessage.getNotification().getBody();
-        System.out.println("got notification:\n" + payload);
-        Map<String, String> r = new Gson().fromJson(payload, mapType);
+        //String payload = remoteMessage.getNotification().getBody();
+        //System.out.println("got notification:\n" + payload);
+        Map<String, String> r =remoteMessage.getData(); //new Gson().fromJson(payload, mapType);
         // TODO: new message vs new chat
         if (r.get("action") == null || r.get("id") == null) {
             System.out.println("no action / id");
@@ -45,23 +47,25 @@ public class FirebaseNotification extends FirebaseMessagingService {
         String type = r.get("action"), sender = r.get("id"), content;
         if (r.get("action").equals("newMessage")) {
             content = r.get("content");
-            Message newMessage = new Message("",
+            String msgId = sender + "," + MyApplication.user.id + "," + MyApplication.user.server + "," + LocalDateTime.now().toString() + "," + content;
+            dataManager.FBPushNewMessage(new Message(msgId,
                     content,
                     sender,
-                    MyApplication.user.name,
+                    MyApplication.user.id,
                     sender,
-                    "NOW");
-            dataManager.FBPushNewMessage(newMessage);
-            MyApplication.notifyChatDisplay(newMessage);
+                    LocalDateTime.now().toString()));
+            MyApplication.notifyMessagesDisplay();
         } else {
             System.out.println("chat exists? : " + dataManager.getContactByName(sender));
             if (dataManager.getContactByName(sender) == null) {
                 content = r.get("server");
                 dataManager.FBPushNewChat(new Chat(sender, content, ""));
-
+                MyApplication.notifyChatDisplay();
             }
             content = "Already-exists-contact tries to reconnect: " + sender;
         }
+        LiveMessages liveMessages = new LiveMessages();
+        liveMessages.setMessages(r.get("content"));
         createNotificationChannel();
         throwNotification(getApplicationContext(), sender, content, type);
     }

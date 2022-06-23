@@ -49,33 +49,17 @@ public class DummyDataManager extends Activity implements DataManager {
         this.myDatabase.clearAllTables();
     }
 
-    @Override
-    public String login(String name, String password) {
-        // TODO: send login to server
-        //String token = "dummytoken";
-        setRelevantCache();
-        return "";
-    }
 
-    @Override
-    public String register(String name, String nickname, String password) {
-        // TODO: send register to server
-        //String token = "dummytoken";
-        setRelevantCache();
-        return "";
-    }
-
-    private void setRelevantCache() {
+    public void setRelevantCache() {
+        clearCache();
         updateChats(MyApplication.token);
-        // clear cache
-        // update chats
-        // update messages
+
     }
 
     private void updateChats(String token) {
         JSONArray jsonArray = chatsAPI.getContacts(token);
         if (jsonArray == null) {
-            myDatabase.clearAllTables();
+            //myDatabase.clearAllTables();
             return;
         }
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -84,9 +68,7 @@ public class DummyDataManager extends Activity implements DataManager {
                 Chat chat = new Chat(user.name, user.server, "");
                 myDao.insertChats(chat);
                 myDao.insertUsers(user);
-            } catch (JSONException e) {
-                break;
-            }
+            } catch (JSONException ignored) {}
         }
         List<User> users = myDao.getAllUsers();
         for (int i = 0; i < users.size(); i++) {
@@ -96,9 +78,7 @@ public class DummyDataManager extends Activity implements DataManager {
                     Message message = new Gson().fromJson(jsonArray.getString(j), Message.class);
                     message.contactName = users.get(i).name;
                     myDao.insertMessages(message);
-                } catch (JSONException e) {
-                    break;
-                }
+                } catch (JSONException ignored) {}
             }
         }
         // TODO: get contacts of current user from server
@@ -112,20 +92,10 @@ public class DummyDataManager extends Activity implements DataManager {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public List<ChatPreviewInfo> getContacts(String token, List<ChatPreviewInfo> old) {
+    public List<ChatPreviewInfo> getContacts(String token) {
         List<Chat> chats = myDao.getAllContacts();
         List<ChatPreviewInfo> chatPreviewInfoList = new ArrayList<>();
-        for (Chat c : chats) {
-            ChatPreviewInfo chatPreviewInfo = new ChatPreviewInfo(c);
-            for (ChatPreviewInfo chatPreviewInfo1 : old) {
-                if (chatPreviewInfo1.chat.getContactName().equals(c.contactName)){
-                    chatPreviewInfo = chatPreviewInfo1;
-                    break;
-                }
-            }
-            chatPreviewInfoList.add(chatPreviewInfo);
-        }
-        old.clear();
+        for (Chat c : chats) chatPreviewInfoList.add(new ChatPreviewInfo(c));
         return chatPreviewInfoList;
     }
 
@@ -151,8 +121,7 @@ public class DummyDataManager extends Activity implements DataManager {
         Chat chat = myDao.getChat(chatId);
         ChatPreviewInfo chatPreviewInfo = new ChatPreviewInfo(chat);
         chatPreviewInfo.setLastMessage(message.getContent());
-        String[] creationTime = message.parseCreationTime();
-        chatPreviewInfo.setLastMessageDate(creationTime[0] + " " + creationTime[1]);
+        chatPreviewInfo.setLastMessageDate(message.getCreationTime());
         return chatPreviewInfo;
     }
 
@@ -171,7 +140,6 @@ public class DummyDataManager extends Activity implements DataManager {
         // TODO: send message to server
         chatsAPI.sendMessage(message);
         myDao.insertMessages(message);
-        MyApplication.notifyChatDisplay(message);
         return true;
     }
 
@@ -180,8 +148,9 @@ public class DummyDataManager extends Activity implements DataManager {
     public boolean sendMessage(String token, String content, String to, String server, String chatId) {
         String time = LocalDateTime.now().toString();
         String msgId = MyApplication.user.id + "," + to + "," + server + "," + time + "," + content;
-        Message newMessage = new Message("", content, MyApplication.user.name, to, chatId, time);
-        return sendMessage(token, newMessage);
+        return sendMessage(token,
+                new Message(msgId, content, MyApplication.user.name, to, chatId, time)
+        );
     }
 
     @Override
