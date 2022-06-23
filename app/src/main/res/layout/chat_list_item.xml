@@ -54,6 +54,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:maxWidth="200dp"
+                        android:maxLines="1"
                         android:text="TextView"
                         android:textColor="?attr/mainText" />
 
@@ -62,6 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:maxLines="1"
                         android:text="TextView"
                         android:textColor="?attr/txtSubtitle2" />
                 </LinearLayout>

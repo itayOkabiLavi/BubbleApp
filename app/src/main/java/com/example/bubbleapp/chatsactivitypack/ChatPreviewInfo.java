@@ -15,7 +15,8 @@ public class ChatPreviewInfo implements Serializable {
     // ALL THE VIEW PARTS ARE DONE IN "CHAT ADAPTER"
     @RequiresApi(api = Build.VERSION_CODES.O)
     public ChatPreviewInfo(Chat chat) {
-        lastMessageDate = null;
+        lastMessageDate = "";
+        lastMessage = "Start chatting with " + chat.contactName;
         this.chat = chat;
     }
 

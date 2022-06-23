@@ -92,20 +92,19 @@ public class DummyDataManager extends Activity implements DataManager {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public List<ChatPreviewInfo> getContacts(String token, List<ChatPreviewInfo> old) {
+    public List<ChatPreviewInfo> getContacts(String token) {
         List<Chat> chats = myDao.getAllContacts();
         List<ChatPreviewInfo> chatPreviewInfoList = new ArrayList<>();
         for (Chat c : chats) {
             ChatPreviewInfo chatPreviewInfo = new ChatPreviewInfo(c);
-            for (ChatPreviewInfo chatPreviewInfo1 : old) {
-                if (chatPreviewInfo1.chat.getContactName().equals(c.contactName)) {
-                    chatPreviewInfo = chatPreviewInfo1;
-                    break;
-                }
+            List<Message> messageList = getAllMessages(c.contactName);
+            if (messageList.size() > 0) {
+                Message lastMessage = messageList.get(messageList.size() - 1);
+                chatPreviewInfo.lastMessage = lastMessage.content;
+                chatPreviewInfo.lastMessageDate = lastMessage.parseCreationTime();
             }
             chatPreviewInfoList.add(chatPreviewInfo);
         }
-        old.clear();
         return chatPreviewInfoList;
     }
 

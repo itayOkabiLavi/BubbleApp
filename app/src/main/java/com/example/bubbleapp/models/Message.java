@@ -97,7 +97,7 @@ public class Message {
     public String parseCreationTime() {
         String[] date = this.created.split("T");
         String time = date[1].split("\\.")[0].substring(0, 5);
-        String dateTime = date[0] +"\n"+ time;
+        String dateTime = date[0] +" "+ time;
         return dateTime;
         //String[] result = {time, dateTime};
         //return result;

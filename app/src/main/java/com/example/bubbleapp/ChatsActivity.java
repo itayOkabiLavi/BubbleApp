@@ -55,7 +55,7 @@ public class ChatsActivity extends NotifiableActivity {
         binding.chatsUsername.setText("Hello " + MyApplication.user.name);
         // set chats list - may be in login
         chatPreviewInfoList = new ArrayList<>();
-        this.chatPreviewInfoList = dataManager.getContacts(MyApplication.token, chatPreviewInfoList);
+        this.chatPreviewInfoList = dataManager.getContacts(MyApplication.token);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -89,8 +89,8 @@ public class ChatsActivity extends NotifiableActivity {
             ok.setOnClickListener(view1 -> {
                 String name = input.getText().toString(), server = input2.getText().toString();
                 dataManager.addContact(new Chat(name, server, "dummyImg"));
-
-                chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token, chatPreviewInfoList));
+                chatPreviewInfoList.clear();
+                chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token));
                 chatPreviewInfoAdapter.notifyDataSetChanged();
                 alertDialog.dismiss();
             });
@@ -103,9 +103,7 @@ public class ChatsActivity extends NotifiableActivity {
 
             alertDialog.show();
         });
-        binding.chatsRefreshBtn.setOnClickListener(view -> {
-            refresh();
-        });
+
         binding.chatsLogoutBtn.setOnClickListener(view -> {
             finish();
         });
@@ -120,8 +118,8 @@ public class ChatsActivity extends NotifiableActivity {
     }
 
     public void refresh() {
-        //chatPreviewInfoList.clear();
-        chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token, chatPreviewInfoList));
+        chatPreviewInfoList.clear();
+        chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token));
         chatPreviewInfoAdapter.notifyDataSetChanged();
     }
 
@@ -130,26 +128,7 @@ public class ChatsActivity extends NotifiableActivity {
     public void public_notify(Message newMessage) {
         super.public_notify(newMessage);
         //refresh();
-        setLastMessage(newMessage);
         System.out.println("Chats notified");
-    }
-
-    private void setLastMessage(Message newMessage) {
-        for (ChatPreviewInfo chatPreviewInfo : chatPreviewInfoList) {
-            if (chatPreviewInfo.getChat().getContactName().equals(newMessage.getContactName())){
-                chatPreviewInfo.lastMessage = newMessage.getContent();
-                chatPreviewInfo.lastMessageDate = newMessage.parseCreationTime();
-                lastChatPreviewInfo = chatPreviewInfo;
-                break;
-            }
-        }
-        if (lastChatPreviewInfo != null) {
-            System.out.println(
-                    "Found matching chatInfo: " + lastChatPreviewInfo.getChat().getContactName() +
-                            "lastMessage: " + lastChatPreviewInfo.lastMessage +
-                            "lastMessageDate: " + lastChatPreviewInfo.lastMessageDate
-            );
-        }
     }
 
     public ActivityChatsBinding getBinding() {
