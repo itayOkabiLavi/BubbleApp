@@ -7,12 +7,8 @@ import androidx.annotation.RequiresApi;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.util.Date;
 
 @Entity
 public class Message {
@@ -105,10 +101,5 @@ public class Message {
         return dateTime;
         //String[] result = {time, dateTime};
         //return result;
-    }
-
-    public String getCreationTime() {
-        String[] date = this.parseCreationTime();
-        return date[0] + " " + date[1];
     }
 }

@@ -92,10 +92,20 @@ public class DummyDataManager extends Activity implements DataManager {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public List<ChatPreviewInfo> getContacts(String token) {
+    public List<ChatPreviewInfo> getContacts(String token, List<ChatPreviewInfo> old) {
         List<Chat> chats = myDao.getAllContacts();
         List<ChatPreviewInfo> chatPreviewInfoList = new ArrayList<>();
-        for (Chat c : chats) chatPreviewInfoList.add(new ChatPreviewInfo(c));
+        for (Chat c : chats) {
+            ChatPreviewInfo chatPreviewInfo = new ChatPreviewInfo(c);
+            for (ChatPreviewInfo chatPreviewInfo1 : old) {
+                if (chatPreviewInfo1.chat.getContactName().equals(c.contactName)) {
+                    chatPreviewInfo = chatPreviewInfo1;
+                    break;
+                }
+            }
+            chatPreviewInfoList.add(chatPreviewInfo);
+        }
+        old.clear();
         return chatPreviewInfoList;
     }
 
@@ -121,7 +131,7 @@ public class DummyDataManager extends Activity implements DataManager {
         Chat chat = myDao.getChat(chatId);
         ChatPreviewInfo chatPreviewInfo = new ChatPreviewInfo(chat);
         chatPreviewInfo.setLastMessage(message.getContent());
-        chatPreviewInfo.setLastMessageDate(message.getCreationTime());
+        chatPreviewInfo.setLastMessageDate(message.parseCreationTime());
         return chatPreviewInfo;
     }
 

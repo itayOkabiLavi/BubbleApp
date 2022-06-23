@@ -129,7 +129,6 @@ public class ChatsActivity extends NotifiableActivity {
     @Override
     public void public_notify(Message newMessage) {
         super.public_notify(newMessage);
-
         //refresh();
         setLastMessage(newMessage);
         System.out.println("Chats notified");
@@ -139,7 +138,7 @@ public class ChatsActivity extends NotifiableActivity {
         for (ChatPreviewInfo chatPreviewInfo : chatPreviewInfoList) {
             if (chatPreviewInfo.getChat().getContactName().equals(newMessage.getContactName())){
                 chatPreviewInfo.lastMessage = newMessage.getContent();
-                chatPreviewInfo.lastMessageDate = newMessage.getCreationTime();
+                chatPreviewInfo.lastMessageDate = newMessage.parseCreationTime();
                 lastChatPreviewInfo = chatPreviewInfo;
                 break;
             }

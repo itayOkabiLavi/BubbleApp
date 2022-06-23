@@ -29,13 +29,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, RegisterForm.class);
             startActivity(intent);
         });
-        binding.mainLoginBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(this, ChatsActivity.class);
-            String token = dataManager.login("itay", "itay123");
-            intent.putExtra("token", token);
-            intent.putExtra("myName", "myName");
-            startActivity(intent);
-        });
 
         MyApplication.setUser();
         Intent intent = new Intent(this, LoginForm.class);
