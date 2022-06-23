@@ -70,6 +70,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             MessageBinding.msgContainer.setLayoutDirection(side);
             MessageBinding.msgCard.setCardBackgroundColor(bg);
             MessageBinding.msgText.setTextColor(txt);
+            MessageBinding.msgTime.setTextColor(Color.BLUE);
         }
     }
 

@@ -51,7 +51,7 @@ public class ChatsActivity extends NotifiableActivity {
         final Observer<String> messageObserver = newName -> {
             // Update the UI, in this case, a TextView.
             chatPreviewInfoList.clear();
-            chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token,chatPreviewInfoList));
+            chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token));
             chatPreviewInfoAdapter.notifyDataSetChanged();
         };
         liveMessages.getCurrentMessages().observe(this, messageObserver);
