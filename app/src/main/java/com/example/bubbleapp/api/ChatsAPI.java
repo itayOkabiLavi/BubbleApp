@@ -1,6 +1,14 @@
 package com.example.bubbleapp.api;
 
+import static java.nio.file.Files.probeContentType;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.util.Base64;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.example.bubbleapp.MyApplication;
 import com.example.bubbleapp.R;
@@ -11,13 +19,18 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.net.URLConnection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -97,15 +110,28 @@ public class ChatsAPI {
         return res[0];
     }
 
-    public JSONObject register(String fullName, String nickName, String password,String androidToken) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public JSONObject register(String fullName, String nickName, String password, String androidToken, File profileImg) throws IOException {
         final JSONObject[] res = new JSONObject[1];
-        MultipartBody registerBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("name", fullName)
-                .addFormDataPart("nickName", nickName)
-                .addFormDataPart("password", password)
-                .addFormDataPart("androidToken", androidToken)
-                .build();
+        MultipartBody registerBody;
+        if (profileImg != null) {
+            registerBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("name", fullName)
+                    .addFormDataPart("nickName", nickName)
+                    .addFormDataPart("password", password)
+                    .addFormDataPart("androidToken", androidToken)
+                    .addFormDataPart("profileImage", profileImg.getName(), RequestBody.create(MediaType.get("image/jpeg"), profileImg))
+                    .build();
+        } else {
+            registerBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("name", fullName)
+                    .addFormDataPart("nickName", nickName)
+                    .addFormDataPart("password", password)
+                    .addFormDataPart("androidToken", androidToken)
+                    .build();
+        }
         Call<ResponseBody> call = webServiceAPI.register(registerBody);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<String> result = executorService.submit(() -> {

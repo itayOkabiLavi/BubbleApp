@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -11,9 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bubbleapp.ChatsActivity;
+import com.example.bubbleapp.R;
 import com.example.bubbleapp.databinding.ChatListItemBinding;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfoAdapter.ContactViewHolder> {
     //private DateTimeFormatter dateTimeFormat;
@@ -58,7 +63,13 @@ public class ChatPreviewInfoAdapter extends RecyclerView.Adapter<ChatPreviewInfo
             });
             chatListItemBinding.userName.setText(userData.getContactName());
             chatListItemBinding.lastmessageText.setText(userData.getLastMessage());
-
+            if (userData.getProfilePicture() != null && !Objects.equals(userData.getProfilePicture(), "")) {
+                byte[] decodedString = Base64.decode(userData.getProfilePicture(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                chatListItemBinding.userImage.setImageBitmap(decodedByte);
+            } else {
+                chatListItemBinding.userImage.setImageResource(R.drawable.generic_profile_image);
+            }
             if (userData.getLastMessageDate() == null)
                 chatListItemBinding.lastmessageTime.setText("");
             else

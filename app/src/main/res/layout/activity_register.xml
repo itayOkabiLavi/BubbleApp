@@ -24,7 +24,13 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="10dp">
-
+        <ImageView
+            android:id="@+id/viewImage"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0"
+            android:src="@drawable/ic_baseline_add_40" />
         <TextView
             android:id="@+id/register_name_label"
             android:layout_width="match_parent"

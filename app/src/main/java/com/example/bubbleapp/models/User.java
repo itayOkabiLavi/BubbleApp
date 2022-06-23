@@ -14,7 +14,7 @@ public class User {
     public String last;
     public String lastType;
     public String lastDate;
-
+    //public String profileImg;
     public User(@NonNull String id, String name, String server, String last, String lastType, String lastDate) {
         this.id = id;
         this.name = name;

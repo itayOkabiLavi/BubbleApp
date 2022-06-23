@@ -4,6 +4,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.bubbleapp.R;
 import com.example.bubbleapp.models.Chat;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ public class ChatPreviewInfo implements Serializable {
     public Chat chat;
     public String lastMessage;
     public String lastMessageDate;
+
     // ALL THE VIEW PARTS ARE DONE IN "CHAT ADAPTER"
     @RequiresApi(api = Build.VERSION_CODES.O)
     public ChatPreviewInfo(Chat chat) {
@@ -41,7 +43,7 @@ public class ChatPreviewInfo implements Serializable {
     }
 
     public String getProfilePicture() {
-        return getProfilePicture();
+        return chat.image;
     }
 
     public Chat getChat() {
