@@ -4,18 +4,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.bubbleapp.MyApplication;
-import com.example.bubbleapp.R;
 import com.example.bubbleapp.DataManager;
 import com.example.bubbleapp.DummyDataManager;
+import com.example.bubbleapp.MyApplication;
 import com.example.bubbleapp.NotifiableActivity;
+import com.example.bubbleapp.R;
 import com.example.bubbleapp.databinding.ActivityChatDisplayBinding;
 import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
@@ -81,9 +80,6 @@ public class ChatDisplayActivity extends NotifiableActivity {
             messageList.addAll(dataManager.getAllMessages(chatId));
             messageAdapter.notifyDataSetChanged();
             binding.chatInputText.setText("");
-        });
-        binding.chatRefreshBtn.setOnClickListener(view -> {
-            refresh();
         });
         // set chats list
         this.messageList = dataManager.getAllMessages(chatId);

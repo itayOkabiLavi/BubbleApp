@@ -11,7 +11,7 @@ public interface DataManager {
     public void clearCache();
 
     // Contacts
-    List<ChatPreviewInfo> getContacts(String token, List<ChatPreviewInfo> old);
+    List<ChatPreviewInfo> getContacts(String token);
 
     Chat getContactByName(String name);
 

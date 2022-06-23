@@ -46,15 +46,6 @@
 
             android:textSize="20dp" />
 
-        <ImageButton
-            android:id="@+id/chat_refresh_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:background="?attr/backgroundTitle"
-            android:padding="10dp"
-            app:srcCompat="@drawable/ic_baseline_refresh_24" />
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
