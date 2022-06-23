@@ -12,7 +12,7 @@
     <string name="login">Login</string>
     <string name="user_name">user name</string>
     <string name="password">password</string>
-    <string name="BaseUrl">http://10.0.2.2:7135/api/</string>
+    <string name="BaseUrl">10.0.2.2:7135</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

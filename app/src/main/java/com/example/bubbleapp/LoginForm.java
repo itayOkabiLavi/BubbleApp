@@ -80,6 +80,7 @@ public class LoginForm extends AppCompatActivity {
                 dummyChats();
                 return;
             }
+            boolean f = true;
             JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString(), MyApplication.fbToken);
             try {
                 SharedPreferences.Editor edit = userDetails.edit();
@@ -90,8 +91,12 @@ public class LoginForm extends AppCompatActivity {
                 User user = new Gson().fromJson(String.valueOf(userInfo.getJSONObject("user")), User.class);
                 if (user == null) MyApplication.setUser();
                 MyApplication.setUser(user);
-            } catch (JSONException e) {
+            } catch (Exception e) {
+                f = false;
                 e.printStackTrace();
+            }
+            if (!f) {
+                return;
             }
             dataManager.setRelevantCache();
             Intent intent = new Intent(this, ChatsActivity.class);
@@ -117,14 +122,14 @@ public class LoginForm extends AppCompatActivity {
             else
                 darkModeSwitch.setChecked(false);
             EditText serverInput = (EditText) dialogView.findViewById(R.id.settings_server_input);
-            serverInput.setText(MyApplication.user.server);
+            serverInput.setText(MyApplication.server);
             /*EditText fbtInput = (EditText) dialogView.findViewById(R.id.settings_fbtoken_input);
             fbtInput.setText(MyApplication.fbToken);*/
             apply.setOnClickListener(view1 -> {
                 if (darkModeSwitch.isChecked())
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                MyApplication.user.server = serverInput.getText().toString();
+                MyApplication.setServer(serverInput.getText().toString());
                 //MyApplication.fbToken = fbtInput.getText().toString();
                 alertDialog.dismiss();
                 reset();

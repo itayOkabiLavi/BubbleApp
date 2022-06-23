@@ -38,13 +38,13 @@
         <activity
             android:name=".ChatsActivity"
             android:exported="false" />
-        <activity
+       <!-- <activity
             android:name=".LoginForm"
             android:exported="false"
             android:label="@string/title_activity_register_form"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme" />-->
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginForm"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

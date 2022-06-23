@@ -134,18 +134,25 @@ public class RegisterForm extends AppCompatActivity {
         regBtn.setOnClickListener(view -> {
             JSONObject userInfo = null;
             try {
+                if (!password.getText().toString().equals(validatePassword.getText().toString())){
+                    return;
+                }
                 userInfo = chatsAPI.register(fullName.getText().toString(), nickName.getText().toString(), password.getText().toString(), MyApplication.fbToken, this.file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            boolean f=true;
             try {
-                assert userInfo != null;
                 MyApplication.setToken(userInfo.getString("token"));
                 User user = new Gson().fromJson(String.valueOf(userInfo.getJSONObject("user")), User.class);
                 if (user == null) MyApplication.setUser();
                 MyApplication.setUser(user);
-            } catch (JSONException e) {
+            } catch (Exception e) {
+                f=false;
                 e.printStackTrace();
+            }
+            if (!f){
+                return;
             }
             dataManager.setRelevantCache();
             Intent intent = new Intent(this, ChatsActivity.class);

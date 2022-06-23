@@ -18,6 +18,9 @@ public class MyApplication extends Application {
     public static NotifiableActivity chatsDisplay = null;
     public static NotifiableActivity messagesDisplay = null;
 
+
+    public static String server;
+
     public static void setUser(User user) {
         MyApplication.user = user;
     }
@@ -48,11 +51,16 @@ public class MyApplication extends Application {
         MyApplication.token = "dummyToken";
     }
 
+    public static void setServer(String server) {
+        MyApplication.server = server;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+        MyApplication.server = MyApplication.context.getString(R.string.BaseUrl);
         MyApplication.dataManager = new DummyDataManager(context);
     }
 

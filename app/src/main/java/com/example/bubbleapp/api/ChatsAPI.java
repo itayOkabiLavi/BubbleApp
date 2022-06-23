@@ -47,7 +47,7 @@ public class ChatsAPI {
 
     public ChatsAPI() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://" + MyApplication.user.server)
+                .baseUrl("http://"+MyApplication.server+"/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
