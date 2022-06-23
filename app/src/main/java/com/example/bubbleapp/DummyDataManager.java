@@ -18,9 +18,11 @@ import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 // NO singleton
@@ -64,8 +66,10 @@ public class DummyDataManager extends Activity implements DataManager {
         }
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
-                User user = new Gson().fromJson(jsonArray.getString(i), User.class);
-                Chat chat = new Chat(user.name, user.server, "");
+                String istring=jsonArray.getString(i);
+                User user = new Gson().fromJson(istring, User.class);
+                String img =new JSONObject(istring).getJSONObject("profileImg").getString("data");
+                Chat chat = new Chat(user.name, user.server,img);
                 myDao.insertChats(chat);
                 myDao.insertUsers(user);
             } catch (JSONException ignored) {}

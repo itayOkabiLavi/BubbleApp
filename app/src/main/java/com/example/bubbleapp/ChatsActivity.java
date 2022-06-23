@@ -11,10 +11,13 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfoAdapter;
+import com.example.bubbleapp.chatsactivitypack.LiveMessages;
 import com.example.bubbleapp.databinding.ActivityChatsBinding;
 import com.example.bubbleapp.models.Chat;
 import com.example.bubbleapp.models.Message;
@@ -30,6 +33,8 @@ public class ChatsActivity extends NotifiableActivity {
     private List<String> chatTitles;
     private AlertDialog alertDialog;
     private ChatPreviewInfo lastChatPreviewInfo;
+    private LiveMessages liveMessages;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +47,14 @@ public class ChatsActivity extends NotifiableActivity {
         // set binding
         this.binding = ActivityChatsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        liveMessages=new ViewModelProvider((this)).get(LiveMessages.class);
+        final Observer<String> messageObserver = newName -> {
+            // Update the UI, in this case, a TextView.
+            chatPreviewInfoList.clear();
+            chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token,chatPreviewInfoList));
+            chatPreviewInfoAdapter.notifyDataSetChanged();
+        };
+        liveMessages.getCurrentMessages().observe(this, messageObserver);
         Bundle extras = getIntent().getExtras();
         // set token and user-name
         //MyApplication.setUser();
