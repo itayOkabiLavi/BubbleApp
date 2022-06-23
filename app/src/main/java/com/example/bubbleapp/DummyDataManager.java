@@ -150,6 +150,7 @@ public class DummyDataManager extends Activity implements DataManager {
         // TODO: send message to server
         chatsAPI.sendMessage(message);
         myDao.insertMessages(message);
+        // last message a+update
         MyApplication.notifyChatDisplay(message);
         return true;
     }
