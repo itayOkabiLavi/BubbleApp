@@ -7,12 +7,11 @@ import androidx.annotation.RequiresApi;
 import com.example.bubbleapp.models.Chat;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public class ChatPreviewInfo implements Serializable {
-    private Chat chat;
-    private String lastMessage;
-    private LocalDateTime lastMessageDate;
+    public Chat chat;
+    public String lastMessage;
+    public String lastMessageDate;
     // ALL THE VIEW PARTS ARE DONE IN "CHAT ADAPTER"
     @RequiresApi(api = Build.VERSION_CODES.O)
     public ChatPreviewInfo(Chat chat) {
@@ -28,7 +27,7 @@ public class ChatPreviewInfo implements Serializable {
         return lastMessage;
     }
 
-    public LocalDateTime getLastMessageDate() {
+    public String getLastMessageDate() {
         return lastMessageDate;
     }
 
@@ -36,7 +35,7 @@ public class ChatPreviewInfo implements Serializable {
         this.lastMessage = lastMessage;
     }
 
-    public void setLastMessageDate(LocalDateTime lastMessageDate) {
+    public void setLastMessageDate(String lastMessageDate) {
         this.lastMessageDate = lastMessageDate;
     }
 

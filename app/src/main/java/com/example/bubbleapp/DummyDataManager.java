@@ -112,10 +112,20 @@ public class DummyDataManager extends Activity implements DataManager {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public List<ChatPreviewInfo> getContacts(String token) {
+    public List<ChatPreviewInfo> getContacts(String token, List<ChatPreviewInfo> old) {
         List<Chat> chats = myDao.getAllContacts();
         List<ChatPreviewInfo> chatPreviewInfoList = new ArrayList<>();
-        for (Chat c : chats) chatPreviewInfoList.add(new ChatPreviewInfo(c));
+        for (Chat c : chats) {
+            ChatPreviewInfo chatPreviewInfo = new ChatPreviewInfo(c);
+            for (ChatPreviewInfo chatPreviewInfo1 : old) {
+                if (chatPreviewInfo1.chat.getContactName().equals(c.contactName)){
+                    chatPreviewInfo = chatPreviewInfo1;
+                    break;
+                }
+            }
+            chatPreviewInfoList.add(chatPreviewInfo);
+        }
+        old.clear();
         return chatPreviewInfoList;
     }
 
@@ -141,7 +151,8 @@ public class DummyDataManager extends Activity implements DataManager {
         Chat chat = myDao.getChat(chatId);
         ChatPreviewInfo chatPreviewInfo = new ChatPreviewInfo(chat);
         chatPreviewInfo.setLastMessage(message.getContent());
-        chatPreviewInfo.setLastMessageDate(message.getCreationTime());
+        String[] creationTime = message.parseCreationTime();
+        chatPreviewInfo.setLastMessageDate(creationTime[0] + " " + creationTime[1]);
         return chatPreviewInfo;
     }
 
@@ -160,6 +171,7 @@ public class DummyDataManager extends Activity implements DataManager {
         // TODO: send message to server
         chatsAPI.sendMessage(message);
         myDao.insertMessages(message);
+        MyApplication.notifyChatDisplay(message);
         return true;
     }
 
@@ -168,9 +180,8 @@ public class DummyDataManager extends Activity implements DataManager {
     public boolean sendMessage(String token, String content, String to, String server, String chatId) {
         String time = LocalDateTime.now().toString();
         String msgId = MyApplication.user.id + "," + to + "," + server + "," + time + "," + content;
-        return sendMessage(token,
-                new Message("", content, MyApplication.user.name, to, chatId, time)
-        );
+        Message newMessage = new Message("", content, MyApplication.user.name, to, chatId, time);
+        return sendMessage(token, newMessage);
     }
 
     @Override

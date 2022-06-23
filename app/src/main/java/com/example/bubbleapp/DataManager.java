@@ -14,7 +14,7 @@ public interface DataManager {
 
     public String register(String name, String nickname, String password) ;
     // Contacts
-    public List<ChatPreviewInfo> getContacts(String token);
+    public List<ChatPreviewInfo> getContacts(String token, List<ChatPreviewInfo> old);
     public Chat getContactByName(String name);
     public void addContact(Chat chat);
     public void FBPushNewChat(Chat... chats);

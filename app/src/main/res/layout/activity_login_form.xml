@@ -46,10 +46,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:autofillHints="User Name"
+            android:background="@android:color/transparent"
             android:hint="@string/user_name"
             android:inputType="textPersonName"
+            android:maxLines="1"
             android:padding="8dp"
-            android:textColor="?attr/txtInput"
+            android:textColor="@color/blue_light"
             android:textColorHint="@color/blue_light"
             android:textSize="20dp" />
 
@@ -59,10 +61,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:autofillHints="User password"
+            android:background="@android:color/transparent"
             android:hint="@string/password"
             android:inputType="textPassword"
+            android:maxLines="1"
             android:padding="8dp"
-            android:textColor="?attr/txtInput"
+            android:textColor="@color/blue_light"
             android:textColorHint="@color/blue_light"
             android:textSize="20dp" />
 

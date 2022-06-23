@@ -17,7 +17,9 @@ import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfo;
 import com.example.bubbleapp.chatsactivitypack.ChatPreviewInfoAdapter;
 import com.example.bubbleapp.databinding.ActivityChatsBinding;
 import com.example.bubbleapp.models.Chat;
+import com.example.bubbleapp.models.Message;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatsActivity extends NotifiableActivity {
@@ -27,6 +29,7 @@ public class ChatsActivity extends NotifiableActivity {
     private ChatPreviewInfoAdapter chatPreviewInfoAdapter;
     private List<String> chatTitles;
     private AlertDialog alertDialog;
+    private ChatPreviewInfo lastChatPreviewInfo;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,8 @@ public class ChatsActivity extends NotifiableActivity {
         // set title
         binding.chatsUsername.setText("Hello " + MyApplication.user.name);
         // set chats list - may be in login
-        this.chatPreviewInfoList = dataManager.getContacts(MyApplication.token);
+        chatPreviewInfoList = new ArrayList<>();
+        this.chatPreviewInfoList = dataManager.getContacts(MyApplication.token, chatPreviewInfoList);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -85,8 +89,8 @@ public class ChatsActivity extends NotifiableActivity {
             ok.setOnClickListener(view1 -> {
                 String name = input.getText().toString(), server = input2.getText().toString();
                 dataManager.addContact(new Chat(name, server, "dummyImg"));
-                chatPreviewInfoList.clear();
-                chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token));
+
+                chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token, chatPreviewInfoList));
                 chatPreviewInfoAdapter.notifyDataSetChanged();
                 alertDialog.dismiss();
             });
@@ -116,16 +120,37 @@ public class ChatsActivity extends NotifiableActivity {
     }
 
     public void refresh() {
-        chatPreviewInfoList.clear();
-        chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token));
+        //chatPreviewInfoList.clear();
+        chatPreviewInfoList.addAll(dataManager.getContacts(MyApplication.token, chatPreviewInfoList));
         chatPreviewInfoAdapter.notifyDataSetChanged();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void public_notify() {
-        super.public_notify();
+    public void public_notify(Message newMessage) {
+        super.public_notify(newMessage);
+
         //refresh();
+        setLastMessage(newMessage);
         System.out.println("Chats notified");
+    }
+
+    private void setLastMessage(Message newMessage) {
+        for (ChatPreviewInfo chatPreviewInfo : chatPreviewInfoList) {
+            if (chatPreviewInfo.getChat().getContactName().equals(newMessage.getContactName())){
+                chatPreviewInfo.lastMessage = newMessage.getContent();
+                chatPreviewInfo.lastMessageDate = newMessage.getCreationTime();
+                lastChatPreviewInfo = chatPreviewInfo;
+                break;
+            }
+        }
+        if (lastChatPreviewInfo != null) {
+            System.out.println(
+                    "Found matching chatInfo: " + lastChatPreviewInfo.getChat().getContactName() +
+                            "lastMessage: " + lastChatPreviewInfo.lastMessage +
+                            "lastMessageDate: " + lastChatPreviewInfo.lastMessageDate
+            );
+        }
     }
 
     public ActivityChatsBinding getBinding() {

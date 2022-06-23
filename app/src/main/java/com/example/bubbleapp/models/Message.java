@@ -105,10 +105,8 @@ public class Message {
         return result;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public LocalDateTime getCreationTime() {
-        return Instant.ofEpochMilli(creationTime)
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
+    public String getCreationTime() {
+        String[] date = this.parseCreationTime();
+        return date[0] + " " + date[1];
     }
 }

@@ -6,6 +6,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.bubbleapp.models.Message;
 import com.example.bubbleapp.models.User;
 
 public class MyApplication extends Application {
@@ -55,13 +56,9 @@ public class MyApplication extends Application {
         MyApplication.dataManager = new DummyDataManager(context);
     }
 
-    public static void notifyChatDisplay() {
-        if (chatsDisplay != null) chatsDisplay.public_notify();
+    public static void notifyChatDisplay(Message newMessage) {
+        if (chatsDisplay != null) chatsDisplay.public_notify(newMessage);
         else System.out.println("chatsDisplay is null");
     }
 
-    public static void notifyMessagesDisplay() {
-        if (messagesDisplay != null) messagesDisplay.public_notify();
-        else System.out.println("messagesDisplay is null");
-    }
 }

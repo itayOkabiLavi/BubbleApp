@@ -45,19 +45,20 @@ public class FirebaseNotification extends FirebaseMessagingService {
         String type = r.get("action"), sender = r.get("id"), content;
         if (r.get("action").equals("newMessage")) {
             content = r.get("content");
-            dataManager.FBPushNewMessage(new Message("",
+            Message newMessage = new Message("",
                     content,
                     sender,
                     MyApplication.user.name,
                     sender,
-                    "NOW"));
-            MyApplication.notifyMessagesDisplay();
+                    "NOW");
+            dataManager.FBPushNewMessage(newMessage);
+            MyApplication.notifyChatDisplay(newMessage);
         } else {
             System.out.println("chat exists? : " + dataManager.getContactByName(sender));
             if (dataManager.getContactByName(sender) == null) {
                 content = r.get("server");
                 dataManager.FBPushNewChat(new Chat(sender, content, ""));
-                MyApplication.notifyChatDisplay();
+
             }
             content = "Already-exists-contact tries to reconnect: " + sender;
         }

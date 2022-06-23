@@ -90,9 +90,4 @@ public class ChatDisplayActivity extends NotifiableActivity {
         messageList.addAll(dataManager.getAllMessages(chatId));
         messageAdapter.notifyDataSetChanged();
     }
-    @Override
-    public void public_notify() {
-        super.public_notify();
-        System.out.println("Messages notified");
-    }
 }
