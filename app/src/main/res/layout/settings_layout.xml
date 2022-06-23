@@ -72,7 +72,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="0"
-                android:text="@string/settings_server_label"
+                android:text="@string/BaseUrl"
                 android:textColor="?attr/mainText"
                 android:textSize="20dp"
                 />
@@ -96,7 +96,7 @@
             android:layout_weight="0"
             android:orientation="horizontal">
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/settings_fbtoken_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                 android:ems="10"
                 android:inputType="number"
                 android:textSize="15dp"
-                android:textColor="?attr/txtInput"/>
+                android:textColor="?attr/txtInput"/>-->
 
         </LinearLayout>
 
