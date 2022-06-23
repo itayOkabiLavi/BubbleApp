@@ -58,15 +58,21 @@ public class LoginForm extends AppCompatActivity {
         name = binding.userName;
         password = binding.password;
         binding.loginLogo.setColorFilter(Color.WHITE);
-        registerButton=binding.loginRegisterBtn;
+        registerButton = binding.loginRegisterBtn;
         SharedPreferences userDetails = MyApplication.context.getSharedPreferences("userdata", 0);
-        if (!Objects.equals(userDetails.getString("token", ""), "")){
-            MyApplication.setToken(userDetails.getString("token",""));
-            JSONObject userJO = chatsAPI.getUser(MyApplication.token);
-            User user = new Gson().fromJson(String.valueOf(userJO), User.class);
-            MyApplication.setUser(user);
-            Intent intent = new Intent(this, ChatsActivity.class);
-            startActivity(intent);
+        if (!Objects.equals(userDetails.getString("token", ""), "")) {
+            MyApplication.setToken(userDetails.getString("token", ""));
+            User user = new Gson().fromJson(userDetails.getString("user", ""), User.class);
+            if (user == null) {
+                JSONObject userJO = chatsAPI.getUser(MyApplication.token);
+                user = new Gson().fromJson(userJO.toString(), User.class);
+            }
+            if (user != null) {
+                MyApplication.setUser(user);
+                dataManager.setRelevantCache();
+                Intent intent = new Intent(this, ChatsActivity.class);
+                startActivity(intent);
+            }
         }
 
         loginBtn.setOnClickListener(view -> {
@@ -93,8 +99,8 @@ public class LoginForm extends AppCompatActivity {
         });
 
 
-        registerButton.setOnClickListener(view->{
-            Intent intent = new Intent(this,RegisterForm.class);
+        registerButton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, RegisterForm.class);
             startActivity(intent);
         });
         binding.loginSettingsBtn.setOnClickListener(view -> {
@@ -115,7 +121,8 @@ public class LoginForm extends AppCompatActivity {
             EditText fbtInput = (EditText) dialogView.findViewById(R.id.settings_fbtoken_input);
             fbtInput.setText(MyApplication.fbToken);
             apply.setOnClickListener(view1 -> {
-                if (darkModeSwitch.isChecked()) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                if (darkModeSwitch.isChecked())
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 MyApplication.user.server = serverInput.getText().toString();
                 MyApplication.fbToken = fbtInput.getText().toString();
@@ -128,6 +135,7 @@ public class LoginForm extends AppCompatActivity {
             alertDialog.show();
         });
     }
+
     private void reset() {
         Intent intent = new Intent(getApplicationContext(), LoginForm.class);
 

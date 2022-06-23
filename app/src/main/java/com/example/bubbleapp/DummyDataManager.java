@@ -53,9 +53,7 @@ public class DummyDataManager extends Activity implements DataManager {
 
 
     public void setRelevantCache() {
-        clearCache();
         updateChats(MyApplication.token);
-
     }
 
     private void updateChats(String token) {
@@ -64,6 +62,7 @@ public class DummyDataManager extends Activity implements DataManager {
             //myDatabase.clearAllTables();
             return;
         }
+        clearCache();
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 String istring=jsonArray.getString(i);
