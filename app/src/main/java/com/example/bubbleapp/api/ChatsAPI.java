@@ -163,8 +163,8 @@ public class ChatsAPI {
         });
     }
 
-    public JSONArray getUser(String token) {
-        final JSONArray[] res = new JSONArray[1];
+    public JSONObject getUser(String token) {
+        final JSONObject[] res = new JSONObject[1];
         Call<ResponseBody> call = webServiceAPI.getUser("Bearer " + token);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<String> result = executorService.submit(() -> {
@@ -173,7 +173,7 @@ public class ChatsAPI {
             return response.body().string();
         });
         try {
-            res[0] = new JSONArray(result.get());
+            res[0] = new JSONObject(result.get());
         } catch (Exception e) {
             e.printStackTrace();
         }
