@@ -1,6 +1,7 @@
 package com.example.bubbleapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Objects;
 
 public class LoginForm extends AppCompatActivity {
     private ActivityLoginFormBinding binding;
@@ -56,7 +59,15 @@ public class LoginForm extends AppCompatActivity {
         password = binding.password;
         binding.loginLogo.setColorFilter(Color.WHITE);
         registerButton=binding.loginRegisterBtn;
-
+        SharedPreferences userDetails = MyApplication.context.getSharedPreferences("userdata", 0);
+        if (!Objects.equals(userDetails.getString("token", ""), "")){
+            MyApplication.setToken(userDetails.getString("token",""));
+            JSONObject userJO = chatsAPI.getUser(MyApplication.token);
+            User user = new Gson().fromJson(String.valueOf(userJO), User.class);
+            MyApplication.setUser(user);
+            Intent intent = new Intent(this, ChatsActivity.class);
+            startActivity(intent);
+        }
 
         loginBtn.setOnClickListener(view -> {
             if (name.getText().toString().equals("tester")) {
@@ -65,6 +76,10 @@ public class LoginForm extends AppCompatActivity {
             }
             JSONObject userInfo = chatsAPI.login(name.getText().toString(), password.getText().toString(), MyApplication.fbToken);
             try {
+                SharedPreferences.Editor edit = userDetails.edit();
+                edit.putString("token", userInfo.getString("token"));
+                edit.putString("user", userInfo.getJSONObject("user").toString());
+                edit.apply();
                 MyApplication.setToken(userInfo.getString("token"));
                 User user = new Gson().fromJson(String.valueOf(userInfo.getJSONObject("user")), User.class);
                 if (user == null) MyApplication.setUser();

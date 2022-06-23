@@ -34,6 +34,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginForm.class);
         startActivity(intent);
     }
-
-
 }
